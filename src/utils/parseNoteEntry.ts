@@ -1,4 +1,4 @@
-import { NewNoteEntry } from '../types';
+import { BaseNoteEntry } from '../types';
 
 const isString = (string: unknown): string is string => {
   return typeof string === 'string' || string instanceof String;
@@ -20,18 +20,20 @@ const parseDate = (param: unknown): string => {
   return param;
 };
 
-const toNewNoteEntry = (object: unknown): NewNoteEntry => {
+const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
   if (
     'content' in object &&
     'date' in object &&
-    'title' in object
+    'title' in object &&
+    'id' in object
   ) {
-    const newEntry: NewNoteEntry = {
+    const newEntry: BaseNoteEntry = {
       content: parseToString(object.content),
       date: parseDate(object.date),
-      title: parseToString(object.title)
+      title: parseToString(object.title),
+      id: parseToString(object.id)
     };
 
     return newEntry;

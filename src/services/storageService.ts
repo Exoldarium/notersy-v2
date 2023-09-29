@@ -2,8 +2,12 @@ import { BaseCategoryEntry } from '../types';
 
 const getStorage = async (key: string): Promise<BaseCategoryEntry[]> => {
   const res = await chrome.storage.sync.get(key);
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  console.log({ storage: res.notes });
+  console.log({ notesRes: res });
+
+  // const parsedEntry = res.every(key => toNewCategoryEntry(key));
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return res.notes;
 };

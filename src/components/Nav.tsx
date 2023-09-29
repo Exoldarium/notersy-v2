@@ -1,32 +1,20 @@
-import { clearStorage } from '../services/storageService';
 import useStorage from '../services/useStorage';
 import { BaseCategoryEntry } from '../types';
 import NavStyles from './styles/NavStyles';
+import { v4 as uuidv4 } from 'uuid';
 
-// interface Props {
-//   setCategories: React.Dispatch<React.SetStateAction<BaseCategoryEntry[]>>
-//   categories: BaseCategoryEntry[]
-// }
 
 const Nav = () => {
-  const { addNewCategory } = useStorage();
+  const { addNewCategory, clearStorage } = useStorage();
+  const id = uuidv4();
 
-  const addCategoryOnClick = () => {
+  const addCategoryOnClick = async () => {
     const newEntry: BaseCategoryEntry = {
-      id: 1,
+      id,
       title: 'Category entry',
       notes: []
     };
-    addNewCategory(newEntry);
-    // setCategories(categories.concat({
-    //   id: 1,
-    //   title: 'Category title',
-    //   notes: []
-    // }));
-  };
-
-  const clearStorageOnClick = async () => {
-    await clearStorage();
+    await addNewCategory(newEntry);
   };
 
   return (
@@ -42,7 +30,7 @@ const Nav = () => {
       <button
         type="button"
         style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-        onClick={clearStorageOnClick}
+        onClick={clearStorage}
       >
         Clear
       </button>

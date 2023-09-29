@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import Category from './components/Category';
 import Nav from './components/Nav';
 import useStorage from './services/useStorage';
+import { BaseCategoryEntry } from './types';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -16,24 +17,27 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
-  const { getStorageData } = useStorage();
+  const { clientData } = useStorage();
+
+  console.log('this has rendered');
 
   // useEffect(() => {
-  //   function start() {
-  //     async () => {
-  //       await getData();
-  //     };
-  //   }
-  //   start();
-  // });
-  console.log({ app: getStorageData });
+  //   void (async () => {
+  //     const res = await getStorage('notes');
+
+  //     void setClientData(res);
+  //   })();
+  // }, [setClientData]);
+
+  const map: BaseCategoryEntry[] = [];
+  console.log({ app: clientData });
 
   return (
     <>
       <GlobalStyles />
       <Nav />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {getStorageData.map(category => (
+        {map.map(category => (
           <Category category={category} />
         ))}
       </div>

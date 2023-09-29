@@ -1,12 +1,12 @@
 export interface BaseNoteEntry {
-  id: number;
+  id: string;
   title: string;
   content: string;
   date: string;
 }
 
 export interface BaseCategoryEntry {
-  id: number;
+  id: string;
   title: string;
   notes: BaseNoteEntry[]
 }

@@ -3,29 +3,40 @@ import { BaseCategoryEntry } from '../types';
 import { getStorage, setStorage } from './storageService';
 
 const useStorage = () => {
-  const [storageData, setStorageData] = useState<BaseCategoryEntry[]>([]);
-  const [getStorageData, setGetStorageData] = useState<BaseCategoryEntry[]>([]);
+  const [clientData, setClientData] = useState<BaseCategoryEntry[]>([]);
+  // const [storageData, setStorageData] = useState<BaseCategoryEntry[]>([]);
 
   useEffect(() => {
     void (async () => {
-      await setStorage('notes', storageData);
       const res = await getStorage('notes');
-      setGetStorageData(res);
-    })();
-  }, [storageData]);
 
-  const addNewCategory = (value: BaseCategoryEntry) => {
-    setStorageData(storageData.concat(value));
+      // if (res === undefined) {
+      //   await setStorage('notes', clientData);
+      //   const emptyRes = await getStorage('notes');
+      //   setClientData(emptyRes);
+      //   return;
+      // }
+
+      setClientData(res);
+    })();
+  }, []);
+
+  const addNewCategory = async (value: BaseCategoryEntry) => {
+    setClientData(clientData.concat(value));
+    await setStorage('notes', clientData);
   };
 
-  console.log({ data: getStorageData });
+  const clearStorage = async () => {
+    await setStorage('notes', []);
+  };
+
+  console.log({ data: clientData });
 
   return {
-    storageData,
+    clientData,
     addNewCategory,
-    getStorageData,
-    setStorageData,
-    setGetStorageData
+    clearStorage,
+    setClientData
   };
 };
 
