@@ -1,20 +1,36 @@
-import useStorage from '../services/useStorage';
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewCategory } from '../reducers/categoryReducer';
 import { BaseCategoryEntry } from '../types';
 import NavStyles from './styles/NavStyles';
 import { v4 as uuidv4 } from 'uuid';
-
+import { AppDispatch } from '../store';
+import { setStorage } from '../services/storageService';
 
 const Nav = () => {
-  const { addNewCategory, clearStorage } = useStorage();
+  const dispatch = useDispatch<AppDispatch>();
+  const categories: BaseCategoryEntry[] = useSelector(({ categories }) => {
+    return categories;
+  });
   const id = uuidv4();
 
-  const addCategoryOnClick = async () => {
+  const addCategoryOnClick = () => {
     const newEntry: BaseCategoryEntry = {
       id,
       title: 'Category entry',
       notes: []
     };
-    await addNewCategory(newEntry);
+    void dispatch(addNewCategory(newEntry));
+
+    console.log({ categories: categories });
+  };
+  void (async () => {
+    await setStorage('notes', categories);
+  })();
+
+  const clearStorage = async () => {
+    await setStorage('notes', []);
   };
 
   return (

@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createGlobalStyle } from 'styled-components';
 import Category from './components/Category';
 import Nav from './components/Nav';
-import useStorage from './services/useStorage';
 import { BaseCategoryEntry } from './types';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { initializeCategories } from './reducers/categoryReducer';
+import { AppDispatch } from './store';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -17,27 +23,25 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
-  const { clientData } = useStorage();
+  const dispatch = useDispatch<AppDispatch>();
+  const categories: BaseCategoryEntry[] = useSelector(({ categories }) => {
+    return categories;
+  });
 
   console.log('this has rendered');
 
-  // useEffect(() => {
-  //   void (async () => {
-  //     const res = await getStorage('notes');
+  useEffect(() => {
+    void dispatch(initializeCategories());
+  }, [dispatch]);
 
-  //     void setClientData(res);
-  //   })();
-  // }, [setClientData]);
-
-  const map: BaseCategoryEntry[] = [];
-  console.log({ app: clientData });
+  console.log({ app: categories });
 
   return (
     <>
       <GlobalStyles />
       <Nav />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {map.map(category => (
+        {categories.map((category: BaseCategoryEntry) => (
           <Category category={category} />
         ))}
       </div>
