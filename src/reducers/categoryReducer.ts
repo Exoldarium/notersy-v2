@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { createSlice } from '@reduxjs/toolkit';
 import { BaseCategoryEntry } from '../types';
-import { getStorage } from '../services/storageService';
+import { getStorage, setStorage } from '../services/storageService';
 import { AppDispatch } from '../store';
 
 const initialState: BaseCategoryEntry[] = [];
@@ -35,17 +34,11 @@ export const initializeCategories = () => {
 };
 
 export const addNewCategory = (newCategory: BaseCategoryEntry) => {
-  return (dispatch: AppDispatch) => {
-    // await setStorage('notes', newCategory);
+  return async (dispatch: AppDispatch) => {
+    const categories = await getStorage('notes');
+    await setStorage('notes', categories.concat(newCategory));
     dispatch(addCategory(newCategory));
   };
 };
-
-// export const setCategoryToStorage = (categories: BaseCategoryEntry[]) => {
-//   return async (dispatch: AppDispatch) => {
-//     await setStorage('notes', categories);
-//     dispatch(setToStorage());
-//   };
-// };
 
 export default categorySlice.reducer;

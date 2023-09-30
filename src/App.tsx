@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createGlobalStyle } from 'styled-components';
 import Category from './components/Category';
@@ -28,13 +27,11 @@ const App = () => {
     return categories;
   });
 
-  console.log('this has rendered');
+  console.log(categories, 'this has rendered');
 
   useEffect(() => {
     void dispatch(initializeCategories());
   }, [dispatch]);
-
-  console.log({ app: categories });
 
   return (
     <>

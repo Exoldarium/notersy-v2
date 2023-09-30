@@ -23,11 +23,8 @@ const Nav = () => {
     };
     void dispatch(addNewCategory(newEntry));
 
-    console.log({ categories: categories });
+    console.log(categories, 'a new category added');
   };
-  void (async () => {
-    await setStorage('notes', categories);
-  })();
 
   const clearStorage = async () => {
     await setStorage('notes', []);
