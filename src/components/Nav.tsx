@@ -27,7 +27,7 @@ const Nav = () => {
   };
 
   const clearStorage = async () => {
-    await setStorage('notes', []);
+    await setStorage([]);
   };
 
   return (

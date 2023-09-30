@@ -1,21 +1,20 @@
 import { BaseCategoryEntry } from '../types';
+// import toNewStorageEntry from '../utils/parseCategoryEntry';
 
-const getStorage = async (key: string): Promise<BaseCategoryEntry[]> => {
-  const res = await chrome.storage.sync.get(key);
+const getStorage = async (): Promise<BaseCategoryEntry[]> => {
+  const res = await chrome.storage.sync.get('storedData');
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  console.log({ notesRes: res });
+  // const parsedStorageEntry = res.storedData.every(key => toNewStorageEntry(key));
 
-  // const parsedEntry = res.every(key => toNewCategoryEntry(key));
-
+  // console.log({ notesRes: parsedStorageEntry });
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return res.notes;
+  return res.storedData;
 };
 
-const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
+const setStorage = async (value: BaseCategoryEntry[]) => {
   // const newEntry = toNewNoteEntry(value);
-  console.log(key, value);
-  await chrome.storage.sync.set({ [key]: value });
+  console.log(value);
+  await chrome.storage.sync.set({ 'storedData': value });
 };
 
 const clearStorage = async () => {

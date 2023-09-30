@@ -16,13 +16,6 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
       notes: []
     };
 
-    // we parse all the notes in the specific note array
-    // const parseNotes = newEntry.notes.every(note => toNewNoteEntry(note));
-
-    // if (!parseNotes) {
-    //   throw new Error('Incorrect data input or some fileds might be missing');
-    // }
-
     return newEntry;
   }
 

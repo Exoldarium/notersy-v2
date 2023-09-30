@@ -11,6 +11,9 @@ export interface BaseCategoryEntry {
   notes: BaseNoteEntry[]
 }
 
+export interface BaseStorageEntry {
+  storedData: BaseCategoryEntry[];
+}
+
 export type NewNoteEntry = Omit<BaseNoteEntry, 'id'>;
 export type NewCategoryEntry = Omit<BaseCategoryEntry, 'id'>;
-// export type Storage = typeof chrome.storage.sync;
