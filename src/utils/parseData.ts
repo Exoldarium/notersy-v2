@@ -1,8 +1,9 @@
+// helpers for validating and parsing values
 export const isString = (string: unknown): string is string => {
   return typeof string === 'string' || string instanceof String;
 };
 
-const isDate = (date: unknown): boolean => {
+export const isDate = (date: unknown): boolean => {
   if (!isString(date)) throw new Error('Invalid title or content input');
   return Boolean(Date.parse(date));
 };
