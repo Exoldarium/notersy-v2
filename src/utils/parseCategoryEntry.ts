@@ -11,7 +11,6 @@ const toNewCategoryEntry = (object: unknown): object is BaseCategoryEntry => {
     'title' in object &&
     'notes' in object
   ) {
-
     // parse the values returning boolean so that we are sure we are getting the types are correct
     return (
       isString(object.id) &&
