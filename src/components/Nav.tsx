@@ -27,7 +27,7 @@ const Nav = () => {
   };
 
   const clearStorage = async () => {
-    await setStorage([]);
+    await setStorage('storedData', []);
   };
 
   return (

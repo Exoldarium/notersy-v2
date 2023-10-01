@@ -27,7 +27,7 @@ export const {
 
 export const initializeCategories = () => {
   return async (dispatch: AppDispatch) => {
-    const categories = await getStorage();
+    const categories = await getStorage('storedData');
     console.log({ getStorage: categories });
     dispatch(setCategories(categories));
   };
@@ -35,8 +35,8 @@ export const initializeCategories = () => {
 
 export const addNewCategory = (newCategory: BaseCategoryEntry) => {
   return async (dispatch: AppDispatch) => {
-    const categories = await getStorage();
-    await setStorage(categories.concat(newCategory));
+    const categories = await getStorage('storedData');
+    await setStorage('storedData', categories.concat(newCategory));
     dispatch(addCategory(newCategory));
   };
 };

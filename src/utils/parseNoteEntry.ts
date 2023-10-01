@@ -1,25 +1,7 @@
 import { BaseNoteEntry } from '../types';
+import { parseDate, parseToString } from './parseData';
 
-const isString = (string: unknown): string is string => {
-  return typeof string === 'string' || string instanceof String;
-};
-
-const isDate = (date: string): boolean => {
-  return Boolean(Date.parse(date));
-};
-
-export const parseToString = (param: unknown): string => {
-  if (!isString(param)) throw new Error('Invalid title or content input');
-
-  return param;
-};
-
-const parseDate = (param: unknown): string => {
-  if (!isString(param) || !isDate(param)) throw new Error('Invalid date input');
-
-  return param;
-};
-
+// check that each note is of correct type
 const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
@@ -29,7 +11,10 @@ const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
     'title' in object &&
     'id' in object
   ) {
-    const newEntry: BaseNoteEntry = {
+
+    // parse each value and return correct type 
+    const newEntry: BaseNoteEntry =
+    {
       content: parseToString(object.content),
       date: parseDate(object.date),
       title: parseToString(object.title),

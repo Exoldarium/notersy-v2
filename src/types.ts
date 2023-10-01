@@ -8,7 +8,7 @@ export interface BaseNoteEntry {
 export interface BaseCategoryEntry {
   id: string;
   title: string;
-  notes: BaseNoteEntry[]
+  notes: BaseNoteEntry[];
 }
 
 export interface BaseStorageEntry {
