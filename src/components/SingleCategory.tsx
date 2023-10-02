@@ -1,12 +1,16 @@
-// TODO: clicking on a category brings us to SingleCategory
-// the route for the SingleCategory component should take an id of the category that was clicked
+// import { BaseCategoryEntry } from '../types';
 
-const SingleCategory = () => {
-  return (
-    <div>
-      Notes
-    </div>
-  );
-};
+// interface Props {
+//   singleCategory: BaseCategoryEntry;
+// }
 
-export default SingleCategory;
+// const SingleCategory = ({ singleCategory }: Props) => {
+//   console.log(singleCategory);
+//   return (
+//     <div>
+//       Notes
+//     </div>
+//   );
+// };
+
+// export default SingleCategory;

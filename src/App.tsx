@@ -4,8 +4,6 @@ import Nav from './components/Nav';
 import { useEffect } from 'react';
 import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
-import { Route, Routes, useMatch } from 'react-router-dom';
-import SingleCategory from './components/SingleCategory';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -24,14 +22,10 @@ const App = () => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
-  const match = useMatch('categories/:id');
+  // const match = useMatch('categories/:id');
 
-  console.log(match);
-
-  // if (match) {
-  //   const findCategory: BaseCategoryEntry = categories.filter(category => category.id === match.params.id);
-  // }
-
+  // const singleCategory = match ? categories.find(category => category.id === match.params.id) : null;
+  // const parsedEntry = toNewCategoryEntry(singleCategory);
 
   useEffect(() => {
     void dispatch(initializeCategories());
@@ -41,9 +35,9 @@ const App = () => {
     <>
       <GlobalStyles />
       <Nav />
-      <Routes>
-        <Route path="categories/:id" element={<SingleCategory />} />
-      </Routes>
+      {/* <Routes>
+        <Route path="categories/:id" element={<SingleCategory singleCategory={parsedEntry} />} />
+      </Routes> */}
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {categories.map((category) => (
           <CategoryList category={category} />
