@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createGlobalStyle } from 'styled-components';
 import Category from './components/Category';
 import Nav from './components/Nav';
-import { BaseCategoryEntry } from './types';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { initializeCategories } from './reducers/categoryReducer';
-import { AppDispatch } from './store';
+import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -22,8 +18,11 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const categories: BaseCategoryEntry[] = useSelector(({ categories }) => {
+  // TODO: try to use a content script that will be injected on every https page instead of using the popup
+  // popup should only open the content page
+
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(({ categories }) => {
     return categories;
   });
 
@@ -38,7 +37,7 @@ const App = () => {
       <GlobalStyles />
       <Nav />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {categories.map((category: BaseCategoryEntry) => (
+        {categories.map((category) => (
           <Category category={category} />
         ))}
       </div>

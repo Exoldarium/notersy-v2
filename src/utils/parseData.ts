@@ -19,3 +19,13 @@ export const parseDate = (param: unknown): string => {
 
   return param;
 };
+
+export const parseError = (error: unknown) => {
+  let errorMessage = 'There was an error.';
+
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message;
+  }
+
+  return errorMessage;
+};

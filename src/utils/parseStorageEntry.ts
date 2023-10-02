@@ -14,8 +14,7 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
     'id' in object
   ) {
     // parse each value and return correct type 
-    const newEntry: BaseNoteEntry =
-    {
+    const newEntry: BaseNoteEntry = {
       content: parseToString(object.content),
       date: parseDate(object.date),
       title: parseToString(object.title),
@@ -29,27 +28,27 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
 };
 
 // parse each category
-const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
+export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
   if (
     'title' in object &&
     'notes' in object &&
-    'id' in object
+    'id' in object &&
+    'date' in object &&
+    Array.isArray(object.notes)
   ) {
-    // check if object.notes is an array
-    if (Array.isArray(object.notes)) {
-      // parse each of the values
-      const parsedNotes = object.notes.map(note => toNewNoteEntry(note));
+    // parse each of the values
+    const parsedNotes = object.notes.map(note => toNewNoteEntry(note));
 
-      const newEntry: BaseCategoryEntry = {
-        title: parseToString(object.title),
-        id: parseToString(object.id),
-        notes: parsedNotes
-      };
+    const newEntry: BaseCategoryEntry = {
+      title: parseToString(object.title),
+      id: parseToString(object.id),
+      date: parseDate(object.date),
+      notes: parsedNotes
+    };
 
-      return newEntry;
-    }
+    return newEntry;
   }
 
   throw new Error('Incorrect data input or some fileds might be missing');
@@ -58,16 +57,17 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
 const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
-  if ('storedData' in object) {
-    if (Array.isArray(object.storedData)) {
-      const parsedCategories = object.storedData.map(category => toNewCategoryEntry(category));
+  if (
+    'storedData' in object &&
+    Array.isArray(object.storedData)
+  ) {
+    const parsedCategories = object.storedData.map(category => toNewCategoryEntry(category));
 
-      const newEntry: BaseStorageEntry = {
-        storedData: parsedCategories
-      };
+    const newEntry: BaseStorageEntry = {
+      storedData: parsedCategories
+    };
 
-      return newEntry;
-    }
+    return newEntry;
   }
   throw new Error('Incorrect data input or some fileds might be missing');
 };

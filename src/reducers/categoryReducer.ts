@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { BaseCategoryEntry } from '../types';
 import { getStorage, setStorage } from '../services/storageService';
 import { AppDispatch } from '../store';
@@ -11,10 +9,10 @@ const categorySlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
-    setCategories(_, action) {
+    setCategories(_, action: PayloadAction<BaseCategoryEntry[]>) {
       return action.payload;
     },
-    addCategory(state, action) {
+    addCategory(state, action: PayloadAction<BaseCategoryEntry>) {
       state.push(action.payload);
     }
   }

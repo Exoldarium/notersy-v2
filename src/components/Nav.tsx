@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useDispatch, useSelector } from 'react-redux';
 import { addNewCategory } from '../reducers/categoryReducer';
 import { BaseCategoryEntry } from '../types';
 import NavStyles from './styles/NavStyles';
 import { v4 as uuidv4 } from 'uuid';
-import { AppDispatch } from '../store';
 import { setStorage } from '../services/storageService';
+import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
+import { getDate } from '../utils/getDate';
 
 const Nav = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const categories: BaseCategoryEntry[] = useSelector(({ categories }) => {
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(({ categories }) => {
     return categories;
   });
   const id = uuidv4();
@@ -19,6 +17,7 @@ const Nav = () => {
     const newEntry: BaseCategoryEntry = {
       id,
       title: 'Category entry',
+      date: getDate(),
       notes: []
     };
     void dispatch(addNewCategory(newEntry));

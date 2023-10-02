@@ -1,7 +1,6 @@
 import { BaseCategoryEntry } from '../types';
+import { parseError } from '../utils/parseData';
 import toNewStorageEntry from '../utils/parseStorageEntry';
-
-// TODO: add helper for error handling
 
 // grab data from storage
 const getStorage = async (key: string): Promise<BaseCategoryEntry[]> => {
@@ -16,16 +15,21 @@ const getStorage = async (key: string): Promise<BaseCategoryEntry[]> => {
 
 // set data to storage
 const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
-  console.log(key, value);
-  await chrome.storage.sync.set({ [key]: value });
+  try {
+    await chrome.storage.sync.set({ [key]: value });
+  } catch (err) {
+    const error = parseError(err);
+    throw new Error(error);
+  }
 };
 
 const clearStorage = async () => {
   try {
     await chrome.storage.sync.clear();
     console.log('cleared');
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    const error = parseError(err);
+    throw new Error(error);
   }
 };
 
