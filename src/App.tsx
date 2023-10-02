@@ -1,9 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
-import Category from './components/Category';
+import CategoryList from './components/CategoryList';
 import Nav from './components/Nav';
 import { useEffect } from 'react';
 import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
+import { Route, Routes, useMatch } from 'react-router-dom';
+import SingleCategory from './components/SingleCategory';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -18,15 +20,18 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
-  // TODO: try to use a content script that will be injected on every https page instead of using the popup
-  // popup should only open the content page
-
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
+  const match = useMatch('categories/:id');
 
-  console.log(categories, 'this has rendered');
+  console.log(match);
+
+  // if (match) {
+  //   const findCategory: BaseCategoryEntry = categories.filter(category => category.id === match.params.id);
+  // }
+
 
   useEffect(() => {
     void dispatch(initializeCategories());
@@ -36,9 +41,12 @@ const App = () => {
     <>
       <GlobalStyles />
       <Nav />
+      <Routes>
+        <Route path="categories/:id" element={<SingleCategory />} />
+      </Routes>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {categories.map((category) => (
-          <Category category={category} />
+          <CategoryList category={category} />
         ))}
       </div>
     </>

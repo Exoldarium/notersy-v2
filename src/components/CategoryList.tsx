@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { BaseCategoryEntry } from '../types';
 import CategoryStyles from './styles/CategoryStyles';
 
@@ -5,12 +6,14 @@ interface Props {
   category: BaseCategoryEntry
 }
 
-const Category = ({ category }: Props) => {
+const CategoryList = ({ category }: Props) => {
   return (
     <CategoryStyles>
-      {category.title}
+      <Link to={`/categories/${category.id}`}>
+        {category.title}
+      </Link>
     </CategoryStyles>
   );
 };
 
-export default Category;
+export default CategoryList;

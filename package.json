@@ -12,12 +12,14 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
     "@types/chrome": "^0.0.246",
+    "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.27",
     "@types/uuid": "^9.0.4",
     "inter-ui": "^3.19.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
+    "react-router-dom": "^6.16.0",
     "styled-components": "^6.0.8",
     "uuid": "^9.0.1"
   },
