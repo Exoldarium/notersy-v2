@@ -1,4 +1,5 @@
 export interface BaseNoteEntry {
+  active: boolean;
   id: string;
   title: string;
   content: string;
@@ -6,6 +7,7 @@ export interface BaseNoteEntry {
 }
 
 export interface BaseCategoryEntry {
+  active: boolean;
   id: string;
   title: string;
   date: string;

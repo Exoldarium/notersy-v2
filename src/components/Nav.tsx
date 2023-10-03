@@ -4,7 +4,7 @@ import NavStyles from './styles/NavStyles';
 import { v4 as uuidv4 } from 'uuid';
 import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-import { getDate } from '../utils/getDate';
+import { getDate } from '../utils/helpers';
 
 const Nav = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +16,7 @@ const Nav = () => {
   const addCategoryOnClick = () => {
     const newEntry: BaseCategoryEntry = {
       id,
+      active: false,
       title: 'Category entry',
       date: getDate(),
       notes: []

@@ -3,6 +3,10 @@ export const isString = (string: unknown): string is string => {
   return typeof string === 'string' || string instanceof String;
 };
 
+export const isBool = (bool: unknown): bool is boolean => {
+  return typeof bool === 'boolean' || bool instanceof Boolean;
+};
+
 export const isDate = (date: unknown): boolean => {
   if (!isString(date)) throw new Error('Invalid title or content input');
   return Boolean(Date.parse(date));
@@ -10,6 +14,12 @@ export const isDate = (date: unknown): boolean => {
 
 export const parseToString = (param: unknown): string => {
   if (!isString(param)) throw new Error('Invalid title or content input');
+
+  return param;
+};
+
+export const parseToBool = (param: unknown): boolean => {
+  if (!isBool(param)) throw new Error('Invalid active property input');
 
   return param;
 };

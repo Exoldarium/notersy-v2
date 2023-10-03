@@ -1,16 +1,16 @@
-// import { BaseCategoryEntry } from '../types';
+import { BaseCategoryEntry } from '../types';
 
-// interface Props {
-//   singleCategory: BaseCategoryEntry;
-// }
+interface Props {
+  singleCategory: BaseCategoryEntry | null;
+}
 
-// const SingleCategory = ({ singleCategory }: Props) => {
-//   console.log(singleCategory);
-//   return (
-//     <div>
-//       Notes
-//     </div>
-//   );
-// };
+const SingleCategory = ({ singleCategory }: Props) => {
+  console.log(singleCategory);
+  return (
+    <div>
+      Notes
+    </div>
+  );
+};
 
-// export default SingleCategory;
+export default SingleCategory;

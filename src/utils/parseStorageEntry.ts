@@ -1,5 +1,5 @@
 import { BaseCategoryEntry, BaseNoteEntry, BaseStorageEntry } from '../types';
-import { parseDate, parseToString } from './parseData';
+import { parseDate, parseToBool, parseToString } from './parseData';
 
 // validate and parse the entries
 // parse each note
@@ -8,6 +8,7 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
 
   // check if correct keys are present in each entry
   if (
+    'active' in object &&
     'content' in object &&
     'date' in object &&
     'title' in object &&
@@ -15,6 +16,7 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
   ) {
     // parse each value and return correct type 
     const newEntry: BaseNoteEntry = {
+      active: parseToBool(object.active),
       content: parseToString(object.content),
       date: parseDate(object.date),
       title: parseToString(object.title),
@@ -32,6 +34,7 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
   if (
+    'active' in object &&
     'title' in object &&
     'notes' in object &&
     'id' in object &&
@@ -42,6 +45,7 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
     const parsedNotes = object.notes.map(note => toNewNoteEntry(note));
 
     const newEntry: BaseCategoryEntry = {
+      active: parseToBool(object.active),
       title: parseToString(object.title),
       id: parseToString(object.id),
       date: parseDate(object.date),
