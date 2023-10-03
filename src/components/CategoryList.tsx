@@ -15,14 +15,14 @@ const CategoryList = ({ category }: Props) => {
     return categories;
   });
 
-  const changeActiveOnClick = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const changeActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const id = e.currentTarget.id;
 
     const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
     categoryToUpdate.active = true;
     console.log(categoryToUpdate);
 
-    await dispatch(updateExistingCategory(categoryToUpdate));
+    void dispatch(updateExistingCategory(categoryToUpdate));
   };
 
   return (

@@ -4,18 +4,13 @@ import toNewStorageEntry from '../utils/parseStorageEntry';
 
 // grab data from storage
 const getStorage = async (key: string): Promise<BaseCategoryEntry[]> => {
-  try {
-    const res = await chrome.storage.sync.get(key);
+  const res = await chrome.storage.sync.get(key);
 
-    // parse data that we get from storage
-    // key is hardcoded to 'storedData'
-    const newEntry = toNewStorageEntry(res);
+  // parse data that we get from storage
+  // key is hardcoded to 'storedData'
+  const newEntry = toNewStorageEntry(res);
 
-    return newEntry.storedData;
-  } catch (err) {
-    const error = parseError(err);
-    throw new Error(error);
-  }
+  return newEntry.storedData;
 };
 
 // set data to storage

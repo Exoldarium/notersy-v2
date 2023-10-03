@@ -50,6 +50,7 @@ export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
     const categories = await getStorage('storedData');
 
     const updatedCategories = categories.filter(category => category.id === categoryToUpdate.id);
+    console.log(updatedCategories);
 
     await setStorage('storedData', updatedCategories.concat(categoryToUpdate));
     dispatch(updateCategory(updatedCategories.concat(categoryToUpdate)));

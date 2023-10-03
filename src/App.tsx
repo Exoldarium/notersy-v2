@@ -35,6 +35,8 @@ const App = () => {
     void dispatch(initializeCategories());
   }, [dispatch]);
 
+  console.log('App', categories);
+
   return (
     <>
       <GlobalStyles />
