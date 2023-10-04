@@ -24,8 +24,8 @@ const Nav = () => {
       date: getDate(),
       notes: []
     };
-    void dispatch(addNewCategory(newEntry));
 
+    void dispatch(addNewCategory(newEntry));
     console.log(categories, 'a new category added');
   };
 

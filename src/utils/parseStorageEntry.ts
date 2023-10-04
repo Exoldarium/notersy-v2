@@ -41,7 +41,7 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
     'date' in object &&
     Array.isArray(object.notes)
   ) {
-    // parse each of the values
+    // parse each individual note
     const parsedNotes = object.notes.map(note => toNewNoteEntry(note));
 
     const newEntry: BaseCategoryEntry = {
@@ -65,6 +65,7 @@ const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
     'storedData' in object &&
     Array.isArray(object.storedData)
   ) {
+    // parse each individual category
     const parsedCategories = object.storedData.map(category => toNewCategoryEntry(category));
 
     const newEntry: BaseStorageEntry = {

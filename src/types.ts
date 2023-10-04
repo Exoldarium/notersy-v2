@@ -17,6 +17,3 @@ export interface BaseCategoryEntry {
 export interface BaseStorageEntry {
   storedData: BaseCategoryEntry[];
 }
-
-export type NewNoteEntry = Omit<BaseNoteEntry, 'id'>;
-export type NewCategoryEntry = Omit<BaseCategoryEntry, 'id'>;

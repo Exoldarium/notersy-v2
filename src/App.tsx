@@ -32,14 +32,17 @@ const App = () => {
   }, [dispatch]);
 
   // match the route param with a category id
+  // TODO: add a message reducer and a message component that will deal with the null return
+  // it could just print a message that there's no category with that id and rerender all of the categories
   const singleCategory = match ?
     toNewCategoryEntry(categories.find(category => category.id === match.params.id)) :
     null;
 
   // check if there's an active category
-  // const findActiveCategory = toNewCategoryEntry(categories.find(category => category.active));
+  const findCategory = categories.filter(entry => entry.active);
 
   console.log('App', categories);
+  console.log('findCategory', findCategory);
 
   return (
     <>
@@ -47,14 +50,14 @@ const App = () => {
       <Nav />
       <Routes>
         <Route path="/:id" element={<SingleCategory singleCategory={singleCategory} />} />
-        {/* {findActiveCategory ?
-          <Route path="/" element={<SingleCategory singleCategory={findActiveCategory} />} /> :
-        } */}
-        <Route path="/" element={<div style={{ display: 'flex', flexDirection: 'column' }}>
-          {categories.map((category) => (
-            <CategoryList category={category} key={category.id} />
-          ))}
-        </div>} />
+        {findCategory[0] ?
+          <Route path="/" element={<SingleCategory singleCategory={findCategory[0]} />} /> :
+          <Route path="/" element={<div style={{ display: 'flex', flexDirection: 'column' }}>
+            {categories.map((category) => (
+              <CategoryList category={category} key={category.id} />
+            ))}
+          </div>} />
+        }
       </Routes>
     </>
   );
