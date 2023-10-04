@@ -17,3 +17,5 @@ export interface BaseCategoryEntry {
 export interface BaseStorageEntry {
   storedData: BaseCategoryEntry[];
 }
+
+export type Notification = string;

@@ -1,3 +1,5 @@
+import { useAppDispatch } from '../hooks/useReduxTypes';
+import { setNotificationMesage } from '../reducers/notificationReducer';
 import { BaseCategoryEntry } from '../types';
 
 interface Props {
@@ -5,12 +7,19 @@ interface Props {
 }
 
 const SingleCategory = ({ singleCategory }: Props) => {
-  console.log(singleCategory);
-  return (
-    <div>
-      Notes
-    </div>
-  );
+  const dispatch = useAppDispatch();
+
+  if (!singleCategory) {
+    void dispatch(setNotificationMesage('Invalid note'));
+  }
+
+  if (singleCategory) {
+    return (
+      <div>
+        Note {singleCategory.id}
+      </div>
+    );
+  }
 };
 
 export default SingleCategory;
