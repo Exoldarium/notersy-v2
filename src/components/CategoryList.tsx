@@ -29,6 +29,8 @@ const CategoryList = ({ category }: Props) => {
     void dispatch(updateExistingCategory(updatedCategory));
   };
 
+  console.log(categories, 'category');
+
   return (
     <Link to={`/${category.id}`}>
       <CategoryStyles id={category.id} onClick={setActiveOnClick}>

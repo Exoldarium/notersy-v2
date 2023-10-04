@@ -6,6 +6,7 @@ import CategoryList from './components/CategoryList';
 import Nav from './components/Nav';
 import SingleCategory from './components/SingleCategory';
 import Notification from './components/Notification';
+import CategoryStyles from './components/styles/CategoryStyles';
 
 import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
@@ -42,7 +43,7 @@ const App = () => {
   // check if there's an active category
   const findActive = categories.find(entry => entry.active) || null;
 
-  console.log('App', categories);
+  console.log('App', categories.length);
   console.log('findCategory', findActive);
 
   return (
@@ -65,6 +66,12 @@ const App = () => {
           />
         }
       </Routes>
+      {categories.length === 0 &&
+        <CategoryStyles >
+          <p>This is Notersy!</p>
+          <p>Create a category to start!</p>
+          <button type="button">Create</button>
+        </CategoryStyles>}
     </>
   );
 };
