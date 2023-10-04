@@ -15,19 +15,21 @@ const CategoryList = ({ category }: Props) => {
     return categories;
   });
 
-  const changeActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const setActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const id = e.currentTarget.id;
 
     const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
-    categoryToUpdate.active = true;
-    console.log(categoryToUpdate);
+    const updatedCategory = {
+      ...categoryToUpdate,
+      active: true
+    };
 
-    void dispatch(updateExistingCategory(categoryToUpdate));
+    void dispatch(updateExistingCategory(updatedCategory));
   };
 
   return (
     <Link to={`/${category.id}`}>
-      <CategoryStyles id={category.id} onClick={changeActiveOnClick}>
+      <CategoryStyles id={category.id} onClick={setActiveOnClick}>
         {category.title}
       </CategoryStyles>
     </Link>

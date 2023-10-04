@@ -27,13 +27,17 @@ const App = () => {
   });
   const match = useMatch('/:id');
 
+  useEffect(() => {
+    void dispatch(initializeCategories());
+  }, [dispatch]);
+
+  // match the route param with a category id
   const singleCategory = match ?
     toNewCategoryEntry(categories.find(category => category.id === match.params.id)) :
     null;
 
-  useEffect(() => {
-    void dispatch(initializeCategories());
-  }, [dispatch]);
+  // check if there's an active category
+  // const findActiveCategory = toNewCategoryEntry(categories.find(category => category.active));
 
   console.log('App', categories);
 
@@ -43,6 +47,9 @@ const App = () => {
       <Nav />
       <Routes>
         <Route path="/:id" element={<SingleCategory singleCategory={singleCategory} />} />
+        {/* {findActiveCategory ?
+          <Route path="/" element={<SingleCategory singleCategory={findActiveCategory} />} /> :
+        } */}
         <Route path="/" element={<div style={{ display: 'flex', flexDirection: 'column' }}>
           {categories.map((category) => (
             <CategoryList category={category} key={category.id} />
