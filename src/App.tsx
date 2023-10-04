@@ -48,7 +48,7 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      <Nav />
+      <Nav findActive={findActive} />
       <Routes>
         <Route path="/:id" element={singleCategory ?
           <SingleCategory singleCategory={singleCategory} /> :
