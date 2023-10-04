@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { getDate } from '../utils/helpers';
 import { toNewCategoryEntry } from '../utils/parseStorageEntry';
 import { useNavigate } from 'react-router-dom';
-import { setNotificationMesage } from '../reducers/notificationReducer';
+import { setNotificationMesage } from '../reducers/messageReducer';
 
 const Nav = () => {
   const dispatch = useAppDispatch();
@@ -20,14 +20,17 @@ const Nav = () => {
   const addCategoryOnClick = () => {
     const newEntry: BaseCategoryEntry = {
       id,
-      active: false,
+      active: true,
       title: 'Category entry',
       date: getDate(),
       notes: []
     };
 
     void dispatch(addNewCategory(newEntry));
-    void dispatch(setNotificationMesage('new note added'));
+    void dispatch(setNotificationMesage({
+      type: 'ADDED',
+      content: newEntry.id
+    }));
     console.log(categories, 'a new category added');
   };
 

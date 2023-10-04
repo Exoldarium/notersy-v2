@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import categoryReducer from './reducers/categoryReducer';
-import notificationReducer from './reducers/notificationReducer';
+import messageReducer from './reducers/messageReducer';
 
 export const store = configureStore({
   reducer: {
     categories: categoryReducer,
-    notification: notificationReducer
+    message: messageReducer
   }
 });
 
