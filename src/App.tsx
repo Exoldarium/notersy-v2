@@ -45,8 +45,7 @@ const App = () => {
 
   const addNewCategoryOnClick = () => void dispatch(addNewCategory());
 
-  console.log('App', categories.length);
-  console.log('findCategory', findActive);
+  console.log('App', categories);
 
   return (
     <>

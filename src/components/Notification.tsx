@@ -2,8 +2,8 @@ import { useAppSelector } from '../hooks/useReduxTypes';
 
 const Notification = () => {
   const message = useAppSelector(({ message }) => {
-    if (message[0] && message[0].type === 'ERROR') {
-      return message[0].content;
+    if (message && message.type === 'ERROR') {
+      return message.content;
     }
 
     return null;

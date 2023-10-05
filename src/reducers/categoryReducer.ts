@@ -9,7 +9,7 @@ import { getDate } from '../utils/helpers';
 import { parseError } from '../utils/parseData';
 
 const initialState: BaseCategoryEntry[] = [];
-const id = uuidv4();
+// const id = uuidv4();
 
 const categorySlice = createSlice({
   name: 'categories',
@@ -36,11 +36,12 @@ export const {
 export const initializeCategories = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const categories = await getStorage('storedData');
+      const { storedData } = await getStorage('storedData');
 
-      dispatch(setCategories(categories));
+      dispatch(setCategories(storedData.sort()));
     } catch (err) {
       const error = parseError(err);
+      console.error('initializeCategories action Error');
       throw new Error(error);
     }
   };
@@ -49,10 +50,10 @@ export const initializeCategories = () => {
 export const addNewCategory = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const categories = await getStorage('storedData');
+      const { storedData } = await getStorage('storedData');
 
       const newEntry: BaseCategoryEntry = {
-        id,
+        id: uuidv4(),
         active: true,
         title: 'New Category',
         date: getDate(),
@@ -60,11 +61,12 @@ export const addNewCategory = () => {
       };
       const parsedentry = toNewCategoryEntry(newEntry);
 
-      await setStorage('storedData', categories.concat(parsedentry));
-      dispatch(addCategory(newEntry));
-      console.log(categories, 'a new category added');
+      await setStorage('storedData', storedData.concat(parsedentry));
+      dispatch(addCategory(parsedentry));
+      console.log(storedData, 'a new category added');
     } catch (err) {
       const error = parseError(err);
+      console.error('addNewCategory action Error');
       throw new Error(error);
     }
   };
@@ -73,14 +75,15 @@ export const addNewCategory = () => {
 export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const categories = await getStorage('storedData');
+      const { storedData } = await getStorage('storedData');
 
-      const updatedCategories = categories.filter(category => category.id !== categoryToUpdate.id);
+      const updatedCategories = storedData.filter(category => category.id !== categoryToUpdate.id);
 
       await setStorage('storedData', updatedCategories.concat(categoryToUpdate));
       dispatch(updateCategory(updatedCategories.concat(categoryToUpdate)));
     } catch (err) {
       const error = parseError(err);
+      console.error('updateExistingCategory action Error');
       throw new Error(error);
     }
   };

@@ -1,5 +1,6 @@
 export const getDate = () => {
-  const date = new Date();
+  const epoch = Date.now();
+  const date = new Date(epoch).toString();
 
-  return date.toLocaleDateString('en-GB');
+  return date.substring(0, 24);
 };

@@ -2,15 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Message } from '../types';
 import { AppDispatch } from '../store';
+import { parseError } from '../utils/parseData';
 
-const initialState: Message[] = [];
+const initialState: Message = {
+  type: '',
+  content: ''
+};
 
 const messageReducer = createSlice({
   name: 'message',
   initialState,
   reducers: {
-    setMessage(state, action: PayloadAction<Message>) {
-      state.push(action.payload);
+    setMessage(_, action: PayloadAction<Message>) {
+      return action.payload;
     }
   }
 });
@@ -21,7 +25,18 @@ export const {
 
 export const setNotificationMesage = (message: Message) => {
   return (dispatch: AppDispatch) => {
-    void dispatch(setMessage(message));
+    try {
+      const newMessage = {
+        type: message.type,
+        content: message.content
+      };
+
+      void dispatch(setMessage(newMessage));
+    } catch (err) {
+      const error = parseError(err);
+      console.error('setNotificationMesage action Error');
+      throw new Error(error);
+    }
   };
 };
 
