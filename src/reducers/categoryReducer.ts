@@ -34,9 +34,14 @@ export const {
 
 export const initializeCategories = () => {
   return async (dispatch: AppDispatch) => {
-    const categories = await getStorage('storedData');
+    try {
+      const categories = await getStorage('storedData');
 
-    dispatch(setCategories(categories));
+      dispatch(setCategories(categories));
+    } catch (err) {
+      const error = parseError(err);
+      throw new Error(error);
+    }
   };
 };
 
@@ -66,12 +71,17 @@ export const addNewCategory = () => {
 
 export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
   return async (dispatch: AppDispatch) => {
-    const categories = await getStorage('storedData');
+    try {
+      const categories = await getStorage('storedData');
 
-    const updatedCategories = categories.filter(category => category.id !== categoryToUpdate.id);
+      const updatedCategories = categories.filter(category => category.id !== categoryToUpdate.id);
 
-    await setStorage('storedData', updatedCategories.concat(categoryToUpdate));
-    dispatch(updateCategory(updatedCategories.concat(categoryToUpdate)));
+      await setStorage('storedData', updatedCategories.concat(categoryToUpdate));
+      dispatch(updateCategory(updatedCategories.concat(categoryToUpdate)));
+    } catch (err) {
+      const error = parseError(err);
+      throw new Error(error);
+    }
   };
 };
 
