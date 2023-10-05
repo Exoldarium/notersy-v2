@@ -9,6 +9,7 @@ const getStorage = async (key: string): Promise<BaseStorageEntry> => {
 
     // check if there's a valid key in res object
     // if not create it
+    // chrome storage will return an empty object if there are no keys present
     if (Object.values(res).length === 0) {
       await chrome.storage.sync.set({ [key]: [] });
 
@@ -26,7 +27,7 @@ const getStorage = async (key: string): Promise<BaseStorageEntry> => {
     return newEntry;
   } catch (err) {
     const error = parseError(err);
-    console.error('getStorage Error');
+    console.error('getStorage Error', error);
     throw new Error(error);
   }
 };
@@ -37,7 +38,7 @@ const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
     await chrome.storage.sync.set({ [key]: value });
   } catch (err) {
     const error = parseError(err);
-    console.error('setStorage Error');
+    console.error('setStorage Error', error);
     throw new Error(error);
   }
 };

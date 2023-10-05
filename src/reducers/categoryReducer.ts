@@ -42,7 +42,7 @@ export const initializeCategories = () => {
       dispatch(setCategories(storedData));
     } catch (err) {
       const error = parseError(err);
-      console.error('initializeCategories action Error');
+      console.error('initializeCategories action Error', error);
       throw new Error(error);
     }
   };
@@ -67,7 +67,7 @@ export const addNewCategory = () => {
       console.log(storedData, 'a new category added');
     } catch (err) {
       const error = parseError(err);
-      console.error('addNewCategory action Error');
+      console.error('addNewCategory action Error', error);
       throw new Error(error);
     }
   };
@@ -84,7 +84,7 @@ export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
       dispatch(updateCategory(updatedCategories.concat(categoryToUpdate)));
     } catch (err) {
       const error = parseError(err);
-      console.error('updateExistingCategory action Error');
+      console.error('updateExistingCategory action Error', error);
       throw new Error(error);
     }
   };
