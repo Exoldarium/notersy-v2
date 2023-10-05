@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
 import NavStyles from './styles/NavStyles';
 
@@ -7,7 +6,6 @@ import { BaseCategoryEntry } from '../types';
 import { addNewCategory, updateExistingCategory } from '../reducers/categoryReducer';
 import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-import { getDate } from '../utils/helpers';
 import { toNewCategoryEntry } from '../utils/parseStorageEntry';
 
 interface Props {
@@ -20,24 +18,10 @@ const Nav = ({ findActive }: Props) => {
     return categories;
   });
   const navigate = useNavigate();
-  const id = uuidv4();
 
-  const addCategoryOnClick = () => {
-    const newEntry: BaseCategoryEntry = {
-      id,
-      active: true,
-      title: 'New Category',
-      date: getDate(),
-      notes: []
-    };
+  const addNewCategoryOnClick = () => void dispatch(addNewCategory());
 
-    void dispatch(addNewCategory(newEntry));
-    console.log(categories, 'a new category added');
-  };
-
-  const clearStorage = async () => {
-    await setStorage('storedData', []);
-  };
+  const clearStorageOnClick = async () => await setStorage('storedData', []);
 
   const setActiveToFalse = () => {
     const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.active));
@@ -50,8 +34,6 @@ const Nav = ({ findActive }: Props) => {
     navigate('/');
   };
 
-  console.log(findActive);
-
   return (
     <NavStyles>
       <h1>Route Title</h1>
@@ -60,14 +42,14 @@ const Nav = ({ findActive }: Props) => {
           <button
             type="button"
             style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-            onClick={addCategoryOnClick}
+            onClick={addNewCategoryOnClick}
           >
             Create
           </button>
           <button
             type="button"
             style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-            onClick={clearStorage}
+            onClick={clearStorageOnClick}
           >
             Clear
           </button>

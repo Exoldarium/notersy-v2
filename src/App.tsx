@@ -8,7 +8,7 @@ import SingleCategory from './components/SingleCategory';
 import Notification from './components/Notification';
 import CategoryStyles from './components/styles/CategoryStyles';
 
-import { initializeCategories } from './reducers/categoryReducer';
+import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
 
@@ -43,6 +43,8 @@ const App = () => {
   // check if there's an active category
   const findActive = categories.find(entry => entry.active) || null;
 
+  const addNewCategoryOnClick = () => void dispatch(addNewCategory());
+
   console.log('App', categories.length);
   console.log('findCategory', findActive);
 
@@ -70,7 +72,12 @@ const App = () => {
         <CategoryStyles >
           <p>This is Notersy!</p>
           <p>Create a category to start!</p>
-          <button type="button">Create</button>
+          <button
+            type="button"
+            onClick={addNewCategoryOnClick}
+          >
+            Create
+          </button>
         </CategoryStyles>}
     </>
   );

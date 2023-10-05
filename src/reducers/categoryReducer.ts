@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 import { BaseCategoryEntry } from '../types';
 import { getStorage, setStorage } from '../services/storageService';
 import { AppDispatch } from '../store';
 import { toNewCategoryEntry } from '../utils/parseStorageEntry';
+import { getDate } from '../utils/helpers';
+import { parseError } from '../utils/parseData';
 
 const initialState: BaseCategoryEntry[] = [];
+const id = uuidv4();
 
 const categorySlice = createSlice({
   name: 'categories',
@@ -36,14 +40,27 @@ export const initializeCategories = () => {
   };
 };
 
-export const addNewCategory = (newCategory: BaseCategoryEntry) => {
+export const addNewCategory = () => {
   return async (dispatch: AppDispatch) => {
-    const categories = await getStorage('storedData');
+    try {
+      const categories = await getStorage('storedData');
 
-    const parsedentry = toNewCategoryEntry(newCategory);
+      const newEntry: BaseCategoryEntry = {
+        id,
+        active: true,
+        title: 'New Category',
+        date: getDate(),
+        notes: []
+      };
+      const parsedentry = toNewCategoryEntry(newEntry);
 
-    await setStorage('storedData', categories.concat(parsedentry));
-    dispatch(addCategory(newCategory));
+      await setStorage('storedData', categories.concat(parsedentry));
+      dispatch(addCategory(newEntry));
+      console.log(categories, 'a new category added');
+    } catch (err) {
+      const error = parseError(err);
+      throw new Error(error);
+    }
   };
 };
 
