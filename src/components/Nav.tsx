@@ -31,7 +31,6 @@ const Nav = ({ findActive }: Props) => {
     };
 
     void dispatch(updateExistingCategory(updatedCategory));
-    // TODO: navigating back should give us sorted categories
     navigate('/');
   };
 

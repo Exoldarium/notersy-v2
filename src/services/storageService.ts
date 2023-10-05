@@ -9,7 +9,6 @@ const getStorage = async (key: string): Promise<BaseStorageEntry> => {
 
     // check if there's a valid key in res object
     // if not create it
-    console.log(Object.values(res).length, 'res');
     if (Object.values(res).length === 0) {
       await chrome.storage.sync.set({ [key]: [] });
 

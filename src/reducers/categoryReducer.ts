@@ -9,14 +9,15 @@ import { getDate } from '../utils/helpers';
 import { parseError } from '../utils/parseData';
 
 const initialState: BaseCategoryEntry[] = [];
-// const id = uuidv4();
+// TODO: add sorting, the user could choose to sort by name or date
 
 const categorySlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
     setCategories(_, action: PayloadAction<BaseCategoryEntry[]>) {
-      return action.payload;
+      const sorted = action.payload.sort();
+      return sorted;
     },
     addCategory(state, action: PayloadAction<BaseCategoryEntry>) {
       state.push(action.payload);
@@ -38,7 +39,7 @@ export const initializeCategories = () => {
     try {
       const { storedData } = await getStorage('storedData');
 
-      dispatch(setCategories(storedData.sort()));
+      dispatch(setCategories(storedData));
     } catch (err) {
       const error = parseError(err);
       console.error('initializeCategories action Error');
