@@ -13,18 +13,15 @@ interface Props {
 }
 
 const Nav = ({ activeCategory }: Props) => {
-  const [edit, setEdit] = useState(false);
+  const [editTitle, setEditTitle] = useState(false);
   const dispatch = useAppDispatch();
-  // const categories = useAppSelector(({ categories }) => {
-  //   return categories;
-  // });
   const navigate = useNavigate();
 
   const addNewCategoryOnClick = () => void dispatch(addNewCategory());
 
   const clearStorageOnClick = async () => await setStorage('storedData', []);
 
-  const changeEditActiveOnClick = () => setEdit(!edit);
+  const changeEditActiveOnClick = () => setEditTitle(!editTitle);
 
   const setActiveCategoryToFalse = () => {
     if (activeCategory) {
@@ -39,7 +36,6 @@ const Nav = ({ activeCategory }: Props) => {
   };
 
   console.log(activeCategory, 'active category');
-  console.log(edit);
 
   return (
     <NavStyles>
@@ -71,8 +67,8 @@ const Nav = ({ activeCategory }: Props) => {
           >
             Back
           </button>
-          {!edit && <h1>{activeCategory.title}</h1>}
-          {edit &&
+          {!editTitle && <h1>{activeCategory.title}</h1>}
+          {editTitle &&
             <form>
               <input type="text" name="title" />
             </form>
@@ -82,7 +78,7 @@ const Nav = ({ activeCategory }: Props) => {
             style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
             onClick={changeEditActiveOnClick}
           >
-            {edit ? 'Cancel' : 'Edit'}
+            {editTitle ? 'Cancel' : 'Edit'}
           </button>
         </div>
       }
