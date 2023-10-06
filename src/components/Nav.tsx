@@ -6,12 +6,14 @@ import { BaseCategoryEntry } from '../types';
 import { addNewCategory, updateExistingCategory } from '../reducers/categoryReducer';
 import { setStorage } from '../services/storageService';
 import { useAppDispatch } from '../hooks/useReduxTypes';
+import { useState } from 'react';
 
 interface Props {
-  findActiveCategory: BaseCategoryEntry | null;
+  activeCategory: BaseCategoryEntry | null;
 }
 
-const Nav = ({ findActiveCategory }: Props) => {
+const Nav = ({ activeCategory }: Props) => {
+  const [edit, setEdit] = useState(false);
   const dispatch = useAppDispatch();
   // const categories = useAppSelector(({ categories }) => {
   //   return categories;
@@ -22,10 +24,12 @@ const Nav = ({ findActiveCategory }: Props) => {
 
   const clearStorageOnClick = async () => await setStorage('storedData', []);
 
-  const setActiveToFalse = () => {
-    if (findActiveCategory) {
+  const changeEditActiveOnClick = () => setEdit(!edit);
+
+  const setActiveCategoryToFalse = () => {
+    if (activeCategory) {
       const updatedCategory = {
-        ...findActiveCategory,
+        ...activeCategory,
         active: false
       };
 
@@ -34,13 +38,14 @@ const Nav = ({ findActiveCategory }: Props) => {
     }
   };
 
-  console.log(findActiveCategory, 'active category');
+  console.log(activeCategory, 'active category');
+  console.log(edit);
 
   return (
     <NavStyles>
-      <h1>Route Title</h1>
-      {!findActiveCategory &&
+      {!activeCategory &&
         <>
+          <h1>Notersy</h1>
           <button
             type="button"
             style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
@@ -57,14 +62,29 @@ const Nav = ({ findActiveCategory }: Props) => {
           </button>
         </>
       }
-      {findActiveCategory &&
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-          onClick={setActiveToFalse}
-        >
-          Back
-        </button>
+      {activeCategory &&
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <button
+            type="button"
+            style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+            onClick={setActiveCategoryToFalse}
+          >
+            Back
+          </button>
+          {!edit && <h1>{activeCategory.title}</h1>}
+          {edit &&
+            <form>
+              <input type="text" name="title" />
+            </form>
+          }
+          <button
+            type="button"
+            style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+            onClick={changeEditActiveOnClick}
+          >
+            {edit ? 'Cancel' : 'Edit'}
+          </button>
+        </div>
       }
     </NavStyles>
   );

@@ -42,7 +42,7 @@ const App = () => {
     null;
 
   // check if there's an active category
-  const findActiveCategory = categories.find(entry => entry.active) || null;
+  const activeCategory = categories.find(entry => entry.active) || null;
 
   const addNewCategoryOnClick = () => void dispatch(addNewCategory());
 
@@ -51,14 +51,14 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      <Nav findActiveCategory={findActiveCategory} />
+      <Nav activeCategory={activeCategory} />
       <Routes>
         <Route path="/:id" element={singleCategory ?
           <SingleCategory singleCategory={singleCategory} /> :
           <Notification />}
         />
-        {findActiveCategory ?
-          <Route path="/" element={<SingleCategory singleCategory={findActiveCategory} />} /> :
+        {activeCategory ?
+          <Route path="/" element={<SingleCategory singleCategory={activeCategory} />} /> :
           <Route path="/" element={
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {sortedCategories.map((category) => (
