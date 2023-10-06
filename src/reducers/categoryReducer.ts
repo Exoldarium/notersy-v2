@@ -16,8 +16,7 @@ const categorySlice = createSlice({
   initialState,
   reducers: {
     setCategories(_, action: PayloadAction<BaseCategoryEntry[]>) {
-      const sorted = action.payload.sort((a, b) => b.unixTime - a.unixTime);
-      return sorted;
+      return action.payload;
     },
     addCategory(state, action: PayloadAction<BaseCategoryEntry>) {
       state.push(action.payload);

@@ -29,6 +29,7 @@ const App = () => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
+  const sortedCategories = categories.slice().sort((a, b) => a.unixTime - b.unixTime);
   const match = useMatch('/:id');
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const App = () => {
     null;
 
   // check if there's an active category
-  const findActive = categories.find(entry => entry.active) || null;
+  const findActiveCategory = categories.find(entry => entry.active) || null;
 
   const addNewCategoryOnClick = () => void dispatch(addNewCategory());
 
@@ -50,17 +51,17 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      <Nav findActive={findActive} />
+      <Nav findActiveCategory={findActiveCategory} />
       <Routes>
         <Route path="/:id" element={singleCategory ?
           <SingleCategory singleCategory={singleCategory} /> :
           <Notification />}
         />
-        {findActive ?
-          <Route path="/" element={<SingleCategory singleCategory={findActive} />} /> :
+        {findActiveCategory ?
+          <Route path="/" element={<SingleCategory singleCategory={findActiveCategory} />} /> :
           <Route path="/" element={
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {categories.map((category) => (
+              {sortedCategories.map((category) => (
                 <CategoryList category={category} key={category.id} />
               ))}
             </div>}

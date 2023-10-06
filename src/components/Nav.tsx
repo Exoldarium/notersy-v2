@@ -5,18 +5,17 @@ import NavStyles from './styles/NavStyles';
 import { BaseCategoryEntry } from '../types';
 import { addNewCategory, updateExistingCategory } from '../reducers/categoryReducer';
 import { setStorage } from '../services/storageService';
-import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-import { toNewCategoryEntry } from '../utils/parseStorageEntry';
+import { useAppDispatch } from '../hooks/useReduxTypes';
 
 interface Props {
-  findActive: BaseCategoryEntry | null;
+  findActiveCategory: BaseCategoryEntry | null;
 }
 
-const Nav = ({ findActive }: Props) => {
+const Nav = ({ findActiveCategory }: Props) => {
   const dispatch = useAppDispatch();
-  const categories = useAppSelector(({ categories }) => {
-    return categories;
-  });
+  // const categories = useAppSelector(({ categories }) => {
+  //   return categories;
+  // });
   const navigate = useNavigate();
 
   const addNewCategoryOnClick = () => void dispatch(addNewCategory());
@@ -24,20 +23,23 @@ const Nav = ({ findActive }: Props) => {
   const clearStorageOnClick = async () => await setStorage('storedData', []);
 
   const setActiveToFalse = () => {
-    const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.active));
-    const updatedCategory = {
-      ...categoryToUpdate,
-      active: false
-    };
+    if (findActiveCategory) {
+      const updatedCategory = {
+        ...findActiveCategory,
+        active: false
+      };
 
-    void dispatch(updateExistingCategory(updatedCategory));
-    navigate('/');
+      void dispatch(updateExistingCategory(updatedCategory));
+      navigate('/');
+    }
   };
+
+  console.log(findActiveCategory, 'active category');
 
   return (
     <NavStyles>
       <h1>Route Title</h1>
-      {!findActive &&
+      {!findActiveCategory &&
         <>
           <button
             type="button"
@@ -55,7 +57,7 @@ const Nav = ({ findActive }: Props) => {
           </button>
         </>
       }
-      {findActive &&
+      {findActiveCategory &&
         <button
           type="button"
           style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
