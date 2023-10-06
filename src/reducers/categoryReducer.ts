@@ -50,7 +50,7 @@ export const initializeCategories = () => {
 export const addNewCategory = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      // const { storedData } = await getStorage('storedData');
+      const { storedData } = await getStorage('storedData');
 
       const newEntry: BaseCategoryEntry = {
         id: uuidv4(),
@@ -62,9 +62,9 @@ export const addNewCategory = () => {
       };
       const parsedentry = toNewCategoryEntry(newEntry);
 
-      // await setStorage('storedData', storedData.concat(parsedentry));
+      await setStorage('storedData', storedData.concat(parsedentry));
       dispatch(addCategory(parsedentry));
-      // console.log(storedData, 'a new category added');
+      console.log(storedData, 'a new category added');
     } catch (err) {
       const error = parseError(err);
       console.error('addNewCategory action Error', error);

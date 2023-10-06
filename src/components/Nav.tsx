@@ -60,13 +60,15 @@ const Nav = ({ activeCategory }: Props) => {
       }
       {activeCategory &&
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <button
-            type="button"
-            style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-            onClick={setActiveCategoryToFalse}
-          >
-            Back
-          </button>
+          {!editTitle &&
+            <button
+              type="button"
+              style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+              onClick={setActiveCategoryToFalse}
+            >
+              Back
+            </button>
+          }
           {!editTitle && <h1>{activeCategory.title}</h1>}
           {editTitle &&
             <form>
