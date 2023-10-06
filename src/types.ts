@@ -4,6 +4,7 @@ export interface BaseNoteEntry {
   title: string;
   content: string;
   date: string;
+  unixTime: number;
 }
 
 export interface BaseCategoryEntry {
@@ -11,6 +12,7 @@ export interface BaseCategoryEntry {
   id: string;
   title: string;
   date: string;
+  unixTime: number;
   notes: BaseNoteEntry[];
 }
 

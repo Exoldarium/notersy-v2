@@ -16,7 +16,7 @@ const categorySlice = createSlice({
   initialState,
   reducers: {
     setCategories(_, action: PayloadAction<BaseCategoryEntry[]>) {
-      const sorted = action.payload.sort();
+      const sorted = action.payload.sort((a, b) => b.unixTime - a.unixTime);
       return sorted;
     },
     addCategory(state, action: PayloadAction<BaseCategoryEntry>) {
@@ -58,6 +58,7 @@ export const addNewCategory = () => {
         active: true,
         title: 'New Category',
         date: getDate(),
+        unixTime: Date.now(),
         notes: []
       };
       const parsedentry = toNewCategoryEntry(newEntry);

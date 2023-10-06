@@ -1,5 +1,5 @@
 import { BaseCategoryEntry, BaseNoteEntry, BaseStorageEntry } from '../types';
-import { parseDate, parseToBool, parseToString } from './parseData';
+import { parseDate, parseToBool, parseToNumber, parseToString } from './parseData';
 
 // validate and parse the entries
 // parse each note
@@ -12,7 +12,8 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
     'content' in object &&
     'date' in object &&
     'title' in object &&
-    'id' in object
+    'id' in object &&
+    'unixTime' in object
   ) {
     // parse each value and return correct type 
     const newEntry: BaseNoteEntry = {
@@ -20,7 +21,8 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
       content: parseToString(object.content),
       date: parseDate(object.date),
       title: parseToString(object.title),
-      id: parseToString(object.id)
+      id: parseToString(object.id),
+      unixTime: parseToNumber(object.unixTime)
     };
 
     return newEntry;
@@ -39,6 +41,7 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
     'notes' in object &&
     'id' in object &&
     'date' in object &&
+    'unixTime' in object &&
     Array.isArray(object.notes)
   ) {
     // parse each individual note
@@ -49,6 +52,7 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
       title: parseToString(object.title),
       id: parseToString(object.id),
       date: parseDate(object.date),
+      unixTime: parseToNumber(object.unixTime),
       notes: parsedNotes
     };
 
