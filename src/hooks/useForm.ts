@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { parseToString } from '../utils/parseData';
-import { InputData } from '../types';
+import { BaseCategoryEntry } from '../types';
 
-const useForm = (initialState: InputData) => {
+const useForm = (initialState: BaseCategoryEntry) => {
   const [inputs, setInputs] = useState(initialState);
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {

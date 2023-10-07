@@ -14,9 +14,7 @@ interface Props {
 
 const EditNav = ({ activeCategory }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
-  const { inputs, handleInputs } = useForm({
-    title: ''
-  });
+  const { inputs, handleInputs } = useForm(activeCategory);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
