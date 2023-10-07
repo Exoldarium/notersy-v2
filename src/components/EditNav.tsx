@@ -18,7 +18,7 @@ const EditNav = ({ activeCategory }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const changeEditActiveOnClick = () => setEditTitle(!editTitle);
+  const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
   const setActiveCategoryToFalse = () => {
     const updatedCategory = {
@@ -28,6 +28,15 @@ const EditNav = ({ activeCategory }: Props) => {
 
     void dispatch(updateExistingCategory(updatedCategory));
     navigate('/');
+  };
+
+  const updateTitleOnClick = () => {
+    const updatedCategory = {
+      ...activeCategory,
+      title: inputs.title
+    };
+
+    void dispatch(updateExistingCategory(updatedCategory));
   };
 
   console.log(activeCategory, 'active category');
@@ -46,19 +55,20 @@ const EditNav = ({ activeCategory }: Props) => {
         }
         {!editTitle && <h1>{activeCategory.title}</h1>}
         {editTitle &&
-          <form>
+          <form onSubmit={updateTitleOnClick}>
             <input
               type="text"
               name="title"
               value={inputs.title}
               onChange={handleInputs}
             />
+            <button type="submit">Submit</button>
           </form>
         }
         <button
           type="button"
           style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-          onClick={changeEditActiveOnClick}
+          onClick={changeEditTitleOnClick}
         >
           {editTitle ? 'Cancel' : 'Edit'}
         </button>

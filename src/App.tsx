@@ -61,7 +61,8 @@ const App = () => {
       <Routes>
         <Route path="/:id" element={singleCategory ?
           <SingleCategory singleCategory={singleCategory} /> :
-          <Notification />}
+          <Notification />
+        }
         />
         {activeCategory ?
           <Route path="/" element={<SingleCategory singleCategory={activeCategory} />} /> :
@@ -70,7 +71,8 @@ const App = () => {
               {sortedCategories.map((category) => (
                 <CategoryList category={category} key={category.id} />
               ))}
-            </div>}
+            </div>
+          }
           />
         }
       </Routes>
@@ -84,7 +86,8 @@ const App = () => {
           >
             Create
           </button>
-        </CategoryStyles>}
+        </CategoryStyles>
+      }
     </>
   );
 };
