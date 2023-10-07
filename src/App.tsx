@@ -11,6 +11,8 @@ import Notification from './components/Notification';
 import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
+import { setNotificationMesage } from './reducers/messageReducer';
+import EditNav from './components/EditNav';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -36,13 +38,17 @@ const App = () => {
     void dispatch(initializeCategories());
   }, [dispatch]);
 
-  // match the route param with a category id
+  // match the route param with a category id, return a message it the note couldn't be found
   const singleCategory = match ?
-    toNewCategoryEntry(categories.find(category => category.id === match.params.id)) :
-    null;
+    toNewCategoryEntry(categories.find(category => category.id === match.params.id))
+    :
+    void dispatch(setNotificationMesage({
+      type: 'ERROR',
+      content: 'Invalid note'
+    }));
 
   // check if there's an active category
-  const activeCategory = categories.find(entry => entry.active) || null;
+  const activeCategory = categories.find(entry => entry.active);
 
   const addNewCategoryOnClick = () => void dispatch(addNewCategory());
 
@@ -51,7 +57,7 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      <Nav activeCategory={activeCategory} />
+      {activeCategory ? <EditNav activeCategory={activeCategory} /> : <Nav />}
       <Routes>
         <Route path="/:id" element={singleCategory ?
           <SingleCategory singleCategory={singleCategory} /> :

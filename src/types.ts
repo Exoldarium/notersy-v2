@@ -24,3 +24,7 @@ export interface Message {
   type: string;
   content: string;
 }
+
+export interface InputData {
+  [key: string]: string;
+}
