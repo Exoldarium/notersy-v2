@@ -32,6 +32,25 @@ const getStorage = async (key: string): Promise<BaseStorageEntry> => {
   }
 };
 
+// const parseStorage = async (key: string) => {
+//   const res = await getStorage(key);
+//   if (Object.values(res).length === 0) {
+//     await chrome.storage.sync.set({ [key]: [] });
+
+//     const res = await chrome.storage.sync.get(key);
+
+//     const newEntry = toNewStorageEntry(res);
+
+//     return newEntry;
+//   }
+
+//   // parse data that we get from storage
+//   // key is hardcoded to 'storedData'
+//   const newEntry = toNewStorageEntry(res);
+
+//   return newEntry;
+// };
+
 // set data to storage
 const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
   try {
