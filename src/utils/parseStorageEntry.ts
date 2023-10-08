@@ -1,6 +1,8 @@
 import { BaseCategoryEntry, BaseNoteEntry, BaseStorageEntry } from '../types';
 import { parseDate, parseToBool, parseToNumber, parseToString } from './parseData';
 
+// TODO: test data parsing when finished with the notes
+
 // validate and parse the entries
 // parse each note
 export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {

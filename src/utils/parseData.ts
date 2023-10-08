@@ -12,7 +12,7 @@ export const isBool = (bool: unknown): bool is boolean => {
 };
 
 export const isDate = (date: unknown): boolean => {
-  if (!isString(date)) throw new Error('Invalid title or content input');
+  if (!isString(date)) throw new Error('Invalid date input');
   return Boolean(Date.parse(date));
 };
 
