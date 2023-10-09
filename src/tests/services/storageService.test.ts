@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { setStorage } from '../../services/storageService';
+import { getStorage, setStorage } from '../../services/storageService';
 
 describe('Chrome Extension Storage', () => {
   const testValue = [
@@ -28,12 +28,12 @@ describe('Chrome Extension Storage', () => {
     expect(chrome.storage.sync.set).toHaveBeenCalledWith({ 'testKey': testValue });
   });
 
-  // test('chrome.storage.sync.get works with correct values', async () => {
-  //   const res = await getStorage('storedData');
-  //   console.log(res);
+  test('chrome.storage.sync.get works with correct values', async () => {
+    const mockRes = await chrome.storage.sync.get('testKey');
+    const res = await getStorage('testKey');
 
-  //   // eslint-disable-next-line @typescript-eslint/unbound-method
-  //   expect(chrome.storage.sync.get).toHaveBeenCalledWith('testKey');
-  //   // expect(res).toBe(testValue);
-  // });
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    expect(chrome.storage.sync.get).toHaveBeenCalledWith('testKey');
+    expect(res.testKey).toBe(mockRes.testKey);
+  });
 });

@@ -3,28 +3,22 @@ import { parseError } from '../utils/parseData';
 import toNewStorageEntry from '../utils/parseStorageEntry';
 
 // grab data from storage
-const getStorage = async (key: string): Promise<BaseStorageEntry> => {
+const getStorage = async (key: string) => {
   try {
     const res = await chrome.storage.sync.get(key);
+    console.log(res, 'this is res');
 
     // check if there's a valid key in res object
     // if not create it
-    // chrome storage will return an empty object if there are no keys present
-    if (Object.values(res).length === 0) {
+    if (!res[key]) {
       await chrome.storage.sync.set({ [key]: [] });
 
       const res = await chrome.storage.sync.get(key);
 
-      const newEntry = toNewStorageEntry(res);
-
-      return newEntry;
+      return res;
     }
 
-    // parse data that we get from storage
-    // key is hardcoded to 'storedData'
-    const newEntry = toNewStorageEntry(res);
-
-    return newEntry;
+    return res;
   } catch (err) {
     const error = parseError(err);
     console.error('getStorage Error', error);
@@ -32,24 +26,14 @@ const getStorage = async (key: string): Promise<BaseStorageEntry> => {
   }
 };
 
-// const parseStorage = async (key: string) => {
-//   const res = await getStorage(key);
-//   if (Object.values(res).length === 0) {
-//     await chrome.storage.sync.set({ [key]: [] });
+const parseStorage = async (key: string): Promise<BaseStorageEntry> => {
+  const res = await getStorage(key);
 
-//     const res = await chrome.storage.sync.get(key);
+  // parse data that we get from storage
+  const newEntry = toNewStorageEntry(res);
 
-//     const newEntry = toNewStorageEntry(res);
-
-//     return newEntry;
-//   }
-
-//   // parse data that we get from storage
-//   // key is hardcoded to 'storedData'
-//   const newEntry = toNewStorageEntry(res);
-
-//   return newEntry;
-// };
+  return newEntry;
+};
 
 // set data to storage
 const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
@@ -76,4 +60,5 @@ export {
   getStorage,
   setStorage,
   clearStorage,
+  parseStorage
 };

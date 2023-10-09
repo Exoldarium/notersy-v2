@@ -4,7 +4,12 @@ beforeAll(() => {
   const chromeMock = {
     storage: {
       sync: {
-        get: vi.fn(),
+        get: vi.fn((keys) => {
+          const result: { [key: string]: string; } = {};
+          result[keys] = 'testValue';
+
+          return result;
+        }),
         set: vi.fn(),
       }
     }

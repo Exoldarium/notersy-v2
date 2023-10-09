@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
 import { BaseCategoryEntry } from '../types';
-import { getStorage, setStorage } from '../services/storageService';
+import { parseStorage, setStorage } from '../services/storageService';
 import { AppDispatch } from '../store';
 import { toNewCategoryEntry } from '../utils/parseStorageEntry';
 import { getDate } from '../utils/helpers';
@@ -36,7 +36,7 @@ export const {
 export const initializeCategories = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const { storedData } = await getStorage('storedData');
+      const { storedData } = await parseStorage('storedData');
 
       dispatch(setCategories(storedData));
     } catch (err) {
@@ -50,7 +50,7 @@ export const initializeCategories = () => {
 export const addNewCategory = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const { storedData } = await getStorage('storedData');
+      const { storedData } = await parseStorage('storedData');
 
       const newEntry: BaseCategoryEntry = {
         id: uuidv4(),
@@ -76,7 +76,7 @@ export const addNewCategory = () => {
 export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const { storedData } = await getStorage('storedData');
+      const { storedData } = await parseStorage('storedData');
 
       const updatedCategories = storedData.filter(category => category.id !== categoryToUpdate.id);
 
