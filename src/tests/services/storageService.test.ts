@@ -9,6 +9,7 @@ describe('Chrome Extension Storage', () => {
       title: 'New Category',
       date: 'Sat Oct 07 2023 18:36:08',
       unixTime: 1696749517,
+      checked: false,
       notes: []
     }
   ];

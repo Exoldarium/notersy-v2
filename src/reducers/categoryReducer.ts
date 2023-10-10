@@ -23,6 +23,9 @@ const categorySlice = createSlice({
     },
     updateCategory(_, action: PayloadAction<BaseCategoryEntry[]>) {
       return action.payload;
+    },
+    deleteCategory(_, action: PayloadAction<BaseCategoryEntry[]>) {
+      return action.payload;
     }
   }
 });
@@ -30,7 +33,8 @@ const categorySlice = createSlice({
 export const {
   setCategories,
   addCategory,
-  updateCategory
+  updateCategory,
+  deleteCategory
 } = categorySlice.actions;
 
 export const initializeCategories = () => {
@@ -58,7 +62,8 @@ export const addNewCategory = () => {
         title: 'New Category',
         date: getDate(),
         unixTime: Date.now(),
-        notes: []
+        checked: false,
+        notes: [],
       };
       const parsedentry = toNewCategoryEntry(newEntry);
 
@@ -85,6 +90,23 @@ export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
     } catch (err) {
       const error = parseError(err);
       console.error('updateExistingCategory action Error', error);
+      throw new Error(error);
+    }
+  };
+};
+
+export const deleteExistingCategory = (id: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { storedData } = await parseStorage('storedData');
+
+      const updatedCategories = storedData.filter(category => category.id == id);
+
+      await setStorage('storedData', updatedCategories);
+      dispatch(deleteCategory(updatedCategories));
+    } catch (err) {
+      const error = parseError(err);
+      console.error('deletExistingCategory action Error', error);
       throw new Error(error);
     }
   };

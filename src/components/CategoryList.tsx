@@ -29,12 +29,34 @@ const CategoryList = ({ category }: Props) => {
     void dispatch(updateExistingCategory(updatedCategory));
   };
 
+  const changeCheckedOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const id = e.currentTarget.id;
+
+    const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
+    const updatedCategory = {
+      ...categoryToUpdate,
+      checked: !categoryToUpdate.checked
+    };
+
+    void dispatch(updateExistingCategory(updatedCategory));
+  };
+
   return (
-    <Link to={`/${category.id}`}>
-      <CategoryStyles id={category.id} onClick={setActiveOnClick}>
-        {category.title}
-      </CategoryStyles>
-    </Link>
+    <>
+      <Link to={`/${category.id}`}>
+        <CategoryStyles id={category.id} onClick={setActiveOnClick}>
+          {category.title}
+        </CategoryStyles>
+      </Link>
+      <form>
+        <input
+          type="checkbox"
+          id={category.id}
+          name="checked"
+          onClick={changeCheckedOnClick}
+        />
+      </form>
+    </>
   );
 };
 

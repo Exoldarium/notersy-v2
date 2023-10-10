@@ -7,12 +7,12 @@ import CategoryStyles from './components/styles/CategoryStyles';
 import Nav from './components/Nav';
 import SingleCategory from './components/SingleCategory';
 import Notification from './components/Notification';
+import EditNav from './components/EditNav';
 
 import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
 import { setNotificationMesage } from './reducers/messageReducer';
-import EditNav from './components/EditNav';
 
 const GlobalStyles = createGlobalStyle`
   html {

@@ -6,7 +6,6 @@ import toNewStorageEntry from '../utils/parseStorageEntry';
 const getStorage = async (key: string) => {
   try {
     const res = await chrome.storage.sync.get(key);
-    console.log(res, 'this is res');
 
     // check if there's a valid key in res object
     // if not create it

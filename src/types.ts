@@ -5,6 +5,7 @@ export interface BaseNoteEntry {
   content: string;
   date: string;
   unixTime: number;
+  checked?: boolean;
 }
 
 export interface BaseCategoryEntry {
@@ -13,6 +14,7 @@ export interface BaseCategoryEntry {
   title: string;
   date: string;
   unixTime: number;
+  checked?: boolean;
   notes: BaseNoteEntry[];
 }
 
