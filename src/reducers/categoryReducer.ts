@@ -96,13 +96,13 @@ export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
   };
 };
 
-export const deleteExistingCategory = (param: Checked[]) => {
+export const deleteExistingCategory = (checkedIdValues: Checked[]) => {
   return async (dispatch: AppDispatch) => {
     try {
       const { storedData } = await parseStorage('storedData');
 
-      const ids = param.map(item => item.id);
-      // delete selected categories
+      // delete selected categories based on their matching ids that are stored in checkbox state
+      const ids = checkedIdValues.map(item => item.id);
       const updatedCategories = storedData.filter(category => !ids.includes(category.id));
 
       await setStorage('storedData', updatedCategories);

@@ -36,6 +36,7 @@ const CategoryList = ({ category }: Props) => {
   };
 
   const setChecboxChecked = (e: React.MouseEvent<HTMLInputElement>) => {
+    // the ids will be stored or filtered from the state depending if they are checked or not
     if (e.currentTarget.checked) {
       const checked = {
         id: parseToString(e.currentTarget.id)
