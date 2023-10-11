@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
-import { BaseCategoryEntry } from '../types';
+import { BaseCategoryEntry, Checked } from '../types';
 import { parseStorage, setStorage } from '../services/storageService';
 import { AppDispatch } from '../store';
 import { toNewCategoryEntry } from '../utils/parseStorageEntry';
@@ -67,6 +67,7 @@ export const addNewCategory = () => {
       const parsedentry = toNewCategoryEntry(newEntry);
 
       await setStorage('storedData', storedData.concat(parsedentry));
+
       dispatch(addCategory(parsedentry));
       console.log(storedData, 'a new category added');
     } catch (err) {
@@ -85,6 +86,7 @@ export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
       const updatedCategories = storedData.filter(category => category.id !== categoryToUpdate.id);
 
       await setStorage('storedData', updatedCategories.concat(categoryToUpdate));
+
       dispatch(updateCategory(updatedCategories.concat(categoryToUpdate)));
     } catch (err) {
       const error = parseError(err);
@@ -94,14 +96,17 @@ export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
   };
 };
 
-export const deleteExistingCategory = (id: string) => {
+export const deleteExistingCategory = (param: Checked[]) => {
   return async (dispatch: AppDispatch) => {
     try {
       const { storedData } = await parseStorage('storedData');
 
-      const updatedCategories = storedData.filter(category => category.id == id);
+      const ids = param.map(item => item.id);
+      // delete selected categories
+      const updatedCategories = storedData.filter(category => !ids.includes(category.id));
 
       await setStorage('storedData', updatedCategories);
+
       dispatch(deleteCategory(updatedCategories));
     } catch (err) {
       const error = parseError(err);
