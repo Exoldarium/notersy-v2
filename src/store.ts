@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import categoryReducer from './reducers/categoryReducer';
 import messageReducer from './reducers/messageReducer';
+import checkboxReducer from './reducers/checkboxReducer';
 
 export const store = configureStore({
   reducer: {
     categories: categoryReducer,
-    message: messageReducer
+    message: messageReducer,
+    checkbox: checkboxReducer
   }
 });
 

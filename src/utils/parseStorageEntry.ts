@@ -15,8 +15,7 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
     'date' in object &&
     'title' in object &&
     'id' in object &&
-    'unixTime' in object &&
-    'checked' in object
+    'unixTime' in object
   ) {
     // parse each value and return correct type 
     const newEntry: BaseNoteEntry = {
@@ -26,7 +25,6 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
       title: parseToString(object.title),
       id: parseToString(object.id),
       unixTime: parseToNumber(object.unixTime),
-      checked: parseToBool(object.checked)
     };
 
     return newEntry;
@@ -46,7 +44,6 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
     'id' in object &&
     'date' in object &&
     'unixTime' in object &&
-    'checked' in object &&
     Array.isArray(object.notes)
   ) {
     // parse each individual note
@@ -58,7 +55,6 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
       id: parseToString(object.id),
       date: parseDate(object.date),
       unixTime: parseToNumber(object.unixTime),
-      checked: parseToBool(object.checked),
       notes: parsedNotes
     };
 

@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingCategory } from '../reducers/categoryReducer';
 import { BaseCategoryEntry } from '../types';
 import { toNewCategoryEntry } from '../utils/parseStorageEntry';
+import { addCheckedId, updateCheckedId } from '../reducers/checkboxReducer';
+import { parseToString } from '../utils/parseData';
 
 interface Props {
   category: BaseCategoryEntry
@@ -15,6 +17,9 @@ const CategoryList = ({ category }: Props) => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
+  });
+  const checkbox = useAppSelector(({ checkbox }) => {
+    return checkbox;
   });
 
   const setActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -26,20 +31,23 @@ const CategoryList = ({ category }: Props) => {
       active: true
     };
 
+    void dispatch(updateCheckedId([])); // clear active checkbox id's from state
     void dispatch(updateExistingCategory(updatedCategory));
   };
 
-  const changeCheckedOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const id = e.currentTarget.id;
+  const setChecboxChecked = (e: React.MouseEvent<HTMLInputElement>) => {
+    if (e.currentTarget.checked) {
+      const checked = {
+        id: parseToString(e.currentTarget.id)
+      };
 
-    const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
-    const updatedCategory = {
-      ...categoryToUpdate,
-      checked: !categoryToUpdate.checked
-    };
-
-    void dispatch(updateExistingCategory(updatedCategory));
+      void dispatch(addCheckedId(checked));
+    } else {
+      void dispatch(updateCheckedId(checkbox.filter(item => item.id !== e.currentTarget.id)));
+    }
   };
+
+  console.log(checkbox);
 
   return (
     <>
@@ -53,7 +61,7 @@ const CategoryList = ({ category }: Props) => {
           type="checkbox"
           id={category.id}
           name="checked"
-          onClick={changeCheckedOnClick}
+          onClick={setChecboxChecked}
         />
       </form>
     </>

@@ -62,7 +62,6 @@ export const addNewCategory = () => {
         title: 'New Category',
         date: getDate(),
         unixTime: Date.now(),
-        checked: false,
         notes: [],
       };
       const parsedentry = toNewCategoryEntry(newEntry);
