@@ -9,7 +9,6 @@ describe('Chrome Extension Storage', () => {
       title: 'New Category',
       date: 'Sat Oct 07 2023 18:36:08',
       unixTime: 1696749517,
-      checked: false,
       notes: []
     }
   ];
@@ -35,6 +34,7 @@ describe('Chrome Extension Storage', () => {
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(chrome.storage.sync.get).toHaveBeenCalledWith('testKey');
-    expect(res.testKey).toBe(mockRes.testKey);
+    expect(res.testKey).toStrictEqual(mockCategory);
+    expect(mockRes.testKey).toStrictEqual(mockCategory);
   });
 });
