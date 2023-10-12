@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { getStorage, setStorage } from '../../services/storageService';
 
 describe('Chrome Extension Storage', () => {
-  const testValue = [
+  const mockCategory = [
     {
       id: '123',
       active: true,
@@ -23,10 +23,10 @@ describe('Chrome Extension Storage', () => {
   });
 
   test('chrome.storage.sync.set works with correct values', async () => {
-    await setStorage('testKey', testValue);
+    await setStorage('testKey', mockCategory);
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(chrome.storage.sync.set).toHaveBeenCalledWith({ 'testKey': testValue });
+    expect(chrome.storage.sync.set).toHaveBeenCalledWith({ 'testKey': mockCategory });
   });
 
   test('chrome.storage.sync.get works with correct values', async () => {
