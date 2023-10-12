@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
+    "@tiptap/pm": "^2.1.12",
+    "@tiptap/react": "^2.1.12",
+    "@tiptap/starter-kit": "^2.1.12",
     "@types/chrome": "^0.0.246",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.27",
