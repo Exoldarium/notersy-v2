@@ -1,16 +1,16 @@
-import CharacterCount from '@tiptap/extension-character-count';
-import { EditorContent, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { useState } from 'react';
 import styled from 'styled-components';
-import { parseToNumber } from '../utils/parseData';
+import { EditorContent, useEditor } from '@tiptap/react';
+import CharacterCount from '@tiptap/extension-character-count';
 import HardBreak from '@tiptap/extension-hard-break';
+import StarterKit from '@tiptap/starter-kit';
 
-const TipTapStyles = styled.div`
+import { parseToNumber } from '../utils/parseData';
+
+const NoteEditorStyles = styled.div`
   .tiptap {
     min-height: 100px;
     height: fit-content;
-    padding: 0;
+    padding: 0.2rem;
     border: 1px solid black;
     border-radius: 3px;
     p {
@@ -19,11 +19,14 @@ const TipTapStyles = styled.div`
   }
 `;
 
-const Tiptap = () => {
-  const [state, setState] = useState('');
+const NoteEditor = () => {
+  // const [state, setState] = useState('');
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        // starter kit hardbreak is disabled so that it doesn't create conflict with the HardBreak extension
+        hardBreak: false
+      }),
       CharacterCount.configure({
         limit: 1500,
       }),
@@ -31,6 +34,8 @@ const Tiptap = () => {
         addKeyboardShortcuts() {
           return {
             Enter: () => {
+              // sets hard break, no line break on enter
+              // doesn't create new paragraph when a list is used
               if (this.editor.isActive('orderedList') || this.editor.isActive('bulletList')) {
                 return this.editor.chain().createParagraphNear().run();
               }
@@ -40,8 +45,13 @@ const Tiptap = () => {
         },
       })
     ],
-    content: "<div><p>Hello</p></div>",
+    content: `
+      <div>
+        <p></p>
+      </div>
+    `,
     onUpdate({ editor }) {
+      // grabs the text, on change event
       // setState(editor.getText());
       console.log(JSON.stringify(editor.getJSON()));
     },
@@ -55,18 +65,18 @@ const Tiptap = () => {
   const characterCount = parseToNumber(editor.storage.characterCount.characters());
 
   return (
-    <TipTapStyles>
-      <button onClick={() => editor.chain().focus().toggleBold().run()}>Bold</button>
-      <button onClick={() => editor.chain().focus().toggleItalic().run()}>Italic</button>
-      <button onClick={() => editor.chain().focus().toggleBulletList().run()}>Bullet</button>
+    <NoteEditorStyles>
+      <div>
+        <button onClick={() => editor.chain().focus().toggleBold().run()}>Bold</button>
+        <button onClick={() => editor.chain().focus().toggleItalic().run()}>Italic</button>
+        <button onClick={() => editor.chain().focus().toggleBulletList().run()}>Bullet</button>
+      </div>
       <EditorContent editor={editor} />
       <div>
         {characterCount}/1500
       </div>
-      {/* <FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>
-        <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu> */}
-    </TipTapStyles>
+    </NoteEditorStyles>
   );
 };
 
-export default Tiptap;
+export default NoteEditor;

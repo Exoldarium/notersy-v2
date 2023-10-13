@@ -5,7 +5,7 @@ beforeAll(() => {
   const chromeMock = {
     storage: {
       sync: {
-        get: vi.fn((keys) => {
+        get: vi.fn((keys: string) => {
           const result: {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             [key: string]: any;

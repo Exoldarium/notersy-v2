@@ -8,12 +8,12 @@ import Nav from './components/Nav';
 import SingleCategory from './components/SingleCategory';
 import Notification from './components/Notification';
 import EditNav from './components/EditNav';
+import NoteEditor from './components/NoteEditor';
 
 import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
 import { setNotificationMesage } from './reducers/messageReducer';
-import Tiptap from './components/Tiptap';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -60,7 +60,7 @@ const App = () => {
       <GlobalStyles />
       {activeCategory ? <EditNav activeCategory={activeCategory} /> : <Nav />}
       <div>
-        <Tiptap />
+        <NoteEditor />
       </div>
       <Routes>
         <Route path="/:id" element={singleCategory ?
