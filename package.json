@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
+    "@tiptap/extension-character-count": "^2.1.12",
+    "@tiptap/extension-hard-break": "^2.1.12",
     "@tiptap/pm": "^2.1.12",
     "@tiptap/react": "^2.1.12",
     "@tiptap/starter-kit": "^2.1.12",

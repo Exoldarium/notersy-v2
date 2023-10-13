@@ -13,6 +13,7 @@ import { addNewCategory, initializeCategories } from './reducers/categoryReducer
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
 import { setNotificationMesage } from './reducers/messageReducer';
+import Tiptap from './components/Tiptap';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -58,6 +59,9 @@ const App = () => {
     <>
       <GlobalStyles />
       {activeCategory ? <EditNav activeCategory={activeCategory} /> : <Nav />}
+      <div>
+        <Tiptap />
+      </div>
       <Routes>
         <Route path="/:id" element={singleCategory ?
           <SingleCategory singleCategory={singleCategory} /> :
