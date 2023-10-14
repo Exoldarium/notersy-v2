@@ -1,23 +1,10 @@
-import styled from 'styled-components';
 import { EditorContent, useEditor } from '@tiptap/react';
 import CharacterCount from '@tiptap/extension-character-count';
 import HardBreak from '@tiptap/extension-hard-break';
 import StarterKit from '@tiptap/starter-kit';
 
 import { parseToNumber } from '../utils/parseData';
-
-const NoteEditorStyles = styled.div`
-  .tiptap {
-    min-height: 100px;
-    height: fit-content;
-    padding: 0.2rem;
-    border: 1px solid black;
-    border-radius: 3px;
-    p {
-      margin: 0;
-    }
-  }
-`;
+import NoteEditorStyles from './styles/NoteEditorStyles';
 
 const NoteEditor = () => {
   // const [state, setState] = useState('');
@@ -70,6 +57,18 @@ const NoteEditor = () => {
         <button onClick={() => editor.chain().focus().toggleBold().run()}>Bold</button>
         <button onClick={() => editor.chain().focus().toggleItalic().run()}>Italic</button>
         <button onClick={() => editor.chain().focus().toggleBulletList().run()}>Bullet</button>
+        <button
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().chain().focus().undo().run()}
+        >
+          Undo
+        </button>
+        <button
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().chain().focus().redo().run()}
+        >
+          Redo
+        </button>
       </div>
       <EditorContent editor={editor} />
       <div>

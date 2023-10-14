@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 
@@ -8,7 +8,6 @@ import Nav from './components/Nav';
 import SingleCategory from './components/SingleCategory';
 import Notification from './components/Notification';
 import EditNav from './components/EditNav';
-import NoteEditor from './components/NoteEditor';
 
 import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
@@ -28,16 +27,19 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
+  const [noteEditorActive, setNoteEditorActive] = useState(false);
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
-  const sortedCategories = categories.slice().sort((a, b) => a.unixTime - b.unixTime);
   const match = useMatch('/:id');
+
 
   useEffect(() => {
     void dispatch(initializeCategories());
   }, [dispatch]);
+
+  const sortedCategories = categories.slice().sort((a, b) => a.unixTime - b.unixTime);
 
   // match the route param with a category id, return a message it the note couldn't be found
   const singleCategory = match ?
@@ -58,18 +60,32 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      {activeCategory ? <EditNav activeCategory={activeCategory} /> : <Nav />}
-      <div>
-        <NoteEditor />
-      </div>
+      {activeCategory ?
+        <EditNav
+          activeCategory={activeCategory}
+          setNoteEditorActive={setNoteEditorActive}
+          noteEditorActive={noteEditorActive}
+        /> :
+        <Nav />
+      }
       <Routes>
-        <Route path="/:id" element={singleCategory ?
-          <SingleCategory singleCategory={singleCategory} /> :
-          <Notification />
+        <Route path="/:id" element={
+          singleCategory ?
+            <SingleCategory
+              singleCategory={singleCategory}
+              noteEditorActive={noteEditorActive}
+            /> :
+            <Notification />
         }
         />
         {activeCategory ?
-          <Route path="/" element={<SingleCategory singleCategory={activeCategory} />} /> :
+          <Route path="/" element={
+            <SingleCategory
+              singleCategory={activeCategory}
+              noteEditorActive={noteEditorActive}
+            />
+          }
+          /> :
           <Route path="/" element={
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {sortedCategories.map((category) => (

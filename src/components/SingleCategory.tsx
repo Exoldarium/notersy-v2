@@ -1,15 +1,22 @@
+import NoteEditor from './NoteEditor';
+import SingleCategoryStyles from './styles/SingleCategoryStyles';
+
 import { BaseCategoryEntry } from '../types';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
+  noteEditorActive: boolean;
 }
 
-const SingleCategory = ({ singleCategory }: Props) => {
+const SingleCategory = ({ singleCategory, noteEditorActive }: Props) => {
   console.log('single category', singleCategory);
   return (
-    <div>
-      Note {singleCategory.id}
-    </div>
+    <>
+      {noteEditorActive && <NoteEditor />}
+      <SingleCategoryStyles>
+        Note {singleCategory.id}
+      </SingleCategoryStyles>
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ import { parseError } from '../utils/parseData';
 
 const initialState: BaseCategoryEntry[] = [];
 // TODO: add sorting, the user could choose to sort by name or date
+// TODO: we could add last viewed where the viewed property could be updated depending on when the category was clicked
 
 const categorySlice = createSlice({
   name: 'categories',

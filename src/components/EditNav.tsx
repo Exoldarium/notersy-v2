@@ -2,17 +2,21 @@ import { useNavigate } from 'react-router-dom';
 
 import NavStyles from './styles/NavStyles';
 
+import { Dispatch, SetStateAction, useState } from 'react';
+
 import { BaseCategoryEntry } from '../types';
 import { updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch } from '../hooks/useReduxTypes';
-import { useState } from 'react';
+
 import useForm from '../hooks/useForm';
 
 interface Props {
   activeCategory: BaseCategoryEntry;
+  setNoteEditorActive: Dispatch<SetStateAction<boolean>>;
+  noteEditorActive: boolean;
 }
 
-const EditNav = ({ activeCategory }: Props) => {
+const EditNav = ({ activeCategory, setNoteEditorActive, noteEditorActive }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
   const { inputs, handleInputs } = useForm(activeCategory);
   const dispatch = useAppDispatch();
@@ -38,6 +42,8 @@ const EditNav = ({ activeCategory }: Props) => {
 
     void dispatch(updateExistingCategory(updatedCategory));
   };
+
+  const setNoteEditorActiveOnClick = () => setNoteEditorActive(!noteEditorActive);
 
   console.log(activeCategory, 'active category');
 
@@ -71,6 +77,13 @@ const EditNav = ({ activeCategory }: Props) => {
           onClick={changeEditTitleOnClick}
         >
           {editTitle ? 'Cancel' : 'Edit'}
+        </button>
+        <button
+          type="button"
+          style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+          onClick={setNoteEditorActiveOnClick}
+        >
+          {noteEditorActive ? 'Cancel' : 'New note'}
         </button>
       </div>
     </NavStyles>
