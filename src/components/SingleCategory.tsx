@@ -12,7 +12,7 @@ const SingleCategory = ({ singleCategory, noteEditorActive }: Props) => {
   console.log('single category', singleCategory);
   return (
     <>
-      {noteEditorActive && <NoteEditor />}
+      {noteEditorActive && <NoteEditor singleCategory={singleCategory} />}
       <SingleCategoryStyles>
         Note {singleCategory.id}
       </SingleCategoryStyles>

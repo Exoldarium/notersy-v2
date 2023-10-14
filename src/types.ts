@@ -1,7 +1,7 @@
 export interface BaseNoteEntry {
   active: boolean;
   id: string;
-  title: string;
+  title?: string;
   content: string;
   date: string;
   unixTime: number;

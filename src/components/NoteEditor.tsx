@@ -1,13 +1,24 @@
+import { useState } from 'react';
+import DOMPurify from 'dompurify';
+
 import { EditorContent, useEditor } from '@tiptap/react';
 import CharacterCount from '@tiptap/extension-character-count';
 import HardBreak from '@tiptap/extension-hard-break';
 import StarterKit from '@tiptap/starter-kit';
 
+import { useAppDispatch } from '../hooks/useReduxTypes';
 import { parseToNumber } from '../utils/parseData';
 import NoteEditorStyles from './styles/NoteEditorStyles';
+import { BaseCategoryEntry } from '../types';
+import { addNewNote } from '../reducers/noteReducer';
 
-const NoteEditor = () => {
-  // const [state, setState] = useState('');
+interface Props {
+  singleCategory: BaseCategoryEntry;
+}
+
+const NoteEditor = ({ singleCategory }: Props) => {
+  const [newNote, setNewNote] = useState('');
+  const dispatch = useAppDispatch();
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -38,9 +49,9 @@ const NoteEditor = () => {
       </div>
     `,
     onUpdate({ editor }) {
-      // grabs the text, on change event
-      // setState(editor.getText());
-      console.log(JSON.stringify(editor.getJSON()));
+      // grab the text and sanitize the inputs
+      const clean = DOMPurify.sanitize(editor.getHTML());
+      setNewNote(JSON.stringify(clean));
     },
   });
 
@@ -48,26 +59,54 @@ const NoteEditor = () => {
     return null;
   }
 
+  const addNewNoteOnClick = () => {
+    void dispatch(addNewNote(singleCategory.id, newNote));
+    console.log(JSON.parse(newNote));
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const characterCount = parseToNumber(editor.storage.characterCount.characters());
 
   return (
     <NoteEditorStyles>
       <div>
-        <button onClick={() => editor.chain().focus().toggleBold().run()}>Bold</button>
-        <button onClick={() => editor.chain().focus().toggleItalic().run()}>Italic</button>
-        <button onClick={() => editor.chain().focus().toggleBulletList().run()}>Bullet</button>
         <button
+          type="button"
+          onClick={() => editor.chain().focus().toggleBold().run()}
+        >
+          Bold
+        </button>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+        >
+          Italic
+        </button>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+        >
+          Bullet
+        </button>
+        <button
+          type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
         >
           Undo
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
         >
           Redo
+        </button>
+        <button
+          type="button"
+          onClick={addNewNoteOnClick}
+        >
+          Add note
         </button>
       </div>
       <EditorContent editor={editor} />
