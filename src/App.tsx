@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 
@@ -27,18 +27,17 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
-  const [noteEditorActive, setNoteEditorActive] = useState(false);
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
   const match = useMatch('/:id');
 
-
   useEffect(() => {
     void dispatch(initializeCategories());
   }, [dispatch]);
 
+  // shallow copy categories using slice and sort them 
   const sortedCategories = categories.slice().sort((a, b) => a.unixTime - b.unixTime);
 
   // match the route param with a category id, return a message it the note couldn't be found
@@ -63,8 +62,6 @@ const App = () => {
       {activeCategory ?
         <EditNav
           activeCategory={activeCategory}
-          setNoteEditorActive={setNoteEditorActive}
-          noteEditorActive={noteEditorActive}
         /> :
         <Nav />
       }
@@ -73,7 +70,6 @@ const App = () => {
           singleCategory ?
             <SingleCategory
               singleCategory={singleCategory}
-              noteEditorActive={noteEditorActive}
             /> :
             <Notification />
         }
@@ -82,7 +78,6 @@ const App = () => {
           <Route path="/" element={
             <SingleCategory
               singleCategory={activeCategory}
-              noteEditorActive={noteEditorActive}
             />
           }
           /> :

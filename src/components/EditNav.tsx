@@ -1,23 +1,24 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import NavStyles from './styles/NavStyles';
 
-import { Dispatch, SetStateAction, useState } from 'react';
-
 import { BaseCategoryEntry } from '../types';
 import { updateExistingCategory } from '../reducers/categoryReducer';
-import { useAppDispatch } from '../hooks/useReduxTypes';
+import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 
 import useForm from '../hooks/useForm';
+import { setEditorActive } from '../reducers/editorActiveReducer';
 
 interface Props {
   activeCategory: BaseCategoryEntry;
-  setNoteEditorActive: Dispatch<SetStateAction<boolean>>;
-  noteEditorActive: boolean;
 }
 
-const EditNav = ({ activeCategory, setNoteEditorActive, noteEditorActive }: Props) => {
+const EditNav = ({ activeCategory }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
+  const editorActive = useAppSelector(({ editorActive }) => {
+    return editorActive;
+  });
   const { inputs, handleInputs } = useForm(activeCategory);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const EditNav = ({ activeCategory, setNoteEditorActive, noteEditorActive }: Prop
     void dispatch(updateExistingCategory(updatedCategory));
   };
 
-  const setNoteEditorActiveOnClick = () => setNoteEditorActive(!noteEditorActive);
+  const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(!editorActive));
 
   console.log(activeCategory, 'active category');
 
@@ -83,7 +84,7 @@ const EditNav = ({ activeCategory, setNoteEditorActive, noteEditorActive }: Prop
           style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
           onClick={setNoteEditorActiveOnClick}
         >
-          {noteEditorActive ? 'Cancel' : 'New note'}
+          {editorActive ? 'Cancel' : 'New note'}
         </button>
       </div>
     </NavStyles>

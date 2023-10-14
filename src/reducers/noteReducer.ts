@@ -45,6 +45,8 @@ export const addNewNote = (id: string, content: string) => {
     const categoryWithNotesAdded = categoryToAdTo.notes.concat(parsedNoteEntry);
     categoryToAdTo.notes = categoryWithNotesAdded;
 
+    console.log(storedData, 'storedData');
+
     await setStorage('storedData', storedData);
     dispatch(addNote(parsedNoteEntry));
   };

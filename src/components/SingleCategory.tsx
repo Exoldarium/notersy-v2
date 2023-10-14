@@ -1,21 +1,29 @@
 import NoteEditor from './NoteEditor';
-import SingleCategoryStyles from './styles/SingleCategoryStyles';
+import SingleNote from './SingleNote';
 
 import { BaseCategoryEntry } from '../types';
+import { useAppSelector } from '../hooks/useReduxTypes';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
-  noteEditorActive: boolean;
 }
 
-const SingleCategory = ({ singleCategory, noteEditorActive }: Props) => {
+const SingleCategory = ({ singleCategory }: Props) => {
+  const notes = useAppSelector(({ notes }) => {
+    return notes;
+  });
+  const editorActive = useAppSelector(({ editorActive }) => {
+    return editorActive;
+  });
+
   console.log('single category', singleCategory);
+
   return (
     <>
-      {noteEditorActive && <NoteEditor singleCategory={singleCategory} />}
-      <SingleCategoryStyles>
-        Note {singleCategory.id}
-      </SingleCategoryStyles>
+      {editorActive && <NoteEditor singleCategory={singleCategory} />}
+      {notes.map(note => (
+        <SingleNote note={note} key={note.id} />
+      ))}
     </>
   );
 };

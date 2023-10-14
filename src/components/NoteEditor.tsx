@@ -11,6 +11,7 @@ import { parseToNumber } from '../utils/parseData';
 import NoteEditorStyles from './styles/NoteEditorStyles';
 import { BaseCategoryEntry } from '../types';
 import { addNewNote } from '../reducers/noteReducer';
+import { setEditorActive } from '../reducers/editorActiveReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -60,7 +61,9 @@ const NoteEditor = ({ singleCategory }: Props) => {
   }
 
   const addNewNoteOnClick = () => {
+    // send a new note and close the editor
     void dispatch(addNewNote(singleCategory.id, newNote));
+    void dispatch(setEditorActive(false));
     console.log(JSON.parse(newNote));
   };
 

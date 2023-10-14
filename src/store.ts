@@ -3,13 +3,15 @@ import categoryReducer from './reducers/categoryReducer';
 import messageReducer from './reducers/messageReducer';
 import checkboxReducer from './reducers/checkboxReducer';
 import noteReducer from './reducers/noteReducer';
+import editorActiveReducer from './reducers/editorActiveReducer';
 
 export const store = configureStore({
   reducer: {
     categories: categoryReducer,
     message: messageReducer,
     checkbox: checkboxReducer,
-    notes: noteReducer
+    notes: noteReducer,
+    editorActive: editorActiveReducer
   }
 });
 
