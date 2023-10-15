@@ -14,10 +14,4 @@ export const {
   setEditorActive
 } = editorActiveSlice.actions;
 
-// export const setEditorActive = (params: boolean) => {
-//   return (dispatch: AppDispatch) => {
-//     dispatch(setActive(params));
-//   };
-// };
-
 export default editorActiveSlice.reducer;
