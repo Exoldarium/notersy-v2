@@ -3,7 +3,6 @@ import DOMPurify from 'dompurify';
 
 import { EditorContent, useEditor } from '@tiptap/react';
 import CharacterCount from '@tiptap/extension-character-count';
-import HardBreak from '@tiptap/extension-hard-break';
 import StarterKit from '@tiptap/starter-kit';
 
 import { useAppDispatch } from '../hooks/useReduxTypes';
@@ -21,8 +20,7 @@ interface Props {
 // add different headers and paragraph options into a dropdown menu
 
 // TODO:
-// saving the editor content when editing notes and closing the popup could be done by pushing
-// editor content to a new storage key and grabbing it from there on reaload for the edit: active note
+// add a button to submit edited note
 
 const NoteEditor = ({ singleCategory }: Props) => {
   const [newNote, setNewNote] = useState('');
@@ -30,32 +28,13 @@ const NoteEditor = ({ singleCategory }: Props) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        // starter kit hardbreak is disabled so that it doesn't create conflict with the HardBreak extension
         hardBreak: false
       }),
       CharacterCount.configure({
         limit: 1500,
       }),
-      HardBreak.extend({
-        addKeyboardShortcuts() {
-          return {
-            Enter: () => {
-              // sets hard break, no line break on enter
-              // doesn't create new paragraph when a list is used
-              if (this.editor.isActive('orderedList') || this.editor.isActive('bulletList')) {
-                return this.editor.chain().createParagraphNear().run();
-              }
-              return this.editor.commands.setHardBreak();
-            },
-          };
-        },
-      })
     ],
-    content: `
-      <div>
-        <p></p>
-      </div>
-    `,
+    content: '',
     onUpdate({ editor }) {
       // grab the text and sanitize the inputs
       const clean = DOMPurify.sanitize(editor.getHTML());
