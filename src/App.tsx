@@ -15,7 +15,7 @@ import { toNewCategoryEntry } from './utils/parseStorageEntry';
 import { setNotificationMesage } from './reducers/messageReducer';
 
 // TODO: 
-// add a button that will resize the popup when notes are active, redisign category display, maybe add a way to arrange then when dragged
+// add a button that will resize the popup when notes are active, redisign category display
 
 const GlobalStyles = createGlobalStyle`
   html {

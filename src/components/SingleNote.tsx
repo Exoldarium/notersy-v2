@@ -1,24 +1,46 @@
 import DOMPurify from 'dompurify';
 
 import SingleNoteStyles from './styles/SingleNoteStyles';
-import { BaseNoteEntry } from '../types';
+import { BaseCategoryEntry, BaseNoteEntry } from '../types';
+import { useAppDispatch } from '../hooks/useReduxTypes';
+import { setEditNote } from '../reducers/editNoteReducer';
+import { updateExistingNote } from '../reducers/categoryReducer';
+import { setEditorActive } from '../reducers/editorActiveReducer';
+
+// TODO:
+// clicking edit button should bring the note editor to that note
+// edited note should be automatically saved either when user clicks save or when the user clicks some other element
 
 interface Props {
   note: BaseNoteEntry;
+  singleCategory: BaseCategoryEntry;
 }
 
-const SingleNote = ({ note }: Props) => {
-  console.log(note, 'note');
-
+const SingleNote = ({ note, singleCategory }: Props) => {
   // sanitize note content before setting it to innerHTML
+  const dispatch = useAppDispatch();
   const clean = DOMPurify.sanitize(note.content);
   const render = {
     __html: clean
   };
 
+  const editNoteOnClick = () => {
+    const noteToEdit: BaseNoteEntry = {
+      ...note,
+      edit: true
+    };
+
+    void dispatch(updateExistingNote(singleCategory, noteToEdit));
+    dispatch(setEditorActive(false)); // close new note editor if it's open
+    dispatch(setEditNote(true));
+  };
+
+  console.log(note, 'note');
+
   return (
-    <SingleNoteStyles >
+    <SingleNoteStyles>
       <div dangerouslySetInnerHTML={render} />
+      <button type="button" onClick={editNoteOnClick}>Edit</button>
     </SingleNoteStyles>
   );
 };

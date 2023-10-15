@@ -1,5 +1,5 @@
 export interface BaseNoteEntry {
-  active: boolean;
+  edit: boolean;
   id: string;
   title?: string;
   content: string;

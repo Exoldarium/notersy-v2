@@ -30,6 +30,9 @@ const categorySlice = createSlice({
     },
     addNote(_, action: PayloadAction<BaseCategoryEntry[]>) {
       return action.payload;
+    },
+    updateNote(_, action: PayloadAction<BaseCategoryEntry[]>) {
+      return action.payload;
     }
   }
 });
@@ -39,7 +42,8 @@ export const {
   addCategory,
   updateCategory,
   deleteCategory,
-  addNote
+  addNote,
+  updateNote
 } = categorySlice.actions;
 
 export const initializeCategories = () => {
@@ -128,7 +132,7 @@ export const addNewNote = (category: BaseCategoryEntry, content: string) => {
 
       const newNoteEntry: BaseNoteEntry = {
         id: uuidv4(),
-        active: false,
+        edit: false,
         title: 'New Category',
         date: getDate(),
         unixTime: Date.now(),
@@ -146,6 +150,32 @@ export const addNewNote = (category: BaseCategoryEntry, content: string) => {
       await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
       dispatch(addNote(updatedCategories.concat(categoryWithNotes)));
+      console.log(updatedCategories, 'a new note added');
+    } catch (err) {
+      const error = parseError(err);
+      console.error('addNewNote action Error', error);
+      throw new Error(error);
+    }
+  };
+};
+
+export const updateExistingNote = (category: BaseCategoryEntry, editedNote: BaseNoteEntry) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { storedData } = await parseStorage('storedData');
+
+      const parsedNoteEntry = toNewNoteEntry(editedNote);
+      const notesToUpdate = category.notes.filter(note => note.id !== parsedNoteEntry.id);
+      const updatedNotes = notesToUpdate.concat(parsedNoteEntry);
+      const categoryWithNotes = {
+        ...category,
+        notes: updatedNotes
+      };
+
+      const updatedCategories = storedData.filter(category => category.id !== categoryWithNotes.id);
+      await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
+
+      dispatch(updateNote(updatedCategories.concat(categoryWithNotes)));
       console.log(updatedCategories, 'a new note added');
     } catch (err) {
       const error = parseError(err);

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 
 import useForm from '../hooks/useForm';
 import { setEditorActive } from '../reducers/editorActiveReducer';
+import { setEditNote } from '../reducers/editNoteReducer';
 
 interface Props {
   activeCategory: BaseCategoryEntry;
@@ -47,7 +48,10 @@ const EditNav = ({ activeCategory }: Props) => {
     setEditTitle(false);
   };
 
-  const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(!editorActive));
+  const setNoteEditorActiveOnClick = () => {
+    dispatch(setEditorActive(!editorActive));
+    dispatch(setEditNote(false)); // sets any notes that are being edited to false, closing the editor that's active on them
+  };
 
   console.log(activeCategory, 'active category');
 

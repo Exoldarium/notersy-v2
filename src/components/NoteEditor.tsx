@@ -20,6 +20,10 @@ interface Props {
 // TODO:
 // add different headers and paragraph options into a dropdown menu
 
+// TODO:
+// saving the editor content when editing notes and closing the popup could be done by pushing
+// editor content to a new storage key and grabbing it from there on reaload for the edit: active note
+
 const NoteEditor = ({ singleCategory }: Props) => {
   const [newNote, setNewNote] = useState('');
   const dispatch = useAppDispatch();

@@ -10,7 +10,7 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
 
   // check if correct keys are present in each entry
   if (
-    'active' in object &&
+    'edit' in object &&
     'content' in object &&
     'date' in object &&
     'title' in object &&
@@ -19,7 +19,7 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
   ) {
     // parse each value and return correct type 
     const newEntry: BaseNoteEntry = {
-      active: parseToBool(object.active),
+      edit: parseToBool(object.edit),
       content: parseToString(object.content),
       date: parseDate(object.date),
       title: parseToString(object.title),
