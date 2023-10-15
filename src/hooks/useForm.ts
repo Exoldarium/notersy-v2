@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { parseToString } from '../utils/parseData';
 import { BaseCategoryEntry } from '../types';
+import DOMPurify from 'dompurify';
 
 const useForm = (initialState: BaseCategoryEntry) => {
   const [inputs, setInputs] = useState(initialState);
@@ -9,9 +10,11 @@ const useForm = (initialState: BaseCategoryEntry) => {
     const name = parseToString(e.target.name);
     const value = parseToString(e.target.value);
 
+    const clean = DOMPurify.sanitize(value);
+
     setInputs({
       ...inputs,
-      [name]: value
+      [name]: clean
     });
   };
 
