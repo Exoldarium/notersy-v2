@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingCategory } from '../reducers/categoryReducer';
 import { BaseCategoryEntry } from '../types';
 import { toNewCategoryEntry } from '../utils/parseStorageEntry';
-import { addCheckedId, updateCheckedId } from '../reducers/checkboxReducer';
+import { addChecked, updateChecked } from '../reducers/checkboxReducer';
 import { parseToString } from '../utils/parseData';
 
 interface Props {
@@ -31,7 +31,7 @@ const CategoryList = ({ category }: Props) => {
       active: true
     };
 
-    void dispatch(updateCheckedId([])); // clear active checkbox id's from state
+    void dispatch(updateChecked([])); // clear active checkbox id's from state
     void dispatch(updateExistingCategory(updatedCategory));
   };
 
@@ -42,9 +42,9 @@ const CategoryList = ({ category }: Props) => {
         id: parseToString(e.currentTarget.id)
       };
 
-      void dispatch(addCheckedId(checked));
+      void dispatch(addChecked(checked));
     } else {
-      void dispatch(updateCheckedId(checkbox.filter(item => item.id !== e.currentTarget.id)));
+      void dispatch(updateChecked(checkbox.filter(item => item.id !== e.currentTarget.id)));
     }
   };
 

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
-import { BaseCategoryEntry, Checked } from '../types';
+import { BaseCategoryEntry, BaseNoteEntry, Checked } from '../types';
 import { parseStorage, setStorage } from '../services/storageService';
 import { AppDispatch } from '../store';
-import { toNewCategoryEntry } from '../utils/parseStorageEntry';
+import { toNewCategoryEntry, toNewNoteEntry } from '../utils/parseStorageEntry';
 import { getDate } from '../utils/helpers';
 import { parseError } from '../utils/parseData';
 
@@ -27,6 +27,9 @@ const categorySlice = createSlice({
     },
     deleteCategory(_, action: PayloadAction<BaseCategoryEntry[]>) {
       return action.payload;
+    },
+    addNote(_, action: PayloadAction<BaseCategoryEntry[]>) {
+      return action.payload;
     }
   }
 });
@@ -35,7 +38,8 @@ export const {
   setCategories,
   addCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  addNote
 } = categorySlice.actions;
 
 export const initializeCategories = () => {
@@ -57,7 +61,7 @@ export const addNewCategory = () => {
     try {
       const { storedData } = await parseStorage('storedData');
 
-      const newEntry: BaseCategoryEntry = {
+      const newCategoryEntry: BaseCategoryEntry = {
         id: uuidv4(),
         active: true,
         title: 'New Category',
@@ -65,11 +69,11 @@ export const addNewCategory = () => {
         unixTime: Date.now(),
         notes: [],
       };
-      const parsedentry = toNewCategoryEntry(newEntry);
+      const parsedCategoryEntry = toNewCategoryEntry(newCategoryEntry);
 
-      await setStorage('storedData', storedData.concat(parsedentry));
+      await setStorage('storedData', storedData.concat(parsedCategoryEntry));
 
-      dispatch(addCategory(parsedentry));
+      dispatch(addCategory(parsedCategoryEntry));
       console.log(storedData, 'a new category added');
     } catch (err) {
       const error = parseError(err);
@@ -112,6 +116,40 @@ export const deleteExistingCategory = (checkedIdValues: Checked[]) => {
     } catch (err) {
       const error = parseError(err);
       console.error('deletExistingCategory action Error', error);
+      throw new Error(error);
+    }
+  };
+};
+
+export const addNewNote = (category: BaseCategoryEntry, content: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { storedData } = await parseStorage('storedData');
+
+      const newNoteEntry: BaseNoteEntry = {
+        id: uuidv4(),
+        active: true,
+        title: 'New Category',
+        date: getDate(),
+        unixTime: Date.now(),
+        content,
+      };
+
+      const parsedNoteEntry = toNewNoteEntry(newNoteEntry);
+      const notes = category.notes.concat(parsedNoteEntry);
+      const categoryWithNotes = {
+        ...category,
+        notes,
+      };
+
+      const updatedCategories = storedData.filter(category => category.id !== categoryWithNotes.id);
+      await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
+
+      dispatch(addNote(updatedCategories.concat(categoryWithNotes)));
+      console.log(updatedCategories, 'a new note added');
+    } catch (err) {
+      const error = parseError(err);
+      console.error('addNewNote action Error', error);
       throw new Error(error);
     }
   };

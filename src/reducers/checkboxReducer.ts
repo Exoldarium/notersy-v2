@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppDispatch } from '../store';
 import { Checked } from '../types';
 
 const initialState: Checked[] = [];
@@ -22,16 +21,16 @@ export const {
   updateChecked
 } = checkboxSlice.actions;
 
-export const addCheckedId = (param: Checked) => {
-  return (dispatch: AppDispatch) => {
-    dispatch(addChecked(param));
-  };
-};
+// export const addCheckedId = (param: Checked) => {
+//   return (dispatch: AppDispatch) => {
+//     dispatch(addChecked(param));
+//   };
+// };
 
-export const updateCheckedId = (param: Checked[]) => {
-  return (dispatch: AppDispatch) => {
-    dispatch(updateChecked(param));
-  };
-};
+// export const updateCheckedId = (param: Checked[]) => {
+//   return (dispatch: AppDispatch) => {
+//     dispatch(updateChecked(param));
+//   };
+// };
 
 export default checkboxSlice.reducer;

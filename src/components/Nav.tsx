@@ -3,7 +3,7 @@ import NavStyles from './styles/NavStyles';
 import { addNewCategory, deleteExistingCategory } from '../reducers/categoryReducer';
 import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-import { updateCheckedId } from '../reducers/checkboxReducer';
+import { updateChecked } from '../reducers/checkboxReducer';
 
 const Nav = () => {
   const dispatch = useAppDispatch();
@@ -13,17 +13,17 @@ const Nav = () => {
 
   const addNewCategoryOnClick = () => {
     void dispatch(addNewCategory());
-    void dispatch(updateCheckedId([])); // update checkedIds state
+    void dispatch(updateChecked([])); // update checkedIds state
   };
 
   const clearStorageOnClick = async () => {
     await setStorage('storedData', []);
-    void dispatch(updateCheckedId([]));
+    void dispatch(updateChecked([]));
   };
 
   const deleteCheckedCategoriesOnClick = () => {
     void dispatch(deleteExistingCategory(checkbox));
-    void dispatch(updateCheckedId([]));
+    void dispatch(updateChecked([]));
   };
 
   return (

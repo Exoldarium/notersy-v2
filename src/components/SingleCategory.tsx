@@ -9,9 +9,6 @@ interface Props {
 }
 
 const SingleCategory = ({ singleCategory }: Props) => {
-  const notes = useAppSelector(({ notes }) => {
-    return notes;
-  });
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
@@ -21,7 +18,7 @@ const SingleCategory = ({ singleCategory }: Props) => {
   return (
     <>
       {editorActive && <NoteEditor singleCategory={singleCategory} />}
-      {notes.map(note => (
+      {singleCategory.notes.map(note => (
         <SingleNote note={note} key={note.id} />
       ))}
     </>

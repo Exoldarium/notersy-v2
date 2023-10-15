@@ -10,7 +10,7 @@ import { useAppDispatch } from '../hooks/useReduxTypes';
 import { parseToNumber } from '../utils/parseData';
 import NoteEditorStyles from './styles/NoteEditorStyles';
 import { BaseCategoryEntry } from '../types';
-import { addNewNote } from '../reducers/noteReducer';
+import { addNewNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 
 interface Props {
@@ -52,7 +52,7 @@ const NoteEditor = ({ singleCategory }: Props) => {
     onUpdate({ editor }) {
       // grab the text and sanitize the inputs
       const clean = DOMPurify.sanitize(editor.getHTML());
-      setNewNote(JSON.stringify(clean));
+      setNewNote(clean);
     },
   });
 
@@ -62,9 +62,8 @@ const NoteEditor = ({ singleCategory }: Props) => {
 
   const addNewNoteOnClick = () => {
     // send a new note and close the editor
-    void dispatch(addNewNote(singleCategory.id, newNote));
+    void dispatch(addNewNote(singleCategory, newNote));
     void dispatch(setEditorActive(false));
-    console.log(JSON.parse(newNote));
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
