@@ -73,6 +73,7 @@ export const addNewCategory = () => {
         unixTime: Date.now(),
         notes: [],
       };
+      // parse data
       const parsedCategoryEntry = toNewCategoryEntry(newCategoryEntry);
 
       await setStorage('storedData', storedData.concat(parsedCategoryEntry));
@@ -140,13 +141,17 @@ export const addNewNote = (category: BaseCategoryEntry, content: string) => {
       };
 
       const parsedNoteEntry = toNewNoteEntry(newNoteEntry);
+
+      // add a new note to the notes array and create an updated category
       const notes = category.notes.concat(parsedNoteEntry);
       const categoryWithNotes = {
         ...category,
         notes,
       };
 
+      // filter the category that we are updating with a new note
       const updatedCategories = storedData.filter(category => category.id !== categoryWithNotes.id);
+
       await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
       dispatch(addNote(updatedCategories.concat(categoryWithNotes)));
@@ -165,6 +170,8 @@ export const updateExistingNote = (category: BaseCategoryEntry, editedNote: Base
       const { storedData } = await parseStorage('storedData');
 
       const parsedNoteEntry = toNewNoteEntry(editedNote);
+
+      // filter the note that we are updating
       const notesToUpdate = category.notes.filter(note => note.id !== parsedNoteEntry.id);
       const updatedNotes = notesToUpdate.concat(parsedNoteEntry);
       const categoryWithNotes = {
@@ -173,6 +180,7 @@ export const updateExistingNote = (category: BaseCategoryEntry, editedNote: Base
       };
 
       const updatedCategories = storedData.filter(category => category.id !== categoryWithNotes.id);
+
       await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
       dispatch(updateNote(updatedCategories.concat(categoryWithNotes)));

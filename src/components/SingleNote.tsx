@@ -1,6 +1,7 @@
 import DOMPurify from 'dompurify';
 
 import SingleNoteStyles from './styles/SingleNoteStyles';
+
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { useAppDispatch } from '../hooks/useReduxTypes';
 import { setEditNote } from '../reducers/editNoteReducer';
@@ -17,8 +18,9 @@ interface Props {
 }
 
 const SingleNote = ({ note, singleCategory }: Props) => {
-  // sanitize note content before setting it to innerHTML
   const dispatch = useAppDispatch();
+
+  // sanitize note content before setting it to innerHTML
   const clean = DOMPurify.sanitize(note.content);
   const render = {
     __html: clean
@@ -31,7 +33,7 @@ const SingleNote = ({ note, singleCategory }: Props) => {
     };
 
     void dispatch(updateExistingNote(singleCategory, noteToEdit));
-    dispatch(setEditorActive(false)); // close new note editor if it's open
+    dispatch(setEditorActive(false)); // close the editor that's used for adding new notes, if it's open
     dispatch(setEditNote(true));
   };
 
