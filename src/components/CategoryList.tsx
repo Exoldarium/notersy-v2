@@ -31,7 +31,7 @@ const CategoryList = ({ category }: Props) => {
       active: true
     };
 
-    void dispatch(updateChecked([])); // clear active checkbox id's from state
+    dispatch(updateChecked([])); // clear active checkbox id's from state
     void dispatch(updateExistingCategory(updatedCategory));
   };
 
@@ -42,9 +42,9 @@ const CategoryList = ({ category }: Props) => {
         id: parseToString(e.currentTarget.id)
       };
 
-      void dispatch(addChecked(checked));
+      dispatch(addChecked(checked));
     } else {
-      void dispatch(updateChecked(checkbox.filter(item => item.id !== e.currentTarget.id)));
+      dispatch(updateChecked(checkbox.filter(item => item.id !== e.currentTarget.id)));
     }
   };
 

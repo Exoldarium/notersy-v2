@@ -31,7 +31,7 @@ export const setNotificationMesage = (message: Message) => {
         content: message.content
       };
 
-      void dispatch(setMessage(newMessage));
+      dispatch(setMessage(newMessage));
     } catch (err) {
       const error = parseError(err);
       console.error('setNotificationMesage action Error', error);

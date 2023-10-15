@@ -63,7 +63,7 @@ const NoteEditor = ({ singleCategory }: Props) => {
   const addNewNoteOnClick = () => {
     // send a new note and close the editor
     void dispatch(addNewNote(singleCategory, newNote));
-    void dispatch(setEditorActive(false));
+    dispatch(setEditorActive(false));
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call

@@ -128,7 +128,7 @@ export const addNewNote = (category: BaseCategoryEntry, content: string) => {
 
       const newNoteEntry: BaseNoteEntry = {
         id: uuidv4(),
-        active: true,
+        active: false,
         title: 'New Category',
         date: getDate(),
         unixTime: Date.now(),

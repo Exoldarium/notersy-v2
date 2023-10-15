@@ -35,13 +35,15 @@ const EditNav = ({ activeCategory }: Props) => {
     navigate('/');
   };
 
-  const updateTitleOnClick = () => {
+  const updateTitleOnClick = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const updatedCategory = {
       ...activeCategory,
       title: inputs.title
     };
 
     void dispatch(updateExistingCategory(updatedCategory));
+    setEditTitle(false);
   };
 
   const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(!editorActive));

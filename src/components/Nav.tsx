@@ -13,17 +13,17 @@ const Nav = () => {
 
   const addNewCategoryOnClick = () => {
     void dispatch(addNewCategory());
-    void dispatch(updateChecked([])); // update checkedIds state
+    dispatch(updateChecked([])); // update checkedIds state
   };
 
   const clearStorageOnClick = async () => {
     await setStorage('storedData', []);
-    void dispatch(updateChecked([]));
+    dispatch(updateChecked([]));
   };
 
   const deleteCheckedCategoriesOnClick = () => {
     void dispatch(deleteExistingCategory(checkbox));
-    void dispatch(updateChecked([]));
+    dispatch(updateChecked([]));
   };
 
   return (

@@ -44,7 +44,7 @@ const App = () => {
   const singleCategory = match ?
     toNewCategoryEntry(categories.find(category => category.id === match.params.id))
     :
-    void dispatch(setNotificationMesage({
+    dispatch(setNotificationMesage({
       type: 'ERROR',
       content: 'Invalid note'
     }));
@@ -52,7 +52,7 @@ const App = () => {
   // check if there's an active category
   const activeCategory = categories.find(entry => entry.active);
 
-  const addNewCategoryOnClick = () => void dispatch(addNewCategory());
+  const addNewCategoryOnClick = () => dispatch(addNewCategory());
 
   console.log('App', categories);
 
