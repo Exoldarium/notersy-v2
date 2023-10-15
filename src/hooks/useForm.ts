@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import DOMPurify from 'dompurify';
 import { parseToString } from '../utils/parseData';
 import { BaseCategoryEntry } from '../types';
-import DOMPurify from 'dompurify';
 
 const useForm = (initialState: BaseCategoryEntry) => {
   const [inputs, setInputs] = useState(initialState);

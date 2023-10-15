@@ -32,6 +32,7 @@ const EditNav = ({ activeCategory }: Props) => {
     };
 
     void dispatch(updateExistingCategory(updatedCategory));
+    dispatch(setEditorActive(false));
     navigate('/');
   };
 

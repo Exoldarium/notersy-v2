@@ -17,6 +17,9 @@ interface Props {
   singleCategory: BaseCategoryEntry;
 }
 
+// TODO:
+// add different headers and paragraph options into a dropdown menu
+
 const NoteEditor = ({ singleCategory }: Props) => {
   const [newNote, setNewNote] = useState('');
   const dispatch = useAppDispatch();
