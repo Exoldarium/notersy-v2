@@ -61,11 +61,9 @@ export const initializeCategories = () => {
   };
 };
 
-export const addNewCategory = () => {
+export const addNewCategory = (categories: BaseCategoryEntry[]) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const { storedData } = await parseStorage('storedData');
-
       const newCategoryEntry: BaseCategoryEntry = {
         id: uuidv4(),
         active: true,
@@ -77,10 +75,10 @@ export const addNewCategory = () => {
       // parse data
       const parsedCategoryEntry = toNewCategoryEntry(newCategoryEntry);
 
-      await setStorage('storedData', storedData.concat(parsedCategoryEntry));
+      await setStorage('storedData', categories.concat(parsedCategoryEntry));
 
       dispatch(addCategory(parsedCategoryEntry));
-      console.log(storedData, 'a new category added');
+      console.log(categories, 'a new category added');
     } catch (err) {
       const error = parseError(err);
       console.error('addNewCategory action Error', error);
@@ -89,12 +87,13 @@ export const addNewCategory = () => {
   };
 };
 
-export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
+export const updateExistingCategory = (
+  categories: BaseCategoryEntry[],
+  categoryToUpdate: BaseCategoryEntry
+) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const { storedData } = await parseStorage('storedData');
-
-      const updatedCategories = storedData.filter(category => category.id !== categoryToUpdate.id);
+      const updatedCategories = categories.filter(category => category.id !== categoryToUpdate.id);
 
       await setStorage('storedData', updatedCategories.concat(categoryToUpdate));
 
@@ -107,14 +106,15 @@ export const updateExistingCategory = (categoryToUpdate: BaseCategoryEntry) => {
   };
 };
 
-export const deleteExistingCategory = (checkedIdValues: Checked[]) => {
+export const deleteExistingCategory = (
+  categories: BaseCategoryEntry[],
+  checkedIdValues: Checked[]
+) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const { storedData } = await parseStorage('storedData');
-
       // delete selected categories based on their matching ids that are stored in checkbox state
       const ids = checkedIdValues.map(item => item.id);
-      const updatedCategories = storedData.filter(category => !ids.includes(category.id));
+      const updatedCategories = categories.filter(category => !ids.includes(category.id));
 
       await setStorage('storedData', updatedCategories);
 
@@ -127,11 +127,13 @@ export const deleteExistingCategory = (checkedIdValues: Checked[]) => {
   };
 };
 
-export const addNewNote = (category: BaseCategoryEntry, content: string) => {
+export const addNewNote = (
+  categories: BaseCategoryEntry[],
+  category: BaseCategoryEntry,
+  content: string
+) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const { storedData } = await parseStorage('storedData');
-
       const newNoteEntry: BaseNoteEntry = {
         id: uuidv4(),
         edit: false,
@@ -151,7 +153,7 @@ export const addNewNote = (category: BaseCategoryEntry, content: string) => {
       };
 
       // filter the category that we are updating with a new note
-      const updatedCategories = storedData.filter(category => category.id !== categoryWithNotes.id);
+      const updatedCategories = categories.filter(category => category.id !== categoryWithNotes.id);
 
       await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
@@ -165,11 +167,13 @@ export const addNewNote = (category: BaseCategoryEntry, content: string) => {
   };
 };
 
-export const updateExistingNote = (category: BaseCategoryEntry, editedNote: BaseNoteEntry) => {
+export const updateExistingNote = (
+  categories: BaseCategoryEntry[],
+  category: BaseCategoryEntry,
+  editedNote: BaseNoteEntry
+) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const { storedData } = await parseStorage('storedData');
-
       const parsedNoteEntry = toNewNoteEntry(editedNote);
 
       // filter the note that we are updating
@@ -180,7 +184,7 @@ export const updateExistingNote = (category: BaseCategoryEntry, editedNote: Base
         notes: updatedNotes
       };
 
-      const updatedCategories = storedData.filter(category => category.id !== categoryWithNotes.id);
+      const updatedCategories = categories.filter(category => category.id !== categoryWithNotes.id);
 
       await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 

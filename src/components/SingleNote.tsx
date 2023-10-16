@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 import SingleNoteStyles from './styles/SingleNoteStyles';
 
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
-import { useAppDispatch } from '../hooks/useReduxTypes';
+import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { setEditorOnNote } from '../reducers/editorOnNoteReducer';
@@ -18,6 +18,9 @@ interface Props {
 }
 
 const SingleNote = ({ note, singleCategory }: Props) => {
+  const categories = useAppSelector(({ categories }) => {
+    return categories;
+  });
   const dispatch = useAppDispatch();
 
   // sanitize note content before setting it to innerHTML
@@ -32,7 +35,7 @@ const SingleNote = ({ note, singleCategory }: Props) => {
       edit: true
     };
 
-    void dispatch(updateExistingNote(singleCategory, noteToEdit));
+    void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
     dispatch(setEditorActive(false)); // close the editor that's used for adding new notes, if it's open
     dispatch(setEditorOnNote(true));
   };

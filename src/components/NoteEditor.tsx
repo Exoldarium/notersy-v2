@@ -10,7 +10,7 @@ import NoteEditorStyles from './styles/NoteEditorStyles';
 import { addNewNote, updateExistingNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { setEditorOnNote } from '../reducers/editorOnNoteReducer';
-import { useAppDispatch } from '../hooks/useReduxTypes';
+import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { BaseCategoryEntry } from '../types';
 import { parseToNumber } from '../utils/parseData';
 
@@ -24,9 +24,13 @@ interface Props {
 // set the edited content to a different storage key so that the data persists even if the popup is closed
 // FIX:
 // when clicking the button to add a new note, the content from the previously edited note should not be added, it should be blank
+// when the edited note's content is not changed the note will be submitted as an empty note
 
 const NoteEditor = ({ singleCategory }: Props) => {
   const [newNote, setNewNote] = useState('');
+  const categories = useAppSelector(({ categories }) => {
+    return categories;
+  });
   const dispatch = useAppDispatch();
   const editor = useEditor({
     extensions: [
@@ -69,12 +73,12 @@ const NoteEditor = ({ singleCategory }: Props) => {
         edit: false
       };
 
-      void dispatch(updateExistingNote(singleCategory, noteToEdit));
+      void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
       dispatch(setEditorActive(false)); // close editor
       dispatch(setEditorOnNote(false)); // set note edit state to false
     } else {
       // else send a new note and close the editor
-      void dispatch(addNewNote(singleCategory, newNote));
+      void dispatch(addNewNote(categories, singleCategory, newNote));
       dispatch(setEditorActive(false));
     }
   };

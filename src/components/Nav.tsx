@@ -7,12 +7,15 @@ import { updateChecked } from '../reducers/checkboxReducer';
 
 const Nav = () => {
   const dispatch = useAppDispatch();
+  const categories = useAppSelector(({ categories }) => {
+    return categories;
+  });
   const checkbox = useAppSelector(({ checkbox }) => {
     return checkbox;
   });
 
   const addNewCategoryOnClick = () => {
-    void dispatch(addNewCategory());
+    void dispatch(addNewCategory(categories));
     dispatch(updateChecked([])); // update checkedIds state
   };
 
@@ -22,7 +25,7 @@ const Nav = () => {
   };
 
   const deleteCheckedCategoriesOnClick = () => {
-    void dispatch(deleteExistingCategory(checkbox));
+    void dispatch(deleteExistingCategory(categories, checkbox));
     dispatch(updateChecked([]));
   };
 

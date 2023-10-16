@@ -17,6 +17,9 @@ interface Props {
 
 const EditNav = ({ activeCategory }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
+  const categories = useAppSelector(({ categories }) => {
+    return categories;
+  });
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
@@ -32,7 +35,7 @@ const EditNav = ({ activeCategory }: Props) => {
       active: false
     };
 
-    void dispatch(updateExistingCategory(updatedCategory));
+    void dispatch(updateExistingCategory(categories, updatedCategory));
     dispatch(setEditorActive(false));
     navigate('/');
   };
@@ -44,7 +47,7 @@ const EditNav = ({ activeCategory }: Props) => {
       title: inputs.title
     };
 
-    void dispatch(updateExistingCategory(updatedCategory));
+    void dispatch(updateExistingCategory(categories, updatedCategory));
     setEditTitle(false);
   };
 

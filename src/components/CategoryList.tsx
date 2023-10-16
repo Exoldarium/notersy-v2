@@ -32,7 +32,7 @@ const CategoryList = ({ category }: Props) => {
     };
 
     dispatch(updateChecked([])); // clear active checkbox id's from state
-    void dispatch(updateExistingCategory(updatedCategory));
+    void dispatch(updateExistingCategory(categories, updatedCategory));
   };
 
   const setChecboxChecked = (e: React.MouseEvent<HTMLInputElement>) => {
