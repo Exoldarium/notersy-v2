@@ -72,6 +72,7 @@ export const addNewCategory = (categories: BaseCategoryEntry[]) => {
         unixTime: Date.now(),
         notes: [],
       };
+
       // parse data
       const parsedCategoryEntry = toNewCategoryEntry(newCategoryEntry);
 
@@ -198,4 +199,5 @@ export const updateExistingNote = (
   };
 };
 
+// TODO: change default exports
 export default categorySlice.reducer;

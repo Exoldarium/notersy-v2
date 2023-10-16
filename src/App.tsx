@@ -16,8 +16,6 @@ import { setNotificationMesage } from './reducers/messageReducer';
 
 // TODO: 
 // add a button that will resize the popup when notes are active, redisign category display
-// TODO: 
-// try to use a category through reducer instead of querying chrome storage every time
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -69,7 +67,7 @@ const App = () => {
       <GlobalStyles />
       {activeCategory ?
         <EditNav
-          activeCategory={activeCategory}
+          singleCategory={activeCategory}
         /> :
         <Nav />
       }

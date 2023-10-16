@@ -22,12 +22,9 @@ interface Props {
 // add different headers and paragraph options into a dropdown menu
 // TODO:
 // set the edited content to a different storage key so that the data persists even if the popup is closed
-// FIX:
-// when clicking the button to add a new note, the content from the previously edited note should not be added, it should be blank
-// when the edited note's content is not changed the note will be submitted as an empty note
 
 const NoteEditor = ({ singleCategory }: Props) => {
-  const [newNote, setNewNote] = useState('');
+  const [noteContent, setNoteContent] = useState('');
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -45,8 +42,8 @@ const NoteEditor = ({ singleCategory }: Props) => {
     onUpdate({ editor }) {
       // grab the text and sanitize the inputs
       const clean = DOMPurify.sanitize(editor.getHTML());
-      setNewNote(clean);
-    },
+      setNoteContent(clean);
+    }
   });
 
   const editNote = singleCategory.notes.find(note => note.edit);
@@ -56,6 +53,7 @@ const NoteEditor = ({ singleCategory }: Props) => {
     if (editNote) {
       const clean = DOMPurify.sanitize(editNote.content);
       editor?.commands.setContent(clean);
+      setNoteContent(clean);
     }
   }, [editNote, editor]);
 
@@ -69,7 +67,7 @@ const NoteEditor = ({ singleCategory }: Props) => {
       // if it is add the new content and set the edit property to false
       const noteToEdit = {
         ...editNote,
-        content: newNote,
+        content: noteContent,
         edit: false
       };
 
@@ -78,7 +76,7 @@ const NoteEditor = ({ singleCategory }: Props) => {
       dispatch(setEditorOnNote(false)); // set note edit state to false
     } else {
       // else send a new note and close the editor
-      void dispatch(addNewNote(categories, singleCategory, newNote));
+      void dispatch(addNewNote(categories, singleCategory, noteContent));
       dispatch(setEditorActive(false));
     }
   };
@@ -124,6 +122,7 @@ const NoteEditor = ({ singleCategory }: Props) => {
         <button
           type="button"
           onClick={addNewNoteOnClick}
+          disabled={editor.getHTML() === '<p></p>'}
         >
           Add note
         </button>

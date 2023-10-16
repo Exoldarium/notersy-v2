@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import NavStyles from './styles/NavStyles';
 
 import { BaseCategoryEntry } from '../types';
-import { updateExistingCategory } from '../reducers/categoryReducer';
+import { updateExistingCategory, updateExistingNote } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 
 import useForm from '../hooks/useForm';
@@ -12,10 +12,10 @@ import { setEditorActive } from '../reducers/editorActiveReducer';
 import { setEditorOnNote } from '../reducers/editorOnNoteReducer';
 
 interface Props {
-  activeCategory: BaseCategoryEntry;
+  singleCategory: BaseCategoryEntry;
 }
 
-const EditNav = ({ activeCategory }: Props) => {
+const EditNav = ({ singleCategory }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -23,15 +23,17 @@ const EditNav = ({ activeCategory }: Props) => {
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
-  const { inputs, handleInputs } = useForm(activeCategory);
+  const { inputs, handleInputs } = useForm(singleCategory);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const editNote = singleCategory.notes.find(note => note.edit);
 
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
   const setActiveCategoryToFalse = () => {
     const updatedCategory = {
-      ...activeCategory,
+      ...singleCategory,
       active: false
     };
 
@@ -43,7 +45,7 @@ const EditNav = ({ activeCategory }: Props) => {
   const updateTitleOnClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const updatedCategory = {
-      ...activeCategory,
+      ...singleCategory,
       title: inputs.title
     };
 
@@ -52,11 +54,20 @@ const EditNav = ({ activeCategory }: Props) => {
   };
 
   const setNoteEditorActiveOnClick = () => {
+    // if there is a note that is set to be edited, set edit to false
+    // prevents editor menu to be rendered with edited note content
+    if (editNote) {
+      const noteToEdit = {
+        ...editNote,
+        edit: false
+      };
+      void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
+    }
     dispatch(setEditorActive(!editorActive));
     dispatch(setEditorOnNote(false)); // sets any notes that are being edited to false, closing the editor that's active on them
   };
 
-  console.log(activeCategory, 'active category');
+  console.log(singleCategory, 'active category');
 
   return (
     <NavStyles>
@@ -70,7 +81,7 @@ const EditNav = ({ activeCategory }: Props) => {
             Back
           </button>
         }
-        {!editTitle && <h1>{activeCategory.title}</h1>}
+        {!editTitle && <h1>{singleCategory.title}</h1>}
         {editTitle &&
           <form onSubmit={updateTitleOnClick}>
             <input

@@ -11,7 +11,7 @@ export const store = configureStore({
     message: messageReducer,
     checkbox: checkboxReducer,
     editorActive: editorActiveReducer,
-    editNote: editNoteReducer
+    editNote: editNoteReducer,
   }
 });
 
