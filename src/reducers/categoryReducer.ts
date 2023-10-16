@@ -12,6 +12,7 @@ const initialState: BaseCategoryEntry[] = [];
 // TODO: add sorting, the user could choose to sort by name or date
 // TODO: we could add last viewed where the viewed property could be updated depending on when the category was clicked
 
+// controls notes and categories CRUD
 const categorySlice = createSlice({
   name: 'categories',
   initialState,

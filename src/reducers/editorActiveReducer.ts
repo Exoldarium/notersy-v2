@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+// controls the editor that is used for adding new notes
 const editorActiveSlice = createSlice({
   name: 'editorActive',
   initialState: false,

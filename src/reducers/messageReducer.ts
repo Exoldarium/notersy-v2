@@ -9,6 +9,7 @@ const initialState: Message = {
   content: ''
 };
 
+// sets a message to be displayed to a user if there's a need for one
 const messageReducer = createSlice({
   name: 'message',
   initialState,

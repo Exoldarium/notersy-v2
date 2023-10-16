@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
 
 import { EditorContent, useEditor } from '@tiptap/react';
 import CharacterCount from '@tiptap/extension-character-count';
 import StarterKit from '@tiptap/starter-kit';
 
-import { useAppDispatch } from '../hooks/useReduxTypes';
-import { parseToNumber } from '../utils/parseData';
 import NoteEditorStyles from './styles/NoteEditorStyles';
-import { BaseCategoryEntry } from '../types';
-import { addNewNote } from '../reducers/categoryReducer';
+
+import { addNewNote, updateExistingNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
+import { setEditorOnNote } from '../reducers/editorOnNoteReducer';
+import { useAppDispatch } from '../hooks/useReduxTypes';
+import { BaseCategoryEntry } from '../types';
+import { parseToNumber } from '../utils/parseData';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -18,9 +20,10 @@ interface Props {
 
 // TODO:
 // add different headers and paragraph options into a dropdown menu
-
 // TODO:
-// add a button to submit edited note
+// set the edited content to a different storage key so that the data persists even if the popup is closed
+// FIX:
+// when clicking the button to add a new note, the content from the previously edited note should not be added, it should be blank
 
 const NoteEditor = ({ singleCategory }: Props) => {
   const [newNote, setNewNote] = useState('');
@@ -42,14 +45,38 @@ const NoteEditor = ({ singleCategory }: Props) => {
     },
   });
 
+  const editNote = singleCategory.notes.find(note => note.edit);
+
+  useEffect(() => {
+    // if note is set to be edited, add the existing content
+    if (editNote) {
+      const clean = DOMPurify.sanitize(editNote.content);
+      editor?.commands.setContent(clean);
+    }
+  }, [editNote, editor]);
+
   if (!editor) {
     return null;
   }
 
   const addNewNoteOnClick = () => {
-    // send a new note and close the editor
-    void dispatch(addNewNote(singleCategory, newNote));
-    dispatch(setEditorActive(false));
+    // check if the note is set to be edited
+    if (editNote) {
+      // if it is add the new content and set the edit property to false
+      const noteToEdit = {
+        ...editNote,
+        content: newNote,
+        edit: false
+      };
+
+      void dispatch(updateExistingNote(singleCategory, noteToEdit));
+      dispatch(setEditorActive(false)); // close editor
+      dispatch(setEditorOnNote(false)); // set note edit state to false
+    } else {
+      // else send a new note and close the editor
+      void dispatch(addNewNote(singleCategory, newNote));
+      dispatch(setEditorActive(false));
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call

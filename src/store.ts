@@ -3,7 +3,7 @@ import categoryReducer from './reducers/categoryReducer';
 import messageReducer from './reducers/messageReducer';
 import checkboxReducer from './reducers/checkboxReducer';
 import editorActiveReducer from './reducers/editorActiveReducer';
-import editNoteReducer from './reducers/editNoteReducer';
+import editNoteReducer from './reducers/editorOnNoteReducer';
 
 export const store = configureStore({
   reducer: {

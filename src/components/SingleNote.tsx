@@ -4,9 +4,9 @@ import SingleNoteStyles from './styles/SingleNoteStyles';
 
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { useAppDispatch } from '../hooks/useReduxTypes';
-import { setEditNote } from '../reducers/editNoteReducer';
 import { updateExistingNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
+import { setEditorOnNote } from '../reducers/editorOnNoteReducer';
 
 // TODO:
 // clicking edit button should bring the note editor to that note
@@ -34,7 +34,7 @@ const SingleNote = ({ note, singleCategory }: Props) => {
 
     void dispatch(updateExistingNote(singleCategory, noteToEdit));
     dispatch(setEditorActive(false)); // close the editor that's used for adding new notes, if it's open
-    dispatch(setEditNote(true));
+    dispatch(setEditorOnNote(true));
   };
 
   console.log(note, 'note');
