@@ -81,6 +81,21 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     }
   };
 
+  const setNoteEditorActiveOnClick = () => {
+    // if there is a note that is set to be edited, set edit to false
+    // prevents editor menu to be rendered with edited note content
+    if (editNote) {
+      const noteToEdit = {
+        ...editNote,
+        edit: false
+      };
+      void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
+      dispatch(setEditorActive(false));
+    }
+    dispatch(setEditorActive(false));
+    dispatch(setEditorOnNote(false)); // sets any notes that are being edited to false, closing the editor that's active on them
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const characterCount = parseToNumber(editor.storage.characterCount.characters());
 
@@ -125,6 +140,12 @@ export const NoteEditor = ({ singleCategory }: Props) => {
           disabled={editor.getHTML() === '<p></p>'}
         >
           Add note
+        </button>
+        <button
+          type="button"
+          onClick={setNoteEditorActiveOnClick}
+        >
+          Cancel
         </button>
       </div>
       <EditorContent editor={editor} />

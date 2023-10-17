@@ -7,7 +7,7 @@ import { CategoryStyles } from './components/styles/CategoryStyles';
 import { Nav } from './components/Nav';
 import { SingleCategory } from './components/SingleCategory';
 import { Notification } from './components/Notification';
-import { EditNav } from './components/EditNav';
+import { CategoryNav } from './components/CategoryNav';
 
 import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
@@ -33,10 +33,10 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
-  const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
+  const dispatch = useAppDispatch();
   const match = useMatch('/:id');
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const App = () => {
     <>
       <GlobalStyles />
       {activeCategory ?
-        <EditNav
+        <CategoryNav
           singleCategory={activeCategory}
         /> :
         <Nav />
