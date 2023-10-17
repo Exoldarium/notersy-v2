@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { NavStyles } from './styles/NavStyles';
 
 import { BaseCategoryEntry } from '../types';
-import { updateExistingCategory } from '../reducers/categoryReducer';
+import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 
 import { useForm } from '../hooks/useForm';
 import { setEditorActive } from '../reducers/editorActiveReducer';
+import { updateChecked } from '../reducers/checkboxReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -24,6 +25,9 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   });
   const editorOnNote = useAppSelector(({ editorOnNote }) => {
     return editorOnNote;
+  });
+  const checkbox = useAppSelector(({ checkbox }) => {
+    return checkbox;
   });
   const { inputs, handleInputs } = useForm(singleCategory);
   const dispatch = useAppDispatch();
@@ -54,6 +58,13 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   };
 
   const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(true));
+
+  // TODO:
+  // try to extract this function because it's used twice
+  const deleteCheckedNotesOnClick = () => {
+    void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
+    dispatch(updateChecked([]));
+  };
 
   console.log(singleCategory, 'active category');
 
@@ -95,6 +106,13 @@ export const CategoryNav = ({ singleCategory }: Props) => {
           onClick={setNoteEditorActiveOnClick}
         >
           New note
+        </button>
+        <button
+          type="button"
+          style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+          onClick={deleteCheckedNotesOnClick}
+        >
+          Delete
         </button>
       </div>
     </NavStyles>

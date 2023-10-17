@@ -32,7 +32,7 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-const App = () => {
+export const App = () => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -112,5 +112,3 @@ const App = () => {
     </>
   );
 };
-
-export default App;

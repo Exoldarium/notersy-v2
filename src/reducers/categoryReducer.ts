@@ -199,4 +199,32 @@ export const updateExistingNote = (
   };
 };
 
+export const deleteExistingNote = (
+  categories: BaseCategoryEntry[],
+  category: BaseCategoryEntry,
+  checkedIdValues: Checked[]
+) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      // delete selected notes based on their matching ids that are stored in checkbox state
+      const ids = checkedIdValues.map(item => item.id);
+      const updatedNotes = category.notes.filter(note => !ids.includes(note.id));
+      const categoryWithNotes = {
+        ...category,
+        notes: updatedNotes
+      };
+
+      const updatedCategories = categories.filter(category => category.id !== categoryWithNotes.id);
+
+      await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
+
+      dispatch(updateNote(updatedCategories.concat(categoryWithNotes)));
+    } catch (err) {
+      const error = parseError(err);
+      console.error('deletExistingCategory action Error', error);
+      throw new Error(error);
+    }
+  };
+};
+
 export const categoryReducer = categorySlice.reducer;

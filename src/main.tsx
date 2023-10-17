@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import { App } from './App.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store.ts';
 import { MemoryRouter } from 'react-router-dom';
