@@ -18,7 +18,24 @@ beforeAll(() => {
               title: 'New Category',
               date: 'Sat Oct 07 2023 18:36:08',
               unixTime: 1696749517,
-              notes: []
+              notes: [
+                {
+                  id: '321',
+                  edit: false,
+                  title: 'New note',
+                  date: 'Sat Oct 08 2023 18:36:08',
+                  unixTime: 1696749515,
+                  content: 'some content'
+                },
+                {
+                  id: '4321',
+                  edit: false,
+                  title: 'another note',
+                  date: 'Sat Oct 09 2023 18:36:08',
+                  unixTime: 1696749514,
+                  content: 'some other content'
+                }
+              ]
             }
           ];
 

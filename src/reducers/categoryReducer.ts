@@ -199,5 +199,4 @@ export const updateExistingNote = (
   };
 };
 
-// TODO: change default exports
 export const categoryReducer = categorySlice.reducer;
