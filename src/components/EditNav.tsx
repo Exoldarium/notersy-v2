@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import NavStyles from './styles/NavStyles';
+import { NavStyles } from './styles/NavStyles';
 
 import { BaseCategoryEntry } from '../types';
 import { updateExistingCategory, updateExistingNote } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 
-import useForm from '../hooks/useForm';
+import { useForm } from '../hooks/useForm';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { setEditorOnNote } from '../reducers/editorOnNoteReducer';
 
@@ -15,7 +15,7 @@ interface Props {
   singleCategory: BaseCategoryEntry;
 }
 
-const EditNav = ({ singleCategory }: Props) => {
+export const EditNav = ({ singleCategory }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -111,5 +111,3 @@ const EditNav = ({ singleCategory }: Props) => {
     </NavStyles>
   );
 };
-
-export default EditNav;

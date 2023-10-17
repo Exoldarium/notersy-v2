@@ -15,4 +15,4 @@ export const {
   setEditorActive
 } = editorActiveSlice.actions;
 
-export default editorActiveSlice.reducer;
+export const editorActiveReducer = editorActiveSlice.reducer;

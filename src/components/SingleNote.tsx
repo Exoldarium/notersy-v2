@@ -1,6 +1,6 @@
 import DOMPurify from 'dompurify';
 
-import SingleNoteStyles from './styles/SingleNoteStyles';
+import { SingleNoteStyles } from './styles/SingleNoteStyles';
 
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
@@ -17,7 +17,7 @@ interface Props {
   singleCategory: BaseCategoryEntry;
 }
 
-const SingleNote = ({ note, singleCategory }: Props) => {
+export const SingleNote = ({ note, singleCategory }: Props) => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -49,5 +49,3 @@ const SingleNote = ({ note, singleCategory }: Props) => {
     </SingleNoteStyles>
   );
 };
-
-export default SingleNote;

@@ -1,11 +1,11 @@
-import NavStyles from './styles/NavStyles';
+import { NavStyles } from './styles/NavStyles';
 
 import { addNewCategory, deleteExistingCategory } from '../reducers/categoryReducer';
 import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateChecked } from '../reducers/checkboxReducer';
 
-const Nav = () => {
+export const Nav = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -56,5 +56,3 @@ const Nav = () => {
     </NavStyles>
   );
 };
-
-export default Nav;

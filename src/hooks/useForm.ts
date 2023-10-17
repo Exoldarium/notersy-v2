@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 import { parseToString } from '../utils/parseData';
 import { BaseCategoryEntry } from '../types';
 
-const useForm = (initialState: BaseCategoryEntry) => {
+export const useForm = (initialState: BaseCategoryEntry) => {
   const [inputs, setInputs] = useState(initialState);
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,5 +25,3 @@ const useForm = (initialState: BaseCategoryEntry) => {
     handleInputs
   };
 };
-
-export default useForm;

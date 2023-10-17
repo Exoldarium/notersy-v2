@@ -1,5 +1,5 @@
 import { test, describe, expect } from 'vitest';
-import toNewStorageEntry, { toNewCategoryEntry } from '../../utils/parseStorageEntry';
+import { toNewStorageEntry, toNewCategoryEntry } from '../../utils/parseStorageEntry';
 
 describe('functions return correct value', () => {
   const mockData = {

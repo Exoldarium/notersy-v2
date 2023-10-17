@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 
-import CategoryList from './components/CategoryList';
-import CategoryStyles from './components/styles/CategoryStyles';
-import Nav from './components/Nav';
-import SingleCategory from './components/SingleCategory';
-import Notification from './components/Notification';
-import EditNav from './components/EditNav';
+import { CategoryList } from './components/CategoryList';
+import { CategoryStyles } from './components/styles/CategoryStyles';
+import { Nav } from './components/Nav';
+import { SingleCategory } from './components/SingleCategory';
+import { Notification } from './components/Notification';
+import { EditNav } from './components/EditNav';
 
 import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';

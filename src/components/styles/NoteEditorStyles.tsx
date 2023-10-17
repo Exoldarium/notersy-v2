@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const NoteEditorStyles = styled.div`
+export const NoteEditorStyles = styled.div`
   .tiptap {
     min-height: 100px;
     height: fit-content;
@@ -12,5 +12,3 @@ const NoteEditorStyles = styled.div`
     }
   }
 `;
-
-export default NoteEditorStyles;

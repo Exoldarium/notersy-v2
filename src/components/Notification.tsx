@@ -3,7 +3,7 @@ import { useAppSelector } from '../hooks/useReduxTypes';
 // TODO:
 // message should be visible when an error happens
 
-const Notification = () => {
+export const Notification = () => {
   const message = useAppSelector(({ message }) => {
     if (message && message.type === 'ERROR') {
       return message.content;
@@ -18,5 +18,3 @@ const Notification = () => {
     );
   }
 };
-
-export default Notification;

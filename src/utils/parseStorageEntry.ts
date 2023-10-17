@@ -64,7 +64,7 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
   throw new Error('Incorrect data input or some fileds might be missing');
 };
 
-const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
+export const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
   if (
@@ -82,5 +82,3 @@ const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
   }
   throw new Error('Incorrect data input or some fileds might be missing');
 };
-
-export default toNewStorageEntry;

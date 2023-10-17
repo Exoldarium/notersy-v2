@@ -1,6 +1,6 @@
 import { BaseCategoryEntry, BaseStorageEntry } from '../types';
 import { parseError } from '../utils/parseData';
-import toNewStorageEntry from '../utils/parseStorageEntry';
+import { toNewStorageEntry } from '../utils/parseStorageEntry';
 
 // grab data from storage
 const getStorage = async (key: string) => {

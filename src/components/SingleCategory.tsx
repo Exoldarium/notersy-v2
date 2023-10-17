@@ -1,5 +1,5 @@
-import NoteEditor from './NoteEditor';
-import SingleNote from './SingleNote';
+import { NoteEditor } from './NoteEditor';
+import { SingleNote } from './SingleNote';
 
 import { BaseCategoryEntry } from '../types';
 import { useAppSelector } from '../hooks/useReduxTypes';
@@ -8,12 +8,12 @@ interface Props {
   singleCategory: BaseCategoryEntry;
 }
 
-const SingleCategory = ({ singleCategory }: Props) => {
+export const SingleCategory = ({ singleCategory }: Props) => {
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
-  const editorOnNote = useAppSelector(({ editNote }) => {
-    return editNote;
+  const editorOnNote = useAppSelector(({ editorOnNote }) => {
+    return editorOnNote;
   });
 
   console.log('single category', singleCategory);
@@ -34,5 +34,3 @@ const SingleCategory = ({ singleCategory }: Props) => {
     </>
   );
 };
-
-export default SingleCategory;

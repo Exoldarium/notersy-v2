@@ -10,7 +10,7 @@ const initialState: Message = {
 };
 
 // sets a message to be displayed to a user if there's a need for one
-const messageReducer = createSlice({
+const messageReducerSlice = createSlice({
   name: 'message',
   initialState,
   reducers: {
@@ -22,7 +22,7 @@ const messageReducer = createSlice({
 
 export const {
   setMessage
-} = messageReducer.actions;
+} = messageReducerSlice.actions;
 
 export const setNotificationMesage = (message: Message) => {
   return (dispatch: AppDispatch) => {
@@ -41,4 +41,4 @@ export const setNotificationMesage = (message: Message) => {
   };
 };
 
-export default messageReducer.reducer;
+export const messageReducer = messageReducerSlice.reducer;

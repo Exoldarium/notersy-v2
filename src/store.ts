@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import categoryReducer from './reducers/categoryReducer';
-import messageReducer from './reducers/messageReducer';
-import checkboxReducer from './reducers/checkboxReducer';
-import editorActiveReducer from './reducers/editorActiveReducer';
-import editNoteReducer from './reducers/editorOnNoteReducer';
+import { categoryReducer } from './reducers/categoryReducer';
+import { messageReducer } from './reducers/messageReducer';
+import { checkboxReducer } from './reducers/checkboxReducer';
+import { editorActiveReducer } from './reducers/editorActiveReducer';
+import { editorOnNoteReducer } from './reducers/editorOnNoteReducer';
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +11,7 @@ export const store = configureStore({
     message: messageReducer,
     checkbox: checkboxReducer,
     editorActive: editorActiveReducer,
-    editNote: editNoteReducer,
+    editorOnNote: editorOnNoteReducer,
   }
 });
 

@@ -200,4 +200,4 @@ export const updateExistingNote = (
 };
 
 // TODO: change default exports
-export default categorySlice.reducer;
+export const categoryReducer = categorySlice.reducer;

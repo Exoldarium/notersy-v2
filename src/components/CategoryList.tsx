@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import CategoryStyles from './styles/CategoryStyles';
+import { CategoryStyles } from './styles/CategoryStyles';
 
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingCategory } from '../reducers/categoryReducer';
@@ -13,7 +13,7 @@ interface Props {
   category: BaseCategoryEntry
 }
 
-const CategoryList = ({ category }: Props) => {
+export const CategoryList = ({ category }: Props) => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -68,5 +68,3 @@ const CategoryList = ({ category }: Props) => {
     </>
   );
 };
-
-export default CategoryList;

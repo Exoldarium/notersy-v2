@@ -5,7 +5,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import CharacterCount from '@tiptap/extension-character-count';
 import StarterKit from '@tiptap/starter-kit';
 
-import NoteEditorStyles from './styles/NoteEditorStyles';
+import { NoteEditorStyles } from './styles/NoteEditorStyles';
 
 import { addNewNote, updateExistingNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
@@ -23,7 +23,7 @@ interface Props {
 // TODO:
 // set the edited content to a different storage key so that the data persists even if the popup is closed
 
-const NoteEditor = ({ singleCategory }: Props) => {
+export const NoteEditor = ({ singleCategory }: Props) => {
   const [noteContent, setNoteContent] = useState('');
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -134,5 +134,3 @@ const NoteEditor = ({ singleCategory }: Props) => {
     </NoteEditorStyles>
   );
 };
-
-export default NoteEditor;

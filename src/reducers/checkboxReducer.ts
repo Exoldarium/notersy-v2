@@ -24,4 +24,4 @@ export const {
   updateChecked
 } = checkboxSlice.actions;
 
-export default checkboxSlice.reducer;
+export const checkboxReducer = checkboxSlice.reducer;
