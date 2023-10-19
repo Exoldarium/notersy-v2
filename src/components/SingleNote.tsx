@@ -5,8 +5,7 @@ import { SingleNoteStyles } from './styles/SingleNoteStyles';
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
-import { parseToString } from '../utils/parseData';
-import { addCheckedId, updateCheckedId } from '../reducers/checkboxReducer';
+import { setChecboxChecked } from '../reducers/checkboxReducer';
 import { NoteEditor } from './NoteEditor';
 
 // TODO:
@@ -43,18 +42,9 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
     void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
   };
 
-  const setChecboxChecked = (e: React.MouseEvent<HTMLInputElement>) => {
-    // the ids will be stored or filtered from the state depending if they are checked or not
-    if (e.currentTarget.checked) {
-      const checked = {
-        id: parseToString(e.currentTarget.id)
-      };
-
-      dispatch(addCheckedId(checked));
-    } else {
-      dispatch(updateCheckedId(checkbox.filter(item => item.id !== e.currentTarget.id)));
-    }
-  };
+  const getCheckedIdOnClick = (
+    e: React.MouseEvent<HTMLInputElement>
+  ) => dispatch(setChecboxChecked(e, checkbox));
 
   console.log(note, 'note');
 
@@ -72,7 +62,7 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
           type="checkbox"
           id={note.id}
           name="checked"
-          onClick={setChecboxChecked}
+          onClick={getCheckedIdOnClick}
         />
       </form>
     </>
