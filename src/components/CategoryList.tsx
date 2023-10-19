@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingCategory } from '../reducers/categoryReducer';
 import { BaseCategoryEntry } from '../types';
 import { toNewCategoryEntry } from '../utils/parseStorageEntry';
-import { addChecked, updateChecked } from '../reducers/checkboxReducer';
+import { addCheckedId, updateCheckedId } from '../reducers/checkboxReducer';
 import { parseToString } from '../utils/parseData';
 
 interface Props {
@@ -31,10 +31,12 @@ export const CategoryList = ({ category }: Props) => {
       active: true
     };
 
-    dispatch(updateChecked([])); // clear active checkbox id's from state
+    dispatch(updateCheckedId([])); // clear active checkbox id's from state
     void dispatch(updateExistingCategory(categories, updatedCategory));
   };
 
+  // TODO:
+  // try to refactor this function because it's appearing twice, maybe put it in a reducer
   const setChecboxChecked = (e: React.MouseEvent<HTMLInputElement>) => {
     // the ids will be stored or filtered from the state depending if they are checked or not
     if (e.currentTarget.checked) {
@@ -42,9 +44,9 @@ export const CategoryList = ({ category }: Props) => {
         id: parseToString(e.currentTarget.id)
       };
 
-      dispatch(addChecked(checked));
+      dispatch(addCheckedId(checked));
     } else {
-      dispatch(updateChecked(checkbox.filter(item => item.id !== e.currentTarget.id)));
+      dispatch(updateCheckedId(checkbox.filter(item => item.id !== e.currentTarget.id)));
     }
   };
 

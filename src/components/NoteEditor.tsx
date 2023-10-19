@@ -9,10 +9,10 @@ import { NoteEditorStyles } from './styles/NoteEditorStyles';
 
 import { addNewNote, updateExistingNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
-import { setEditorOnNote } from '../reducers/editorOnNoteReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { BaseCategoryEntry } from '../types';
 import { parseToNumber } from '../utils/parseData';
+import { updateCheckedId } from '../reducers/checkboxReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -21,7 +21,7 @@ interface Props {
 // TODO:
 // add different headers and paragraph options into a dropdown menu
 // TODO:
-// set the edited content to a different storage key so that the data persists even if the popup is closed
+// save data every time the user clicks a different button, try to use a mouseOut event for mousing out of popup
 
 export const NoteEditor = ({ singleCategory }: Props) => {
   const [noteContent, setNoteContent] = useState('');
@@ -46,16 +46,16 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     }
   });
 
-  const editNote = singleCategory.notes.find(note => note.edit);
+  const noteToBeEdited = singleCategory.notes.find(note => note.edit);
 
   useEffect(() => {
     // if note is set to be edited, add the existing content
-    if (editNote) {
-      const clean = DOMPurify.sanitize(editNote.content);
+    if (noteToBeEdited) {
+      const clean = DOMPurify.sanitize(noteToBeEdited.content);
       editor?.commands.setContent(clean);
       setNoteContent(clean);
     }
-  }, [editNote, editor]);
+  }, [noteToBeEdited, editor]);
 
   if (!editor) {
     return null;
@@ -63,17 +63,16 @@ export const NoteEditor = ({ singleCategory }: Props) => {
 
   const addNewNoteOnClick = () => {
     // check if the note is set to be edited
-    if (editNote) {
+    if (noteToBeEdited) {
       // if it is add the new content and set the edit property to false
       const noteToEdit = {
-        ...editNote,
+        ...noteToBeEdited,
         content: noteContent,
         edit: false
       };
 
       void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
       dispatch(setEditorActive(false)); // close editor
-      dispatch(setEditorOnNote(false)); // set note edit state to false
     } else {
       // else send a new note and close the editor
       void dispatch(addNewNote(categories, singleCategory, noteContent));
@@ -81,19 +80,23 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     }
   };
 
+  // TODO: 
+  // try to refactor this function because it's appearing twice, maybe put it in a reducer
   const setNoteEditorActiveOnClick = () => {
     // if there is a note that is set to be edited, set edit to false
     // prevents editor menu to be rendered with edited note content
-    if (editNote) {
+    if (noteToBeEdited) {
       const noteToEdit = {
-        ...editNote,
+        ...noteToBeEdited,
         edit: false
       };
       void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
       dispatch(setEditorActive(false));
+      dispatch(updateCheckedId([]));
     }
+
     dispatch(setEditorActive(false));
-    dispatch(setEditorOnNote(false)); // sets any notes that are being edited to false, closing the editor that's active on them
+    dispatch(updateCheckedId([]));
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call

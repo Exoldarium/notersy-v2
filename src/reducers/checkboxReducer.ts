@@ -10,18 +10,18 @@ const checkboxSlice = createSlice({
   name: 'checkbox',
   initialState,
   reducers: {
-    addChecked(state, action: PayloadAction<Checked>) {
+    addCheckedId(state, action: PayloadAction<Checked>) {
       state.push(action.payload);
     },
-    updateChecked(_, action: PayloadAction<Checked[]>) {
+    updateCheckedId(_, action: PayloadAction<Checked[]>) {
       return action.payload;
     }
   }
 });
 
 export const {
-  addChecked,
-  updateChecked
+  addCheckedId,
+  updateCheckedId
 } = checkboxSlice.actions;
 
 export const checkboxReducer = checkboxSlice.reducer;

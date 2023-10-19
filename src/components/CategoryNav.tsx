@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { NavStyles } from './styles/NavStyles';
 
 import { BaseCategoryEntry } from '../types';
-import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
+import { deleteExistingNote, updateExistingCategory, updateExistingNote } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 
 import { useForm } from '../hooks/useForm';
 import { setEditorActive } from '../reducers/editorActiveReducer';
-import { updateChecked } from '../reducers/checkboxReducer';
+import { updateCheckedId } from '../reducers/checkboxReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -23,9 +23,6 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
-  const editorOnNote = useAppSelector(({ editorOnNote }) => {
-    return editorOnNote;
-  });
   const checkbox = useAppSelector(({ checkbox }) => {
     return checkbox;
   });
@@ -35,6 +32,8 @@ export const CategoryNav = ({ singleCategory }: Props) => {
 
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
+  const noteToBeEdited = singleCategory.notes.find(note => note.edit);
+
   const setActiveCategoryToFalse = () => {
     const updatedCategory = {
       ...singleCategory,
@@ -43,6 +42,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
 
     void dispatch(updateExistingCategory(categories, updatedCategory));
     dispatch(setEditorActive(false));
+    dispatch(updateCheckedId([]));
     navigate('/');
   };
 
@@ -57,13 +57,26 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     setEditTitle(false);
   };
 
-  const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(true));
+  const setNoteEditorActiveOnClick = () => {
+    // if there is a note that is set to be edited, set edit to false
+    // prevents editor menu to be rendered with edited note content
+    if (noteToBeEdited) {
+      const noteToEdit = {
+        ...noteToBeEdited,
+        edit: false
+      };
 
-  // TODO:
-  // try to extract this function because it's used twice
+      void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
+      dispatch(setEditorActive(!editorActive));
+      dispatch(updateCheckedId([]));
+    }
+    dispatch(setEditorActive(!editorActive));
+    dispatch(updateCheckedId([]));
+  };
+
   const deleteCheckedNotesOnClick = () => {
     void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
-    dispatch(updateChecked([]));
+    dispatch(updateCheckedId([]));
   };
 
   console.log(singleCategory, 'active category');
@@ -72,7 +85,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     <NavStyles>
       {!editTitle && <h1>{singleCategory.title}</h1>}
       {/* editNav buttons are hidden if the note editor is active */}
-      <div style={{ display: editorActive || editorOnNote ? 'none' : 'flex', flexDirection: 'row' }}>
+      <div style={{ display: editorActive || noteToBeEdited ? 'none' : 'flex', flexDirection: 'row' }}>
         {!editTitle &&
           <button
             type="button"

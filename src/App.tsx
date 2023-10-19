@@ -44,7 +44,9 @@ export const App = () => {
   }, [dispatch]);
 
   // shallow copy categories using slice and sort them 
-  const sortedCategories = categories.slice().sort((a, b) => a.unixTime - b.unixTime);
+  const sortedCategories = categories
+    .slice()
+    .sort((a, b) => b.unixTime - a.unixTime);
 
   // match the route param with a category id, return a message it the note couldn't be found
   const singleCategory = match ?

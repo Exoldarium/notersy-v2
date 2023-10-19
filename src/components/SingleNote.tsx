@@ -5,13 +5,11 @@ import { SingleNoteStyles } from './styles/SingleNoteStyles';
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
-import { setEditorActive } from '../reducers/editorActiveReducer';
-import { setEditorOnNote } from '../reducers/editorOnNoteReducer';
 import { parseToString } from '../utils/parseData';
-import { addChecked, updateChecked } from '../reducers/checkboxReducer';
+import { addCheckedId, updateCheckedId } from '../reducers/checkboxReducer';
+import { NoteEditor } from './NoteEditor';
 
 // TODO:
-// clicking edit button should bring the note editor to that note
 // edited note should be automatically saved either when user clicks save or when the user clicks some other element
 
 interface Props {
@@ -26,8 +24,9 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
   const checkbox = useAppSelector(({ checkbox }) => {
     return checkbox;
   });
-
   const dispatch = useAppDispatch();
+
+  const noteToBeEdited = singleCategory.notes.find(note => note.edit);
 
   // sanitize note content before setting it to innerHTML
   const clean = DOMPurify.sanitize(note.content);
@@ -35,19 +34,15 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
     __html: clean
   };
 
-  const editNoteOnClick = () => {
+  const allowNoteEditOnClick = () => {
     const noteToEdit: BaseNoteEntry = {
       ...note,
       edit: true
     };
 
     void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-    dispatch(setEditorActive(false)); // close the editor that's used for adding new notes, if it's open
-    dispatch(setEditorOnNote(true));
   };
 
-  // TODO
-  // try to extract this function because it's used twice
   const setChecboxChecked = (e: React.MouseEvent<HTMLInputElement>) => {
     // the ids will be stored or filtered from the state depending if they are checked or not
     if (e.currentTarget.checked) {
@@ -55,18 +50,23 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
         id: parseToString(e.currentTarget.id)
       };
 
-      dispatch(addChecked(checked));
+      dispatch(addCheckedId(checked));
     } else {
-      dispatch(updateChecked(checkbox.filter(item => item.id !== e.currentTarget.id)));
+      dispatch(updateCheckedId(checkbox.filter(item => item.id !== e.currentTarget.id)));
     }
   };
 
   console.log(note, 'note');
 
   return (
-    <SingleNoteStyles>
-      <div dangerouslySetInnerHTML={render} />
-      <button type="button" onClick={editNoteOnClick}>Edit</button>
+    <>
+      <SingleNoteStyles>
+        {noteToBeEdited?.id === note.id ?
+          <NoteEditor singleCategory={singleCategory} /> :
+          <div dangerouslySetInnerHTML={render} />
+        }
+      </SingleNoteStyles>
+      <button type="button" onClick={allowNoteEditOnClick}>Edit</button>
       <form>
         <input
           type="checkbox"
@@ -75,6 +75,6 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
           onClick={setChecboxChecked}
         />
       </form>
-    </SingleNoteStyles>
+    </>
   );
 };
