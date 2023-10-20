@@ -41,7 +41,6 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     };
 
     void dispatch(updateExistingCategory(categories, updatedCategory));
-    dispatch(setEditorActive(false));
     dispatch(updateCheckedId([]));
     navigate('/');
   };
@@ -57,7 +56,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     setEditTitle(false);
   };
 
-  const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(!editorActive));
+  const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(true));
 
   const deleteCheckedNotesOnClick = () => {
     void dispatch(deleteExistingNote(categories, singleCategory, checkbox));

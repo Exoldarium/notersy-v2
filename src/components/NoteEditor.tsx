@@ -21,6 +21,8 @@ interface Props {
 // add different headers and paragraph options into a dropdown menu
 // TODO:
 // save data every time the user clicks a different button, try to use a mouseOut event for mousing out of popup
+// TODO: 
+// read this an update everything using the info https://tiptap.dev/guide/output#rendering
 
 export const NoteEditor = ({ singleCategory }: Props) => {
   const [noteContent, setNoteContent] = useState('');

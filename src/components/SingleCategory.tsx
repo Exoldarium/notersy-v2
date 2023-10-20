@@ -13,6 +13,7 @@ export const SingleCategory = ({ singleCategory }: Props) => {
     return editorActive;
   });
 
+  const noteToBeEdited = singleCategory.notes.find(note => note.edit);
   const sortedNotes = singleCategory.notes
     .slice()
     .sort((a, b) => b.unixTime - a.unixTime);
@@ -21,7 +22,7 @@ export const SingleCategory = ({ singleCategory }: Props) => {
 
   return (
     <>
-      {editorActive && <NoteEditor singleCategory={singleCategory} />}
+      {editorActive && !noteToBeEdited && <NoteEditor singleCategory={singleCategory} />}
       {sortedNotes.map(note =>
         <SingleNote
           note={note}

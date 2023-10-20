@@ -33,6 +33,8 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
     __html: clean
   };
 
+  // TODO:
+  // clicking the note should bring the edit screen
   const allowNoteEditOnClick = () => {
     const noteToEdit: BaseNoteEntry = {
       ...note,
@@ -50,22 +52,28 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
 
   return (
     <>
-      <SingleNoteStyles>
-        {/* editor will be displayed on the note that is to be edited */}
-        {noteToBeEdited?.id === note.id ?
-          <NoteEditor singleCategory={singleCategory} /> :
-          <div dangerouslySetInnerHTML={render} />
-        }
-      </SingleNoteStyles>
-      <button type="button" onClick={allowNoteEditOnClick}>Edit</button>
-      <form>
-        <input
-          type="checkbox"
-          id={note.id}
-          name="checked"
-          onClick={getCheckedIdOnClick}
+      {/* editor will be displayed on the note that is to be edited */}
+      {noteToBeEdited?.id === note.id ?
+        <NoteEditor singleCategory={singleCategory} /> :
+        <SingleNoteStyles
+          dangerouslySetInnerHTML={render}
+          onClick={allowNoteEditOnClick}
         />
-      </form>
+      }
+      {/* TODO: checkbox shouls appear on hover, add a copy button too */}
+      {!noteToBeEdited &&
+        <>
+          <button type="button">Edit</button>
+          <form>
+            <input
+              type="checkbox"
+              id={note.id}
+              name="checked"
+              onClick={getCheckedIdOnClick}
+            />
+          </form>
+        </>
+      }
     </>
   );
 };
