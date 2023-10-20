@@ -38,7 +38,6 @@ export const CategoryList = ({ category }: Props) => {
     e: React.MouseEvent<HTMLInputElement>
   ) => dispatch(setChecboxChecked(e, checkbox));
 
-
   console.log(checkbox);
 
   return (

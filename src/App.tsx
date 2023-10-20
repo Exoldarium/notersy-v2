@@ -57,7 +57,7 @@ export const App = () => {
       content: 'Invalid note'
     }));
 
-  // check if there's an active category
+  // check if there's an active category, the category that the user has selected
   const activeCategory = categories.find(entry => entry.active);
 
   const addNewCategoryOnClick = () => dispatch(addNewCategory(categories));

@@ -51,6 +51,7 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
   return (
     <>
       <SingleNoteStyles>
+        {/* editor will be displayed on the note that is to be edited */}
         {noteToBeEdited?.id === note.id ?
           <NoteEditor singleCategory={singleCategory} /> :
           <div dangerouslySetInnerHTML={render} />

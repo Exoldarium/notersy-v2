@@ -12,7 +12,6 @@ import { setEditorActive } from '../reducers/editorActiveReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { BaseCategoryEntry } from '../types';
 import { parseToNumber } from '../utils/parseData';
-import { updateCheckedId } from '../reducers/checkboxReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -62,9 +61,9 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   }
 
   const addNewNoteOnClick = () => {
-    // check if the note is set to be edited
+    // check if the note is being edited
     if (noteToBeEdited) {
-      // if it is add the new content and set the edit property to false
+      // update the note, set the edit property to false
       const noteToEdit = {
         ...noteToBeEdited,
         content: noteContent,
@@ -74,29 +73,26 @@ export const NoteEditor = ({ singleCategory }: Props) => {
       void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
       dispatch(setEditorActive(false)); // close editor
     } else {
-      // else send a new note and close the editor
+      // if the note is not being edited then it's a new note
       void dispatch(addNewNote(categories, singleCategory, noteContent));
       dispatch(setEditorActive(false));
     }
   };
 
-  // TODO: 
-  // try to refactor this function because it's appearing twice, maybe put it in a reducer
-  const setNoteEditorActiveOnClick = () => {
+  const closeEditorOnClick = () => {
     // if there is a note that is set to be edited, set edit to false
-    // prevents editor menu to be rendered with edited note content
+    // prevents a note.edit property staying true even if cancel button is clicked
     if (noteToBeEdited) {
       const noteToEdit = {
         ...noteToBeEdited,
         edit: false
       };
+
       void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
       dispatch(setEditorActive(false));
-      dispatch(updateCheckedId([]));
     }
 
     dispatch(setEditorActive(false));
-    dispatch(updateCheckedId([]));
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -146,7 +142,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
         </button>
         <button
           type="button"
-          onClick={setNoteEditorActiveOnClick}
+          onClick={closeEditorOnClick}
         >
           Cancel
         </button>

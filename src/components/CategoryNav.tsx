@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { NavStyles } from './styles/NavStyles';
 
 import { BaseCategoryEntry } from '../types';
-import { deleteExistingNote, updateExistingCategory, updateExistingNote } from '../reducers/categoryReducer';
+import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 
 import { useForm } from '../hooks/useForm';
@@ -57,22 +57,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     setEditTitle(false);
   };
 
-  const setNoteEditorActiveOnClick = () => {
-    // if there is a note that is set to be edited, set edit to false
-    // prevents editor menu to be rendered with edited note content
-    if (noteToBeEdited) {
-      const noteToEdit = {
-        ...noteToBeEdited,
-        edit: false
-      };
-
-      void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-      dispatch(setEditorActive(!editorActive));
-      dispatch(updateCheckedId([]));
-    }
-    dispatch(setEditorActive(!editorActive));
-    dispatch(updateCheckedId([]));
-  };
+  const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(!editorActive));
 
   const deleteCheckedNotesOnClick = () => {
     void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
