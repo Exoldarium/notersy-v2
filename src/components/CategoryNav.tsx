@@ -20,9 +20,6 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
-  const editorActive = useAppSelector(({ editorActive }) => {
-    return editorActive;
-  });
   const checkbox = useAppSelector(({ checkbox }) => {
     return checkbox;
   });
@@ -31,8 +28,6 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const navigate = useNavigate();
 
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
-
-  const noteToBeEdited = singleCategory.notes.find(note => note.edit);
 
   const setActiveCategoryToFalse = () => {
     const updatedCategory = {
@@ -56,7 +51,9 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     setEditTitle(false);
   };
 
-  const setNoteEditorActiveOnClick = () => dispatch(setEditorActive(true));
+  const setNoteEditorActiveOnClick = () => {
+    dispatch(setEditorActive(true));
+  };
 
   const deleteCheckedNotesOnClick = () => {
     void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
@@ -69,7 +66,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     <NavStyles>
       {!editTitle && <h1>{singleCategory.title}</h1>}
       {/* editNav buttons are hidden if the note editor is active */}
-      <div style={{ display: editorActive || noteToBeEdited ? 'none' : 'flex', flexDirection: 'row' }}>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
         {!editTitle &&
           <button
             type="button"

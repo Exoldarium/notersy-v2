@@ -9,7 +9,7 @@ export const store = configureStore({
     categories: categoryReducer,
     message: messageReducer,
     checkbox: checkboxReducer,
-    editorActive: editorActiveReducer,
+    editorActive: editorActiveReducer
   }
 });
 

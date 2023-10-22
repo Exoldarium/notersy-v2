@@ -23,6 +23,9 @@ interface Props {
 // save data every time the user clicks a different button, try to use a mouseOut event for mousing out of popup
 // TODO: 
 // read this an update everything using the info https://tiptap.dev/guide/output#rendering
+// we could make each of the notes be rendered through the editor component, each of the notes will be a single editor instance
+// apply isEditable accordingly and other methods from the link
+// the editor that is used for adding a new note will be a separate one with empty content
 
 export const NoteEditor = ({ singleCategory }: Props) => {
   const [noteContent, setNoteContent] = useState('');
@@ -30,6 +33,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     return categories;
   });
   const dispatch = useAppDispatch();
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
