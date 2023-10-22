@@ -80,6 +80,11 @@ export const SingleNote = ({
 
   if (!editor) return null;
 
+  // focus the editor
+  if (editable) {
+    editor.commands.focus();
+  }
+
   return (
     <NoteEditorStyles>
       <div style={{ display: editable ? 'flex' : 'none' }}>

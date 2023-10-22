@@ -31,6 +31,9 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
+  const editorActive = useAppSelector(({ editorActive }) => {
+    return editorActive;
+  });
   const dispatch = useAppDispatch();
 
   const editor = useEditor({
@@ -50,16 +53,20 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     }
   });
 
-  if (!editor) {
-    return null;
-  }
-
   const addNewNoteOnClick = () => {
     void dispatch(addNewNote(categories, singleCategory, noteContent));
     dispatch(setEditorActive(false));
   };
 
   const closeEditorOnClick = () => dispatch(setEditorActive(false));
+
+  if (!editor) {
+    return null;
+  }
+
+  if (editorActive) {
+    editor.commands.focus();
+  }
 
   return (
     <NoteEditorStyles>

@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const SingleCategory = ({ singleCategory }: Props) => {
-  // TODO: move this state to reducer and if we want it to be false pass some random string when adding a new note
   const clickedNote = useAppSelector(({ clickedNote }) => {
     return clickedNote;
   });
