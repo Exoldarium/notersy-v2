@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DOMPurify from 'dompurify';
 
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -7,11 +7,10 @@ import StarterKit from '@tiptap/starter-kit';
 
 import { NoteEditorStyles } from './styles/NoteEditorStyles';
 
-import { addNewNote, updateExistingNote } from '../reducers/categoryReducer';
+import { addNewNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { BaseCategoryEntry } from '../types';
-import { parseToNumber } from '../utils/parseData';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -51,58 +50,16 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     }
   });
 
-  const noteToBeEdited = singleCategory.notes.find(note => note.edit);
-
-  useEffect(() => {
-    // if note is set to be edited, add the existing content
-    if (noteToBeEdited) {
-      const clean = DOMPurify.sanitize(noteToBeEdited.content);
-      editor?.commands.setContent(clean);
-      setNoteContent(clean);
-    }
-  }, [noteToBeEdited, editor]);
-
   if (!editor) {
     return null;
   }
 
   const addNewNoteOnClick = () => {
-    // check if the note is being edited
-    if (noteToBeEdited) {
-      // update the note, set the edit property to false
-      const noteToEdit = {
-        ...noteToBeEdited,
-        content: noteContent,
-        edit: false
-      };
-
-      void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-      dispatch(setEditorActive(false)); // close editor
-    } else {
-      // if the note is not being edited then it's a new note
-      void dispatch(addNewNote(categories, singleCategory, noteContent));
-      dispatch(setEditorActive(false));
-    }
-  };
-
-  const closeEditorOnClick = () => {
-    // if there is a note that is set to be edited, set edit to false
-    // prevents a note.edit property staying true even if cancel button is clicked
-    if (noteToBeEdited) {
-      const noteToEdit = {
-        ...noteToBeEdited,
-        edit: false
-      };
-
-      void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-      dispatch(setEditorActive(false));
-    }
-
+    void dispatch(addNewNote(categories, singleCategory, noteContent));
     dispatch(setEditorActive(false));
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const characterCount = parseToNumber(editor.storage.characterCount.characters());
+  const closeEditorOnClick = () => dispatch(setEditorActive(false));
 
   return (
     <NoteEditorStyles>
@@ -154,9 +111,6 @@ export const NoteEditor = ({ singleCategory }: Props) => {
         </button>
       </div>
       <EditorContent editor={editor} />
-      <div>
-        {characterCount}/1500
-      </div>
     </NoteEditorStyles>
   );
 };

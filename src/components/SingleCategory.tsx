@@ -15,16 +15,11 @@ export const SingleCategory = ({ singleCategory }: Props) => {
     return editorActive;
   });
 
-  const sortedNotes = singleCategory.notes
-    .slice()
-    .sort((a, b) => b.unixTime - a.unixTime);
-
   console.log('single category has rendered');
 
   return (
     <>
-      {editorActive && <NoteEditor singleCategory={singleCategory} />}
-      {sortedNotes.map(note =>
+      {singleCategory.notes.map(note =>
         <SingleNote
           note={note}
           key={note.id}
@@ -33,6 +28,7 @@ export const SingleCategory = ({ singleCategory }: Props) => {
           setIsClicked={setIsClicked}
         />
       )}
+      {editorActive && <NoteEditor singleCategory={singleCategory} />}
     </>
   );
 };
