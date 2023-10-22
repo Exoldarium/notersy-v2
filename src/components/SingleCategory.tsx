@@ -2,7 +2,6 @@ import { NoteEditor } from './NoteEditor';
 
 import { BaseCategoryEntry } from '../types';
 import { useAppSelector } from '../hooks/useReduxTypes';
-import { useState } from 'react';
 import { SingleNote } from './SingleNote';
 
 interface Props {
@@ -10,7 +9,10 @@ interface Props {
 }
 
 export const SingleCategory = ({ singleCategory }: Props) => {
-  const [clicked, setIsClicked] = useState('');  // track which of the notes is clicked
+  // TODO: move this state to reducer and if we want it to be false pass some random string when adding a new note
+  const clickedNote = useAppSelector(({ clickedNote }) => {
+    return clickedNote;
+  });
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
@@ -24,8 +26,7 @@ export const SingleCategory = ({ singleCategory }: Props) => {
           note={note}
           key={note.id}
           singleCategory={singleCategory}
-          editable={clicked === note.id}
-          setIsClicked={setIsClicked}
+          editable={clickedNote === note.id}
         />
       )}
       {editorActive && <NoteEditor singleCategory={singleCategory} />}

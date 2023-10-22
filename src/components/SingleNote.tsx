@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
 
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -9,18 +9,18 @@ import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked } from '../reducers/checkboxReducer';
+import { setClickedNote } from '../reducers/clickedNoteReducer';
+import { setEditorActive } from '../reducers/editorActiveReducer';
 
 interface Props {
   note: BaseNoteEntry;
   singleCategory: BaseCategoryEntry;
   editable: boolean;
-  setIsClicked: Dispatch<SetStateAction<string>>;
 }
 
 export const SingleNote = ({
   note,
   editable,
-  setIsClicked,
   singleCategory
 }: Props) => {
   const [noteContent, setNoteContent] = useState('');
@@ -61,15 +61,20 @@ export const SingleNote = ({
     };
 
     void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-    setIsClicked('');
+    dispatch(setClickedNote(''));
   };
 
   const getCheckedIdOnClick = (
     e: React.MouseEvent<HTMLInputElement>
   ) => dispatch(setChecboxChecked(e, checkbox));
 
-  const cancelEditOnClick = () => {
-    setIsClicked('');
+  const setEditNoteOnClick = () => {
+    dispatch(setClickedNote(note.id));
+    dispatch(setEditorActive(false));
+  };
+
+  const cancelEditNoteOnClick = () => {
+    dispatch(setClickedNote(''));
     editor?.commands.setContent(note.content);
   };
 
@@ -119,12 +124,12 @@ export const SingleNote = ({
         </button>
         <button
           type="button"
-          onClick={cancelEditOnClick}
+          onClick={cancelEditNoteOnClick}
         >
           Cancel
         </button>
       </div>
-      <EditorContent editor={editor} id={note.id} onClick={() => setIsClicked(note.id)} />
+      <EditorContent editor={editor} id={note.id} onClick={setEditNoteOnClick} />
       <form>
         <input
           type="checkbox"

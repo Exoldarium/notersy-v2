@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { useForm } from '../hooks/useForm';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { updateCheckedId } from '../reducers/checkboxReducer';
+import { setClickedNote } from '../reducers/clickedNoteReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -51,7 +52,8 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     setEditTitle(false);
   };
 
-  const setNoteEditorActiveOnClick = () => {
+  const setEditorActiveOnClick = () => {
+    dispatch(setClickedNote('')); // close any notes that are being edited
     dispatch(setEditorActive(true));
   };
 
@@ -97,7 +99,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
         <button
           type="button"
           style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-          onClick={setNoteEditorActiveOnClick}
+          onClick={setEditorActiveOnClick}
         >
           New note
         </button>
