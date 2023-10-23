@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import DOMPurify from 'dompurify';
-
 import { EditorContent, useEditor } from '@tiptap/react';
 import CharacterCount from '@tiptap/extension-character-count';
 import StarterKit from '@tiptap/starter-kit';
-
 import { NoteEditorStyles } from './styles/NoteEditorStyles';
-
 import { addNewNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';

@@ -1,5 +1,4 @@
 import { NoteEditor } from './NoteEditor';
-
 import { BaseCategoryEntry } from '../types';
 import { useAppSelector } from '../hooks/useReduxTypes';
 import { SingleNote } from './SingleNote';

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 import { Message } from '../types';
 import { AppDispatch } from '../store';
 import { parseError } from '../utils/parseData';

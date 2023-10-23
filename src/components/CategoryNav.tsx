@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { NavStyles } from './styles/NavStyles';
-
 import { BaseCategoryEntry } from '../types';
 import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-
 import { useForm } from '../hooks/useForm';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { updateCheckedId } from '../reducers/checkboxReducer';
@@ -31,8 +28,10 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
   const setActiveCategoryToFalse = () => {
+    const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
+
     const updatedCategory = {
-      ...singleCategory,
+      ...categoryWithUpdatedNotes,
       active: false
     };
 

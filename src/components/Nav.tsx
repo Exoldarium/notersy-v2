@@ -1,5 +1,4 @@
 import { NavStyles } from './styles/NavStyles';
-
 import { addNewCategory, deleteExistingCategory } from '../reducers/categoryReducer';
 import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';

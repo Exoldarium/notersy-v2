@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
-
 import { BaseCategoryEntry, BaseNoteEntry, Checked } from '../types';
 import { parseStorage, setStorage } from '../services/storageService';
 import { AppDispatch } from '../store';
@@ -168,6 +167,7 @@ export const addNewNote = (
   };
 };
 
+// TODO: try to control notes state only through category updates
 export const updateExistingNote = (
   categories: BaseCategoryEntry[],
   category: BaseCategoryEntry,

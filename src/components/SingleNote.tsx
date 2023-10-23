@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
-
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
