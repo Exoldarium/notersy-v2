@@ -42,6 +42,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
 
   const updateTitleOnClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const updatedCategory = {
       ...singleCategory,
       title: inputs.title

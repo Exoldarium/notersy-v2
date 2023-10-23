@@ -59,9 +59,8 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
     void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
   };
 
-  const getCheckedIdOnClick = (
-    e: React.MouseEvent<HTMLInputElement>
-  ) => dispatch(setChecboxChecked(e, checkbox));
+  const getCheckedIdOnClick = (e: React.MouseEvent<HTMLInputElement>) =>
+    dispatch(setChecboxChecked(e, checkbox));
 
   const setEditNoteOnClick = () => {
     const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);

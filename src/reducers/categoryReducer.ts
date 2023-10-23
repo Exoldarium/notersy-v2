@@ -167,7 +167,6 @@ export const addNewNote = (
   };
 };
 
-// TODO: try to control notes state only through category updates
 export const updateExistingNote = (
   categories: BaseCategoryEntry[],
   category: BaseCategoryEntry,

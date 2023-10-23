@@ -16,8 +16,17 @@ export interface BaseCategoryEntry {
   notes: BaseNoteEntry[];
 }
 
+export interface BaseStoredNoteContent {
+  id: string;
+  content: string;
+}
+
 export interface BaseStorageEntry {
   storedData: BaseCategoryEntry[];
+}
+
+export interface StoredNoteContent {
+  storedNoteContent: BaseStoredNoteContent;
 }
 
 export interface Message {
@@ -27,13 +36,4 @@ export interface Message {
 
 export interface Checked {
   id: string,
-}
-
-export interface StoredNoteContent {
-  storedNoteContent: [
-    {
-      id: string;
-      content: string;
-    }
-  ]
 }

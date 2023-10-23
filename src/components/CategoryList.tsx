@@ -19,7 +19,7 @@ export const CategoryList = ({ category }: Props) => {
     return checkbox;
   });
 
-  const setActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const setCategoryActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const id = e.currentTarget.id;
 
     const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
@@ -41,7 +41,7 @@ export const CategoryList = ({ category }: Props) => {
   return (
     <>
       <Link to={`/${category.id}`}>
-        <CategoryStyles id={category.id} onClick={setActiveOnClick}>
+        <CategoryStyles id={category.id} onClick={setCategoryActiveOnClick}>
           {category.title}
         </CategoryStyles>
       </Link>

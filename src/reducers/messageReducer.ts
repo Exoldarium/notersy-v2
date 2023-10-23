@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Message } from '../types';
 import { AppDispatch } from '../store';
-import { parseError } from '../utils/parseData';
 
 const initialState: Message = {
   type: '',
@@ -25,18 +24,12 @@ export const {
 
 export const setNotificationMesage = (message: Message) => {
   return (dispatch: AppDispatch) => {
-    try {
-      const newMessage = {
-        type: message.type,
-        content: message.content
-      };
+    const newMessage = {
+      type: message.type,
+      content: message.content
+    };
 
-      dispatch(setMessage(newMessage));
-    } catch (err) {
-      const error = parseError(err);
-      console.error('setNotificationMesage action Error', error);
-      throw new Error(error);
-    }
+    dispatch(setMessage(newMessage));
   };
 };
 
