@@ -9,20 +9,14 @@ import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked } from '../reducers/checkboxReducer';
-import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 
 interface Props {
   note: BaseNoteEntry;
   singleCategory: BaseCategoryEntry;
-  editable: boolean;
 }
 
-export const SingleNote = ({
-  note,
-  editable,
-  singleCategory
-}: Props) => {
+export const SingleNote = ({ note, singleCategory }: Props) => {
   const [noteContent, setNoteContent] = useState('');
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -38,7 +32,7 @@ export const SingleNote = ({
         hardBreak: false
       }),
     ],
-    editable,
+    editable: note.edit,
     content: note.content,
     onUpdate({ editor }) {
       // grab the text and sanitize the inputs
@@ -47,21 +41,23 @@ export const SingleNote = ({
     }
   });
 
-  console.log(noteContent, editable);
-
-  // sets editor editable property
   useEffect(() => {
-    editor?.setEditable(editable);
-  }, [editor, editable, dispatch]);
+    // sets editor editable property and focuses the editor
+    if (note.edit) {
+      editor?.commands.focus();
+    }
+
+    editor?.setEditable(note.edit);
+  }, [editor, note]);
 
   const updateNoteOnClick = () => {
     const noteToEdit: BaseNoteEntry = {
       ...note,
       content: noteContent,
+      edit: false
     };
 
     void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-    dispatch(setClickedNote(''));
   };
 
   const getCheckedIdOnClick = (
@@ -69,25 +65,46 @@ export const SingleNote = ({
   ) => dispatch(setChecboxChecked(e, checkbox));
 
   const setEditNoteOnClick = () => {
-    dispatch(setClickedNote(note.id));
+    // set all the notes to false
+    const setNotesFalse = singleCategory.notes.map(note => {
+      return {
+        ...note,
+        edit: false,
+      };
+    });
+
+    const categoryWithUpdatedNotes = {
+      ...singleCategory,
+      notes: setNotesFalse
+    };
+    const noteToUpdate = categoryWithUpdatedNotes.notes.find(n => n.id === note.id);
+
+    if (!noteToUpdate) throw new Error('setEditNoteOnClick Error, something went wrong');
+
+    const updatedNote = {
+      ...noteToUpdate,
+      edit: true
+    };
+
+    void dispatch(updateExistingNote(categories, categoryWithUpdatedNotes, updatedNote));
     dispatch(setEditorActive(false));
   };
 
   const cancelEditNoteOnClick = () => {
-    dispatch(setClickedNote(''));
+    const editedNote: BaseNoteEntry = {
+      ...note,
+      edit: false
+    };
+
+    void dispatch(updateExistingNote(categories, singleCategory, editedNote));
     editor?.commands.setContent(note.content);
   };
 
   if (!editor) return null;
 
-  // focus the editor
-  if (editable) {
-    editor.commands.focus();
-  }
-
   return (
     <NoteEditorStyles>
-      <div style={{ display: editable ? 'flex' : 'none' }}>
+      <div style={{ display: note.edit ? 'flex' : 'none' }}>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}

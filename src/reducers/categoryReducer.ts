@@ -199,6 +199,8 @@ export const updateExistingNote = (
   };
 };
 
+
+
 export const deleteExistingNote = (
   categories: BaseCategoryEntry[],
   category: BaseCategoryEntry,

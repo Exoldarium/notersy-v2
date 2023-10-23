@@ -1,9 +1,9 @@
-import { BaseCategoryEntry, BaseNoteEntry, BaseStorageEntry } from '../types';
+import { BaseCategoryEntry, BaseNoteEntry, BaseStorageEntry, StoredNoteContent } from '../types';
 import { parseDate, parseToBool, parseToNumber, parseToString } from './parseData';
 
 // validate and parse the entries
 // parse each note
-export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
+const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
   // check if correct keys are present in each entry
@@ -32,7 +32,7 @@ export const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
 };
 
 // parse each category
-export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
+const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
   if (
@@ -62,7 +62,7 @@ export const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
   throw new Error('Incorrect data input or some fileds might be missing');
 };
 
-export const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
+const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
   if (
@@ -78,5 +78,35 @@ export const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
 
     return newEntry;
   }
+
   throw new Error('Incorrect data input or some fileds might be missing');
+};
+
+const toNewNoteContentEntry = (object: unknown): StoredNoteContent => {
+  if (!object || typeof object !== 'object') throw new Error('Invalid data input');
+
+  if (
+    'id' in object &&
+    'content' in object &&
+    'storedNoteContent' in object &&
+    Array.isArray(object.storedNoteContent)
+  ) {
+    const newEntry: StoredNoteContent = {
+      storedNoteContent: [{
+        id: parseToString(object.id),
+        content: parseToString(object.content)
+      }]
+    };
+
+    return newEntry;
+  }
+
+  throw new Error('Incorrect data input or some fileds might be missing');
+};
+
+export {
+  toNewNoteEntry,
+  toNewCategoryEntry,
+  toNewStorageEntry,
+  toNewNoteContentEntry
 };

@@ -51,7 +51,6 @@ describe('Chrome Extension Storage', () => {
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(chrome.storage.sync.get).toHaveBeenCalledWith('testKey');
-    expect(res.testKey).toStrictEqual(mockCategory);
-    expect(mockRes.testKey).toStrictEqual(mockCategory);
+    expect(res.testKey).toBe(mockRes.testKey);
   });
 });

@@ -28,3 +28,12 @@ export interface Message {
 export interface Checked {
   id: string,
 }
+
+export interface StoredNoteContent {
+  storedNoteContent: [
+    {
+      id: string;
+      content: string;
+    }
+  ]
+}

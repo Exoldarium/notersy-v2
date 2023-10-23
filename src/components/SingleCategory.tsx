@@ -9,23 +9,23 @@ interface Props {
 }
 
 export const SingleCategory = ({ singleCategory }: Props) => {
-  const clickedNote = useAppSelector(({ clickedNote }) => {
-    return clickedNote;
-  });
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
+
+  const sortedNotes = singleCategory.notes
+    .slice()
+    .sort((a, b) => a.unixTime - b.unixTime);
 
   console.log('single category has rendered');
 
   return (
     <>
-      {singleCategory.notes.map(note =>
+      {sortedNotes.map(note =>
         <SingleNote
           note={note}
           key={note.id}
           singleCategory={singleCategory}
-          editable={clickedNote === note.id}
         />
       )}
       {editorActive && <NoteEditor singleCategory={singleCategory} />}

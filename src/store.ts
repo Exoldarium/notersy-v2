@@ -3,7 +3,6 @@ import { categoryReducer } from './reducers/categoryReducer';
 import { messageReducer } from './reducers/messageReducer';
 import { checkboxReducer } from './reducers/checkboxReducer';
 import { editorActiveReducer } from './reducers/editorActiveReducer';
-import { clickedNoteReducer } from './reducers/clickedNoteReducer';
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +10,6 @@ export const store = configureStore({
     message: messageReducer,
     checkbox: checkboxReducer,
     editorActive: editorActiveReducer,
-    clickedNote: clickedNoteReducer
   }
 });
 

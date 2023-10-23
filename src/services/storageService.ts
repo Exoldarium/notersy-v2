@@ -1,6 +1,6 @@
-import { BaseCategoryEntry, BaseStorageEntry } from '../types';
+import { BaseCategoryEntry, BaseStorageEntry, StoredNoteContent } from '../types';
 import { parseError } from '../utils/parseData';
-import { toNewStorageEntry } from '../utils/parseStorageEntry';
+import { toNewNoteContentEntry, toNewStorageEntry } from '../utils/parseStorageEntry';
 
 // grab data from storage
 const getStorage = async (key: string) => {
@@ -25,17 +25,27 @@ const getStorage = async (key: string) => {
   }
 };
 
+// TODO: 
+// move these two parsing functions to parseData.ts
 const parseStorage = async (key: string): Promise<BaseStorageEntry> => {
   const res = await getStorage(key);
 
   // parse data that we get from storage
-  const newEntry = toNewStorageEntry(res);
+  const parsedEntry = toNewStorageEntry(res);
 
-  return newEntry;
+  return parsedEntry;
+};
+
+const parseNoteContent = async (key: string): Promise<StoredNoteContent> => {
+  const res = await getStorage(key);
+
+  const parsedEntry = toNewNoteContentEntry(res);
+
+  return parsedEntry;
 };
 
 // set data to storage
-const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
+const setStorage = async (key: string, value: BaseCategoryEntry[] | StoredNoteContent) => {
   try {
     await chrome.storage.sync.set({ [key]: value });
   } catch (err) {
@@ -59,5 +69,6 @@ export {
   getStorage,
   setStorage,
   clearStorage,
-  parseStorage
+  parseStorage,
+  parseNoteContent
 };

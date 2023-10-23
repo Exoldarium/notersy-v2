@@ -19,12 +19,8 @@ interface Props {
 // TODO:
 // add different headers and paragraph options into a dropdown menu
 // TODO:
-// save data every time the user clicks a different button, try to use a mouseOut event for mousing out of popup
-// TODO: 
-// read this an update everything using the info https://tiptap.dev/guide/output#rendering
-// we could make each of the notes be rendered through the editor component, each of the notes will be a single editor instance
-// apply isEditable accordingly and other methods from the link
-// the editor that is used for adding a new note will be a separate one with empty content
+// add a separate key in storage that will store unfinished note content
+// if the user clicks out of the popup (note is still active), grab that content and add it to note
 
 export const NoteEditor = ({ singleCategory }: Props) => {
   const [noteContent, setNoteContent] = useState('');
