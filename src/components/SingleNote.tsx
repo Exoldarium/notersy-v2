@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked } from '../reducers/checkboxReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
+import { setNoteEditPropertyToFalse } from '../utils/helpers';
 
 interface Props {
   note: BaseNoteEntry;
@@ -65,24 +66,10 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
   ) => dispatch(setChecboxChecked(e, checkbox));
 
   const setEditNoteOnClick = () => {
-    // set all the notes to false
-    const setNotesFalse = singleCategory.notes.map(note => {
-      return {
-        ...note,
-        edit: false,
-      };
-    });
-
-    const categoryWithUpdatedNotes = {
-      ...singleCategory,
-      notes: setNotesFalse
-    };
-    const noteToUpdate = categoryWithUpdatedNotes.notes.find(n => n.id === note.id);
-
-    if (!noteToUpdate) throw new Error('setEditNoteOnClick Error, something went wrong');
+    const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
 
     const updatedNote = {
-      ...noteToUpdate,
+      ...note,
       edit: true
     };
 
