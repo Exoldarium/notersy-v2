@@ -37,6 +37,7 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
 
   if (
     'active' in object &&
+    'editor' in object &&
     'title' in object &&
     'notes' in object &&
     'id' in object &&
@@ -49,6 +50,7 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
 
     const newEntry: BaseCategoryEntry = {
       active: parseToBool(object.active),
+      editor: parseToBool(object.editor),
       title: parseToString(object.title),
       id: parseToString(object.id),
       date: parseDate(object.date),

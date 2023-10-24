@@ -6,6 +6,7 @@ describe('Chrome Extension Storage', () => {
     {
       id: '123',
       active: true,
+      editor: false,
       title: 'New Category',
       date: 'Sat Oct 07 2023 18:36:08',
       unixTime: 1696749517,

@@ -66,6 +66,7 @@ export const addNewCategory = (categories: BaseCategoryEntry[]) => {
       const newCategoryEntry: BaseCategoryEntry = {
         id: uuidv4(),
         active: true,
+        editor: false,
         title: 'New Category',
         date: getDate(),
         unixTime: Date.now(),

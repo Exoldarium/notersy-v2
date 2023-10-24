@@ -5,7 +5,6 @@ import { BaseCategoryEntry } from '../types';
 import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { useForm } from '../hooks/useForm';
-import { setEditorActive } from '../reducers/editorActiveReducer';
 import { updateCheckedId } from '../reducers/checkboxReducer';
 import { setNoteEditPropertyToFalse } from '../utils/helpers';
 
@@ -25,14 +24,25 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const changeEditTitleOnClick = () => setEditTitle(!editTitle);
+  const changeEditTitleOnClick = () => {
+    const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
+
+    const updatedCategory = {
+      ...categoryWithUpdatedNotes,
+      editor: false,
+    };
+
+    setEditTitle(!editTitle);
+    void dispatch(updateExistingCategory(categories, updatedCategory));
+  };
 
   const setActiveCategoryToFalse = () => {
     const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
 
     const updatedCategory = {
       ...categoryWithUpdatedNotes,
-      active: false
+      active: false,
+      editor: false,
     };
 
     void dispatch(updateExistingCategory(categories, updatedCategory));
@@ -55,11 +65,17 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const setEditorActiveOnClick = () => {
     // set any notes that are being edited to false
     const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
+    const activeEditorCategory = {
+      ...categoryWithUpdatedNotes,
+      editor: true,
+    };
 
-    void dispatch(updateExistingCategory(categories, categoryWithUpdatedNotes));
-    dispatch(setEditorActive(true));
+    void dispatch(updateExistingCategory(categories, activeEditorCategory));
   };
 
+  // TODO: 
+  // delete button can appear only if there are selected notes or categories
+  // if checked id array has items in it
   const deleteCheckedNotesOnClick = () => {
     void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
     dispatch(updateCheckedId([]));

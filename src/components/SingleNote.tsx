@@ -7,7 +7,6 @@ import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked } from '../reducers/checkboxReducer';
-import { setEditorActive } from '../reducers/editorActiveReducer';
 import { setNoteEditPropertyToFalse } from '../utils/helpers';
 
 interface Props {
@@ -65,13 +64,16 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
   const setEditNoteOnClick = () => {
     const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
 
+    const updatedCategory = {
+      ...categoryWithUpdatedNotes,
+      editor: false,
+    };
     const updatedNote = {
       ...note,
       edit: true
     };
 
-    void dispatch(updateExistingNote(categories, categoryWithUpdatedNotes, updatedNote));
-    dispatch(setEditorActive(false));
+    void dispatch(updateExistingNote(categories, updatedCategory, updatedNote));
   };
 
   const cancelEditNoteOnClick = () => {

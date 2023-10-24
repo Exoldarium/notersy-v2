@@ -9,6 +9,7 @@ export interface BaseNoteEntry {
 
 export interface BaseCategoryEntry {
   active: boolean;
+  editor: boolean;
   id: string;
   title: string;
   date: string;
