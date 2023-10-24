@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 import { CategoryList } from './components/CategoryList';
-import { CategoryStyles } from './components/styles/CategoryStyles';
 import { Nav } from './components/Nav';
 import { SingleCategory } from './components/SingleCategory';
 import { Notification } from './components/Notification';
@@ -88,17 +87,15 @@ export const App = () => {
           }
           /> :
           <Route path="/" element={
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {sortedCategories.map((category) => (
-                <CategoryList category={category} key={category.id} />
-              ))}
-            </div>
+            sortedCategories.map((category) => (
+              <CategoryList category={category} key={category.id} />
+            ))
           }
           />
         }
       </Routes>
       {categories.length === 0 &&
-        <CategoryStyles >
+        <div>
           <p>This is Notersy!</p>
           <p>Create a category to start!</p>
           <button
@@ -107,7 +104,7 @@ export const App = () => {
           >
             Create
           </button>
-        </CategoryStyles>
+        </div>
       }
     </>
   );

@@ -20,13 +20,15 @@ export const SingleCategory = ({ singleCategory }: Props) => {
 
   return (
     <>
-      {sortedNotes.map(note =>
-        <SingleNote
-          note={note}
-          key={note.id}
-          singleCategory={singleCategory}
-        />
-      )}
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {sortedNotes.map(note =>
+          <SingleNote
+            note={note}
+            key={note.id}
+            singleCategory={singleCategory}
+          />
+        )}
+      </ul>
       {editorActive && <NoteEditor singleCategory={singleCategory} />}
     </>
   );

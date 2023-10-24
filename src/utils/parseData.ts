@@ -1,3 +1,7 @@
+import { getStorage } from '../services/storageService';
+import { BaseStorageEntry, StoredNoteContent } from '../types';
+import { toNewNoteContentEntry, toNewStorageEntry } from './parseStorageEntry';
+
 // helpers for validating and parsing values
 export const isString = (string: unknown): string is string => {
   return typeof string === 'string' || string instanceof String;
@@ -48,4 +52,21 @@ export const parseError = (error: unknown) => {
   }
 
   return errorMessage;
+};
+
+export const parseStorage = async (key: string): Promise<BaseStorageEntry> => {
+  const res = await getStorage(key);
+
+  // parse data that we get from storage
+  const parsedEntry = toNewStorageEntry(res);
+
+  return parsedEntry;
+};
+
+export const parseNoteContent = async (key: string): Promise<StoredNoteContent> => {
+  const res = await getStorage(key);
+
+  const parsedEntry = toNewNoteContentEntry(res);
+
+  return parsedEntry;
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CategoryStyles = styled.div`
+export const CategoryStyles = styled.li`
   border: 1px solid black;
   height: 90px;
   width: 350px;

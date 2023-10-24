@@ -1,6 +1,5 @@
-import { BaseCategoryEntry, BaseStorageEntry, StoredNoteContent } from '../types';
+import { BaseCategoryEntry, StoredNoteContent } from '../types';
 import { parseError } from '../utils/parseData';
-import { toNewNoteContentEntry, toNewStorageEntry } from '../utils/parseStorageEntry';
 
 // grab data from storage
 const getStorage = async (key: string) => {
@@ -23,25 +22,6 @@ const getStorage = async (key: string) => {
     console.error('getStorage Error', error);
     throw new Error(error);
   }
-};
-
-// TODO: 
-// move these two parsing functions to parseData.ts
-const parseStorage = async (key: string): Promise<BaseStorageEntry> => {
-  const res = await getStorage(key);
-
-  // parse data that we get from storage
-  const parsedEntry = toNewStorageEntry(res);
-
-  return parsedEntry;
-};
-
-const parseNoteContent = async (key: string): Promise<StoredNoteContent> => {
-  const res = await getStorage(key);
-
-  const parsedEntry = toNewNoteContentEntry(res);
-
-  return parsedEntry;
 };
 
 // set data to storage
@@ -68,7 +48,5 @@ const clearStorage = async () => {
 export {
   getStorage,
   setStorage,
-  clearStorage,
-  parseStorage,
-  parseNoteContent
+  clearStorage
 };

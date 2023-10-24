@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import CharacterCount from '@tiptap/extension-character-count';
 import StarterKit from '@tiptap/starter-kit';
-import { NoteEditorStyles } from './styles/NoteEditorStyles';
+import { EditorStyles } from './styles/NoteEditorStyles';
 import { addNewNote } from '../reducers/categoryReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
@@ -62,7 +62,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   }
 
   return (
-    <NoteEditorStyles>
+    <EditorStyles>
       <div>
         <button
           type="button"
@@ -111,6 +111,6 @@ export const NoteEditor = ({ singleCategory }: Props) => {
         </button>
       </div>
       <EditorContent editor={editor} />
-    </NoteEditorStyles>
+    </EditorStyles>
   );
 };

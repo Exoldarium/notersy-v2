@@ -92,10 +92,10 @@ const toNewNoteContentEntry = (object: unknown): StoredNoteContent => {
     Array.isArray(object.storedNoteContent)
   ) {
     const newEntry: StoredNoteContent = {
-      storedNoteContent: [{
+      storedNoteContent: {
         id: parseToString(object.id),
         content: parseToString(object.content)
-      }]
+      }
     };
 
     return newEntry;

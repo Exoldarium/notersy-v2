@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { BaseCategoryEntry, BaseNoteEntry, Checked } from '../types';
-import { parseStorage, setStorage } from '../services/storageService';
+import { setStorage } from '../services/storageService';
 import { AppDispatch } from '../store';
 import { toNewCategoryEntry, toNewNoteEntry } from '../utils/parseStorageEntry';
 import { getDate } from '../utils/helpers';
-import { parseError } from '../utils/parseData';
+import { parseError, parseStorage } from '../utils/parseData';
 
 const initialState: BaseCategoryEntry[] = [];
 // TODO: add sorting, the user could choose to sort by name or date
