@@ -7,14 +7,17 @@ import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked } from '../reducers/checkboxReducer';
-import { setNoteEditPropertyToFalse } from '../utils/helpers';
+import { useVisibilityChange } from '../hooks/useVisibilityChange';
+import { setClickedNote } from '../reducers/clickedNoteReducer';
+import { setEditorActive } from '../reducers/editorActiveReducer';
 
 interface Props {
   note: BaseNoteEntry;
   singleCategory: BaseCategoryEntry;
+  editable: boolean;
 }
 
-export const SingleNote = ({ note, singleCategory }: Props) => {
+export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   const [noteContent, setNoteContent] = useState('');
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -23,6 +26,7 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
     return checkbox;
   });
   const dispatch = useAppDispatch();
+  const change = useVisibilityChange();
 
   const editor = useEditor({
     extensions: [
@@ -30,7 +34,7 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
         hardBreak: false
       }),
     ],
-    editable: note.edit,
+    editable,
     content: note.content,
     onUpdate({ editor }) {
       // grab the text and sanitize the inputs
@@ -41,56 +45,53 @@ export const SingleNote = ({ note, singleCategory }: Props) => {
 
   useEffect(() => {
     // sets editor editable property and focuses the editor
-    if (note.edit) {
+    if (editable) {
       editor?.commands.focus();
     }
 
-    editor?.setEditable(note.edit);
-  }, [editor, note]);
+    editor?.setEditable(editable);
+  }, [editor, editable]);
 
   const updateNoteOnClick = () => {
     const noteToEdit: BaseNoteEntry = {
       ...note,
       content: noteContent,
-      edit: false
     };
 
     void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
+    dispatch(setClickedNote(''));
   };
 
-  const getCheckedIdOnClick = (e: React.MouseEvent<HTMLInputElement>) =>
-    dispatch(setChecboxChecked(e, checkbox));
+  const getCheckedIdOnClick = (
+    e: React.MouseEvent<HTMLInputElement>
+  ) => dispatch(setChecboxChecked(e, checkbox));
 
   const setEditNoteOnClick = () => {
-    const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
-
-    const updatedCategory = {
-      ...categoryWithUpdatedNotes,
-      editor: false,
-    };
-    const updatedNote = {
-      ...note,
-      edit: true
-    };
-
-    void dispatch(updateExistingNote(categories, updatedCategory, updatedNote));
+    dispatch(setClickedNote(note.id));
+    dispatch(setEditorActive(false));
   };
 
   const cancelEditNoteOnClick = () => {
-    const editedNote: BaseNoteEntry = {
-      ...note,
-      edit: false
-    };
-
-    void dispatch(updateExistingNote(categories, singleCategory, editedNote));
+    dispatch(setClickedNote(''));
     editor?.commands.setContent(note.content);
   };
 
   if (!editor) return null;
 
+  // TODO: try to edit notes using the previous method with state without setting to storage every time
+  if (change) {
+    const noteToEdit = {
+      ...note,
+      content: noteContent,
+    };
+
+    void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
+    dispatch(setClickedNote(''));
+  }
+
   return (
     <NoteEditorStyles>
-      <div style={{ display: note.edit ? 'flex' : 'none' }}>
+      <div style={{ display: editable ? 'flex' : 'none' }}>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}

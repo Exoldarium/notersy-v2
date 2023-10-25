@@ -66,7 +66,6 @@ export const addNewCategory = (categories: BaseCategoryEntry[]) => {
       const newCategoryEntry: BaseCategoryEntry = {
         id: uuidv4(),
         active: true,
-        editor: false,
         title: 'New Category',
         date: getDate(),
         unixTime: Date.now(),
@@ -137,7 +136,7 @@ export const addNewNote = (
     try {
       const newNoteEntry: BaseNoteEntry = {
         id: uuidv4(),
-        edit: false,
+
         title: 'New Category',
         date: getDate(),
         unixTime: Date.now(),

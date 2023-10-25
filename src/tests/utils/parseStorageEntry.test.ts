@@ -8,14 +8,12 @@ describe('functions return correct value', () => {
       {
         id: '123',
         active: true,
-        editor: false,
         title: 'New Category',
         date: 'Sat Oct 07 2023 18:36:08',
         unixTime: 1696749517,
         notes: [
           {
             id: '321',
-            edit: false,
             title: 'New note',
             date: 'Sat Oct 08 2023 18:36:08',
             unixTime: 1696749515,
@@ -23,7 +21,6 @@ describe('functions return correct value', () => {
           },
           {
             id: '4321',
-            edit: false,
             title: 'another note',
             date: 'Sat Oct 09 2023 18:36:08',
             unixTime: 1696749514,
@@ -34,14 +31,12 @@ describe('functions return correct value', () => {
       {
         id: '12345',
         active: false,
-        editor: false,
         title: 'Another category',
         date: 'Sat Oct 10 2023 18:36:08',
         unixTime: 1696749513,
         notes: [
           {
             id: '54321',
-            edit: false,
             title: 'some other note title',
             date: 'Sat Oct 10 2023 18:36:08',
             unixTime: 1696749512,
@@ -66,8 +61,8 @@ describe('functions return correct value', () => {
       .toThrowError('Invalid data input');
 
     expect(parsedNotes).toStrictEqual(mockData.storedData[0].notes);
-    expect(() => mockData.storedData[0].notes
-      .map(note => toNewNoteEntry(note.edit)))
-      .toThrowError('Invalid data input');
+    // expect(() => mockData.storedData[0].notes
+    //   .map(note => toNewNoteEntry(note.edit)))
+    //   .toThrowError('Invalid data input');
   });
 });

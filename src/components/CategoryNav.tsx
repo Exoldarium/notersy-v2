@@ -6,7 +6,8 @@ import { deleteExistingNote, updateExistingCategory } from '../reducers/category
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { useForm } from '../hooks/useForm';
 import { updateCheckedId } from '../reducers/checkboxReducer';
-import { setNoteEditPropertyToFalse } from '../utils/helpers';
+import { setClickedNote } from '../reducers/clickedNoteReducer';
+import { setEditorActive } from '../reducers/editorActiveReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -20,29 +21,22 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const checkbox = useAppSelector(({ checkbox }) => {
     return checkbox;
   });
+  const editorActive = useAppSelector(({ editorActive }) => {
+    return editorActive;
+  });
+  const clickedNote = useAppSelector(({ clickedNote }) => {
+    return clickedNote;
+  });
   const { inputs, handleInputs } = useForm(singleCategory);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const changeEditTitleOnClick = () => {
-    const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
-
-    const updatedCategory = {
-      ...categoryWithUpdatedNotes,
-      editor: false,
-    };
-
-    setEditTitle(!editTitle);
-    void dispatch(updateExistingCategory(categories, updatedCategory));
-  };
+  const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
   const setActiveCategoryToFalse = () => {
-    const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
-
     const updatedCategory = {
-      ...categoryWithUpdatedNotes,
-      active: false,
-      editor: false,
+      ...singleCategory,
+      active: false
     };
 
     void dispatch(updateExistingCategory(categories, updatedCategory));
@@ -63,14 +57,8 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   };
 
   const setEditorActiveOnClick = () => {
-    // set any notes that are being edited to false
-    const categoryWithUpdatedNotes = setNoteEditPropertyToFalse(singleCategory);
-    const activeEditorCategory = {
-      ...categoryWithUpdatedNotes,
-      editor: true,
-    };
-
-    void dispatch(updateExistingCategory(categories, activeEditorCategory));
+    dispatch(setClickedNote('')); // close any notes that are being edited
+    dispatch(setEditorActive(true));
   };
 
   // TODO: 
@@ -87,7 +75,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     <NavStyles>
       {!editTitle && <h1>{singleCategory.title}</h1>}
       {/* editNav buttons are hidden if the note editor is active */}
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={{ display: editorActive || clickedNote ? 'none' : 'flex', flexDirection: 'row' }}>
         {!editTitle &&
           <button
             type="button"

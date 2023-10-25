@@ -8,7 +8,6 @@ const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
 
   // check if correct keys are present in each entry
   if (
-    'edit' in object &&
     'content' in object &&
     'date' in object &&
     'title' in object &&
@@ -17,7 +16,6 @@ const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
   ) {
     // parse each value and return correct type 
     const newEntry: BaseNoteEntry = {
-      edit: parseToBool(object.edit),
       content: parseToString(object.content),
       date: parseDate(object.date),
       title: parseToString(object.title),
@@ -37,7 +35,6 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
 
   if (
     'active' in object &&
-    'editor' in object &&
     'title' in object &&
     'notes' in object &&
     'id' in object &&
@@ -50,7 +47,6 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
 
     const newEntry: BaseCategoryEntry = {
       active: parseToBool(object.active),
-      editor: parseToBool(object.editor),
       title: parseToString(object.title),
       id: parseToString(object.id),
       date: parseDate(object.date),
@@ -94,10 +90,10 @@ const toNewNoteContentEntry = (object: unknown): StoredNoteContent => {
     Array.isArray(object.storedNoteContent)
   ) {
     const newEntry: StoredNoteContent = {
-      storedNoteContent: {
+      storedNoteContent: [{
         id: parseToString(object.id),
         content: parseToString(object.content)
-      }
+      }]
     };
 
     return newEntry;

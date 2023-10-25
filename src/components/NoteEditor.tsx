@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
-import CharacterCount from '@tiptap/extension-character-count';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorStyles } from './styles/NoteEditorStyles';
-import { addNewNote, updateExistingCategory } from '../reducers/categoryReducer';
+import { addNewNote } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { BaseCategoryEntry } from '../types';
+import { setEditorActive } from '../reducers/editorActiveReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -23,16 +23,16 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
+  const editorActive = useAppSelector(({ editorActive }) => {
+    return editorActive;
+  });
   const dispatch = useAppDispatch();
 
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
         hardBreak: false
-      }),
-      CharacterCount.configure({
-        limit: 1500,
-      }),
+      })
     ],
     content: '',
     onUpdate({ editor }) {
@@ -43,28 +43,17 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   });
 
   const addNewNoteOnClick = () => {
-    const updatedCategory = {
-      ...singleCategory,
-      editor: false
-    };
-
-    void dispatch(addNewNote(categories, updatedCategory, noteContent));
+    void dispatch(addNewNote(categories, singleCategory, noteContent));
+    dispatch(setEditorActive(false));
   };
 
-  const closeEditorOnClick = () => {
-    const updatedCategory = {
-      ...singleCategory,
-      editor: false
-    };
-
-    void dispatch(updateExistingCategory(categories, updatedCategory));
-  };
+  const closeEditorOnClick = () => dispatch(setEditorActive(false));
 
   if (!editor) {
     return null;
   }
 
-  if (singleCategory.editor) {
+  if (editorActive) {
     editor.commands.focus();
   }
 

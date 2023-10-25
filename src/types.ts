@@ -1,5 +1,4 @@
 export interface BaseNoteEntry {
-  edit: boolean;
   id: string;
   title?: string;
   content: string;
@@ -9,7 +8,6 @@ export interface BaseNoteEntry {
 
 export interface BaseCategoryEntry {
   active: boolean;
-  editor: boolean;
   id: string;
   title: string;
   date: string;
@@ -27,7 +25,7 @@ export interface BaseStorageEntry {
 }
 
 export interface StoredNoteContent {
-  storedNoteContent: BaseStoredNoteContent;
+  storedNoteContent: BaseStoredNoteContent[];
 }
 
 export interface Message {

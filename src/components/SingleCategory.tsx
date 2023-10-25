@@ -1,15 +1,19 @@
 import { NoteEditor } from './NoteEditor';
 import { BaseCategoryEntry } from '../types';
 import { SingleNote } from './SingleNote';
+import { useAppSelector } from '../hooks/useReduxTypes';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
 }
 
 export const SingleCategory = ({ singleCategory }: Props) => {
-  // const editorActive = useAppSelector(({ editorActive }) => {
-  //   return editorActive;
-  // });
+  const editorActive = useAppSelector(({ editorActive }) => {
+    return editorActive;
+  });
+  const clickedNote = useAppSelector(({ clickedNote }) => {
+    return clickedNote;
+  });
 
   const sortedNotes = singleCategory.notes
     .slice()
@@ -25,10 +29,11 @@ export const SingleCategory = ({ singleCategory }: Props) => {
             note={note}
             key={note.id}
             singleCategory={singleCategory}
+            editable={clickedNote === note.id}
           />
         )}
       </ul>
-      {singleCategory.editor && <NoteEditor singleCategory={singleCategory} />}
+      {editorActive && <NoteEditor singleCategory={singleCategory} />}
     </>
   );
 };

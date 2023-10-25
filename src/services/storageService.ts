@@ -1,21 +1,22 @@
-import { BaseCategoryEntry, StoredNoteContent } from '../types';
+import { BaseCategoryEntry, BaseStoredNoteContent } from '../types';
 import { parseError } from '../utils/parseData';
 
 // grab data from storage
 const getStorage = async (key: string) => {
   try {
-    const res = await chrome.storage.sync.get(key);
+    const res = await chrome.storage.local.get(key);
 
     // check if there's a valid key in res object
     // if not create it
     if (!res[key]) {
-      await chrome.storage.sync.set({ [key]: [] });
+      await chrome.storage.local.set({ [key]: [] });
 
-      const res = await chrome.storage.sync.get(key);
+      const res = await chrome.storage.local.get(key);
 
       return res;
     }
 
+    console.log(res, 'this is res');
     return res;
   } catch (err) {
     const error = parseError(err);
@@ -25,9 +26,9 @@ const getStorage = async (key: string) => {
 };
 
 // set data to storage
-const setStorage = async (key: string, value: BaseCategoryEntry[] | StoredNoteContent) => {
+const setStorage = async (key: string, value: BaseCategoryEntry[] | BaseStoredNoteContent[]) => {
   try {
-    await chrome.storage.sync.set({ [key]: value });
+    await chrome.storage.local.set({ [key]: value });
   } catch (err) {
     const error = parseError(err);
     console.error('setStorage Error', error);
@@ -37,7 +38,7 @@ const setStorage = async (key: string, value: BaseCategoryEntry[] | StoredNoteCo
 
 const clearStorage = async () => {
   try {
-    await chrome.storage.sync.clear();
+    await chrome.storage.local.clear();
     console.log('cleared');
   } catch (err) {
     const error = parseError(err);
