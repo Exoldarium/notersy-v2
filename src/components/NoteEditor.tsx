@@ -14,9 +14,6 @@ interface Props {
 
 // TODO:
 // add different headers and paragraph options into a dropdown menu
-// TODO:
-// add a separate key in storage that will store unfinished note content
-// if the user clicks out of the popup (note is still active), grab that content and add it to note
 
 export const NoteEditor = ({ singleCategory }: Props) => {
   const [noteContent, setNoteContent] = useState('');

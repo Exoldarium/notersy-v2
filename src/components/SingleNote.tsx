@@ -78,7 +78,6 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
   if (!editor) return null;
 
-  // TODO: try to edit notes using the previous method with state without setting to storage every time
   if (change) {
     const noteToEdit = {
       ...note,
