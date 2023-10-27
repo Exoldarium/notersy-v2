@@ -34,15 +34,15 @@ const categorySlice = createSlice({
     updateNote(_, action: PayloadAction<BaseCategoryEntry[]>) {
       return action.payload;
     },
-    sortCategoriesByDateAdded(state) {
-      return state
-        .slice()
-        .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
-    },
-    sortCategoriesByDateModified(state) {
-      return state
-        .slice()
-        .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
+    sortCategories(state, action: PayloadAction<string>) {
+      if (action.payload === 'dateAdded') {
+        return state
+          .slice()
+          .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
+      } else if (action.payload === 'dateModified') {
+        return state.slice()
+          .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
+      }
     }
   }
 });
@@ -54,8 +54,7 @@ export const {
   deleteCategory,
   addNote,
   updateNote,
-  sortCategoriesByDateAdded,
-  sortCategoriesByDateModified
+  sortCategories
 } = categorySlice.actions;
 
 export const initializeCategories = () => {
@@ -241,7 +240,5 @@ export const deleteExistingNote = (
     }
   };
 };
-
-
 
 export const categoryReducer = categorySlice.reducer;
