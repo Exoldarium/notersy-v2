@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -37,6 +37,20 @@ export const NoteEditor = ({ singleCategory }: Props) => {
       const clean = DOMPurify.sanitize(editor.getHTML());
       setNoteContent(clean);
     }
+  });
+
+  useEffect(() => {
+    // listen for visibility change (popup window closing)
+    const addNoteOnVisibilityChange = () => {
+      if (document.visibilityState === 'hidden' && noteContent) {
+        void dispatch(addNewNote(categories, singleCategory, noteContent));
+        dispatch(setEditorActive(false));
+      }
+    };
+
+    document.addEventListener('visibilitychange', addNoteOnVisibilityChange);
+
+    return () => document.removeEventListener('visibilitychange', addNoteOnVisibilityChange);
   });
 
   const addNewNoteOnClick = () => {

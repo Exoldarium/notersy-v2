@@ -1,4 +1,4 @@
-import { BaseCategoryEntry, BaseNoteEntry, BaseStorageEntry, StoredNoteContent } from '../types';
+import { BaseCategoryEntry, BaseNoteEntry, BaseStorageEntry } from '../types';
 import { parseDate, parseToBool, parseToNumber, parseToString } from './parseData';
 
 // validate and parse the entries
@@ -80,31 +80,8 @@ const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
   throw new Error('Incorrect data input or some fileds might be missing');
 };
 
-const toNewNoteContentEntry = (object: unknown): StoredNoteContent => {
-  if (!object || typeof object !== 'object') throw new Error('Invalid data input');
-
-  if (
-    'id' in object &&
-    'content' in object &&
-    'storedNoteContent' in object &&
-    Array.isArray(object.storedNoteContent)
-  ) {
-    const newEntry: StoredNoteContent = {
-      storedNoteContent: [{
-        id: parseToString(object.id),
-        content: parseToString(object.content)
-      }]
-    };
-
-    return newEntry;
-  }
-
-  throw new Error('Incorrect data input or some fileds might be missing');
-};
-
 export {
   toNewNoteEntry,
   toNewCategoryEntry,
-  toNewStorageEntry,
-  toNewNoteContentEntry
+  toNewStorageEntry
 };

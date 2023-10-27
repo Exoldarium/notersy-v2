@@ -61,9 +61,6 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     dispatch(setEditorActive(true));
   };
 
-  // TODO: 
-  // delete button can appear only if there are selected notes or categories
-  // if checked id array has items in it
   const deleteCheckedNotesOnClick = () => {
     void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
     dispatch(updateCheckedId([]));
@@ -110,13 +107,15 @@ export const CategoryNav = ({ singleCategory }: Props) => {
         >
           New note
         </button>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-          onClick={deleteCheckedNotesOnClick}
-        >
-          Delete
-        </button>
+        {checkbox[0] &&
+          <button
+            type="button"
+            style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+            onClick={deleteCheckedNotesOnClick}
+          >
+            Delete
+          </button>
+        }
       </div>
     </NavStyles>
   );

@@ -23,11 +23,6 @@ export interface BaseStoredNoteContent {
 export interface BaseStorageEntry {
   storedData: BaseCategoryEntry[];
 }
-
-export interface StoredNoteContent {
-  storedNoteContent: BaseStoredNoteContent[];
-}
-
 export interface Message {
   type: string;
   content: string;

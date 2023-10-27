@@ -5,6 +5,7 @@ import { parseError } from '../utils/parseData';
 const getStorage = async (key: string) => {
   try {
     const res = await chrome.storage.local.get(key);
+    console.log(res);
 
     // check if there's a valid key in res object
     // if not create it

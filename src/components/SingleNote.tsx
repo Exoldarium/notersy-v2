@@ -7,7 +7,6 @@ import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked } from '../reducers/checkboxReducer';
-import { useVisibilityChange } from '../hooks/useVisibilityChange';
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 
@@ -26,7 +25,6 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
     return checkbox;
   });
   const dispatch = useAppDispatch();
-  const change = useVisibilityChange();
 
   const editor = useEditor({
     extensions: [
@@ -45,15 +43,33 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
   useEffect(() => {
     // sets editor editable property and focuses the editor
+    editor?.setEditable(editable);
+
     if (editable) {
       editor?.commands.focus();
     }
-
-    editor?.setEditable(editable);
   }, [editor, editable]);
 
+  useEffect(() => {
+    // listen for visibility change (popup window closing)
+    const updateNoteOnVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        const noteToEdit = {
+          ...note,
+          content: noteContent,
+        };
+
+        void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
+      }
+    };
+
+    document.addEventListener('visibilitychange', updateNoteOnVisibilityChange);
+
+    return () => document.removeEventListener('visibilitychange', updateNoteOnVisibilityChange);
+  });
+
   const updateNoteOnClick = () => {
-    const noteToEdit: BaseNoteEntry = {
+    const noteToEdit = {
       ...note,
       content: noteContent,
     };
@@ -64,7 +80,10 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
   const getCheckedIdOnClick = (
     e: React.MouseEvent<HTMLInputElement>
-  ) => dispatch(setChecboxChecked(e, checkbox));
+  ) => {
+    dispatch(setChecboxChecked(e, checkbox));
+    dispatch(setClickedNote(''));
+  };
 
   const setEditNoteOnClick = () => {
     dispatch(setClickedNote(note.id));
@@ -77,16 +96,6 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   };
 
   if (!editor) return null;
-
-  if (change) {
-    const noteToEdit = {
-      ...note,
-      content: noteContent,
-    };
-
-    void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-    dispatch(setClickedNote(''));
-  }
 
   return (
     <NoteEditorStyles>

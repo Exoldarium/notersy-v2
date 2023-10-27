@@ -13,7 +13,8 @@ import { setNotificationMesage } from './reducers/messageReducer';
 
 // TODO: 
 // add a button that will resize the popup when notes are active, redisign category display
-
+// TODO:
+// choose appropriate license
 const GlobalStyles = createGlobalStyle`
   html {
     box-sizing: border-box;

@@ -45,13 +45,15 @@ export const Nav = () => {
       >
         Clear
       </button>
-      <button
-        type="button"
-        style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-        onClick={deleteCheckedCategoriesOnClick}
-      >
-        Delete
-      </button>
+      {checkbox[0] &&
+        <button
+          type="button"
+          style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+          onClick={deleteCheckedCategoriesOnClick}
+        >
+          Delete
+        </button>
+      }
     </NavStyles>
   );
 };
