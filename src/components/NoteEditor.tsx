@@ -3,10 +3,11 @@ import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorStyles } from './styles/NoteEditorStyles';
-import { addNewNote } from '../reducers/categoryReducer';
+import { addNewNote, updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { BaseCategoryEntry } from '../types';
 import { setEditorActive } from '../reducers/editorActiveReducer';
+import { getDate } from '../utils/helpers';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -43,6 +44,13 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     // listen for visibility change (popup window closing)
     const addNoteOnVisibilityChange = () => {
       if (document.visibilityState === 'hidden' && noteContent) {
+        const updatedCategory: BaseCategoryEntry = {
+          ...singleCategory,
+          dateModified: getDate(),
+          unixTimeModified: Date.now()
+        };
+
+        void dispatch(updateExistingCategory(categories, updatedCategory));
         void dispatch(addNewNote(categories, singleCategory, noteContent));
         dispatch(setEditorActive(false));
       }
@@ -50,7 +58,9 @@ export const NoteEditor = ({ singleCategory }: Props) => {
 
     document.addEventListener('visibilitychange', addNoteOnVisibilityChange);
 
-    return () => document.removeEventListener('visibilitychange', addNoteOnVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', addNoteOnVisibilityChange);
+    };
   });
 
   const addNewNoteOnClick = () => {
@@ -88,6 +98,12 @@ export const NoteEditor = ({ singleCategory }: Props) => {
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
           Bullet
+        </button>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        >
+          Heading
         </button>
         <button
           type="button"

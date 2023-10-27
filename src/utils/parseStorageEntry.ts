@@ -9,18 +9,22 @@ const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
   // check if correct keys are present in each entry
   if (
     'content' in object &&
-    'date' in object &&
+    'dateAdded' in object &&
     'title' in object &&
     'id' in object &&
-    'unixTime' in object
+    'unixTimeAdded' in object &&
+    'dateModified' in object &&
+    'unixTimeModified' in object
   ) {
     // parse each value and return correct type 
     const newEntry: BaseNoteEntry = {
       content: parseToString(object.content),
-      date: parseDate(object.date),
+      dateAdded: parseDate(object.dateAdded),
       title: parseToString(object.title),
       id: parseToString(object.id),
-      unixTime: parseToNumber(object.unixTime),
+      unixTimeAdded: parseToNumber(object.unixTimeAdded),
+      dateModified: parseToString(object.dateModified),
+      unixTimeModified: parseToNumber(object.unixTimeModified)
     };
 
     return newEntry;
@@ -38,8 +42,10 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
     'title' in object &&
     'notes' in object &&
     'id' in object &&
-    'date' in object &&
-    'unixTime' in object &&
+    'dateAdded' in object &&
+    'unixTimeAdded' in object &&
+    'dateModified' in object &&
+    'unixTimeModified' in object &&
     Array.isArray(object.notes)
   ) {
     // parse each individual note
@@ -49,8 +55,10 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
       active: parseToBool(object.active),
       title: parseToString(object.title),
       id: parseToString(object.id),
-      date: parseDate(object.date),
-      unixTime: parseToNumber(object.unixTime),
+      dateAdded: parseDate(object.dateAdded),
+      unixTimeAdded: parseToNumber(object.unixTimeAdded),
+      dateModified: parseToString(object.dateModified),
+      unixTimeModified: parseToNumber(object.unixTimeModified),
       notes: parsedNotes
     };
 

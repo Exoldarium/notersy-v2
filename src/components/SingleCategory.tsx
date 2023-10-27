@@ -17,7 +17,7 @@ export const SingleCategory = ({ singleCategory }: Props) => {
 
   const sortedNotes = singleCategory.notes
     .slice()
-    .sort((a, b) => a.unixTime - b.unixTime);
+    .sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
 
   console.log('single category has rendered');
 

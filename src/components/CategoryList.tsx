@@ -23,7 +23,7 @@ export const CategoryList = ({ category }: Props) => {
     const id = e.currentTarget.id;
 
     const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
-    const updatedCategory = {
+    const updatedCategory: BaseCategoryEntry = {
       ...categoryToUpdate,
       active: true
     };

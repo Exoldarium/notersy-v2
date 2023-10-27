@@ -33,6 +33,16 @@ const categorySlice = createSlice({
     },
     updateNote(_, action: PayloadAction<BaseCategoryEntry[]>) {
       return action.payload;
+    },
+    sortCategoriesByDateAdded(state) {
+      return state
+        .slice()
+        .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
+    },
+    sortCategoriesByDateModified(state) {
+      return state
+        .slice()
+        .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
     }
   }
 });
@@ -43,7 +53,9 @@ export const {
   updateCategory,
   deleteCategory,
   addNote,
-  updateNote
+  updateNote,
+  sortCategoriesByDateAdded,
+  sortCategoriesByDateModified
 } = categorySlice.actions;
 
 export const initializeCategories = () => {
@@ -67,8 +79,10 @@ export const addNewCategory = (categories: BaseCategoryEntry[]) => {
         id: uuidv4(),
         active: true,
         title: 'New Category',
-        date: getDate(),
-        unixTime: Date.now(),
+        dateAdded: getDate(),
+        unixTimeAdded: Date.now(),
+        dateModified: getDate(),
+        unixTimeModified: Date.now(),
         notes: [],
       };
 
@@ -138,8 +152,10 @@ export const addNewNote = (
         id: uuidv4(),
 
         title: 'New Category',
-        date: getDate(),
-        unixTime: Date.now(),
+        dateAdded: getDate(),
+        unixTimeAdded: Date.now(),
+        dateModified: getDate(),
+        unixTimeModified: Date.now(),
         content,
       };
 
@@ -225,5 +241,7 @@ export const deleteExistingNote = (
     }
   };
 };
+
+
 
 export const categoryReducer = categorySlice.reducer;

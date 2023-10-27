@@ -2,16 +2,20 @@ export interface BaseNoteEntry {
   id: string;
   title?: string;
   content: string;
-  date: string;
-  unixTime: number;
+  dateAdded: string;
+  dateModified: string;
+  unixTimeModified: number;
+  unixTimeAdded: number;
 }
 
 export interface BaseCategoryEntry {
   active: boolean;
   id: string;
   title: string;
-  date: string;
-  unixTime: number;
+  dateAdded: string;
+  dateModified: string;
+  unixTimeAdded: number;
+  unixTimeModified: number;
   notes: BaseNoteEntry[];
 }
 

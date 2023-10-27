@@ -42,9 +42,9 @@ export const App = () => {
   }, [dispatch]);
 
   // shallow copy categories using slice and sort them 
-  const sortedCategories = categories
-    .slice()
-    .sort((a, b) => b.unixTime - a.unixTime);
+  // const sortedCategories = categories
+  //   .slice()
+  //   .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
 
   // match the route param with a category id, return a message it the note couldn't be found
   const singleCategory = match ?
@@ -88,7 +88,7 @@ export const App = () => {
           }
           /> :
           <Route path="/" element={
-            sortedCategories.map((category) => (
+            categories.map((category) => (
               <CategoryList category={category} key={category.id} />
             ))
           }

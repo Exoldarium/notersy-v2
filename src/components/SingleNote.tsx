@@ -5,10 +5,11 @@ import StarterKit from '@tiptap/starter-kit';
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-import { updateExistingNote } from '../reducers/categoryReducer';
+import { updateExistingCategory, updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked } from '../reducers/checkboxReducer';
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
+import { getDate } from '../utils/helpers';
 
 interface Props {
   note: BaseNoteEntry;
@@ -54,27 +55,47 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
     // listen for visibility change (popup window closing)
     const updateNoteOnVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
-        const noteToEdit = {
+        const updatedCategory: BaseCategoryEntry = {
+          ...singleCategory,
+          dateModified: getDate(),
+          unixTimeModified: Date.now()
+        };
+
+        const noteToEdit: BaseNoteEntry = {
           ...note,
           content: noteContent,
+          dateModified: getDate(),
+          unixTimeModified: Date.now()
         };
 
         void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
+        void dispatch(updateExistingCategory(categories, updatedCategory));
       }
     };
 
     document.addEventListener('visibilitychange', updateNoteOnVisibilityChange);
 
-    return () => document.removeEventListener('visibilitychange', updateNoteOnVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', updateNoteOnVisibilityChange);
+    };
   });
 
   const updateNoteOnClick = () => {
-    const noteToEdit = {
+    const updatedCategory: BaseCategoryEntry = {
+      ...singleCategory,
+      dateModified: getDate(),
+      unixTimeModified: Date.now()
+    };
+
+    const noteToEdit: BaseNoteEntry = {
       ...note,
       content: noteContent,
+      dateModified: getDate(),
+      unixTimeModified: Date.now()
     };
 
     void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
+    void dispatch(updateExistingCategory(categories, updatedCategory));
     dispatch(setClickedNote(''));
   };
 
@@ -99,7 +120,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
   return (
     <NoteEditorStyles>
-      <div style={{ display: editable ? 'flex' : 'none' }}>
+      <div style={{ display: editable ? 'block' : 'none' }}>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -117,6 +138,12 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
           Bullet
+        </button>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        >
+          Heading
         </button>
         <button
           type="button"

@@ -9,22 +9,28 @@ describe('functions return correct value', () => {
         id: '123',
         active: true,
         title: 'New Category',
-        date: 'Sat Oct 07 2023 18:36:08',
-        unixTime: 1696749517,
+        dateAdded: 'Sat Oct 07 2023 18:36:08',
+        unixTimeAdded: 1696749517,
+        dateModified: 'Sat Oct 08 2023 18:36:08',
+        unixTimeModified: 1696749520,
         notes: [
           {
             id: '321',
             title: 'New note',
-            date: 'Sat Oct 08 2023 18:36:08',
-            unixTime: 1696749515,
-            content: 'some content'
+            dateAdded: 'Sat Oct 08 2023 18:36:08',
+            unixTimeAdded: 1696749515,
+            content: 'some content',
+            dateModified: 'Sat Oct 08 2023 18:36:08',
+            unixTimeModified: 1696749520,
           },
           {
             id: '4321',
             title: 'another note',
-            date: 'Sat Oct 09 2023 18:36:08',
-            unixTime: 1696749514,
-            content: 'some other content'
+            dateAdded: 'Sat Oct 09 2023 18:36:08',
+            unixTimeAdded: 1696749514,
+            content: 'some other content',
+            dateModified: 'Sat Oct 08 2023 18:36:08',
+            unixTimeModified: 1696749520,
           }
         ]
       },
@@ -32,15 +38,19 @@ describe('functions return correct value', () => {
         id: '12345',
         active: false,
         title: 'Another category',
-        date: 'Sat Oct 10 2023 18:36:08',
-        unixTime: 1696749513,
+        dateAdded: 'Sat Oct 10 2023 18:36:08',
+        unixTimeAdded: 1696749513,
+        dateModified: 'Sat Oct 08 2023 18:36:08',
+        unixTimeModified: 1696749520,
         notes: [
           {
             id: '54321',
             title: 'some other note title',
-            date: 'Sat Oct 10 2023 18:36:08',
-            unixTime: 1696749512,
-            content: 'some new other content'
+            dateAdded: 'Sat Oct 10 2023 18:36:08',
+            unixTimeAdded: 1696749512,
+            content: 'some new other content',
+            dateModified: 'Sat Oct 08 2023 18:36:08',
+            unixTimeModified: 1696749520,
           }
         ]
       }

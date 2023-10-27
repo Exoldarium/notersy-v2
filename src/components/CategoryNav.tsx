@@ -8,6 +8,7 @@ import { useForm } from '../hooks/useForm';
 import { updateCheckedId } from '../reducers/checkboxReducer';
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
+import { getDate } from '../utils/helpers';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -34,7 +35,7 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
   const setActiveCategoryToFalse = () => {
-    const updatedCategory = {
+    const updatedCategory: BaseCategoryEntry = {
       ...singleCategory,
       active: false
     };
@@ -47,9 +48,11 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   const updateTitleOnClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const updatedCategory = {
+    const updatedCategory: BaseCategoryEntry = {
       ...singleCategory,
-      title: inputs.title
+      title: inputs.title,
+      dateModified: getDate(),
+      unixTimeModified: Date.now()
     };
 
     void dispatch(updateExistingCategory(categories, updatedCategory));
@@ -57,6 +60,14 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   };
 
   const setEditorActiveOnClick = () => {
+    const updatedCategory: BaseCategoryEntry = {
+      ...singleCategory,
+      title: inputs.title,
+      dateModified: getDate(),
+      unixTimeModified: Date.now()
+    };
+
+    void dispatch(updateExistingCategory(categories, updatedCategory));
     dispatch(setClickedNote('')); // close any notes that are being edited
     dispatch(setEditorActive(true));
   };
@@ -72,11 +83,11 @@ export const CategoryNav = ({ singleCategory }: Props) => {
     <NavStyles>
       {!editTitle && <h1>{singleCategory.title}</h1>}
       {/* editNav buttons are hidden if the note editor is active */}
-      <div style={{ display: editorActive || clickedNote ? 'none' : 'flex', flexDirection: 'row' }}>
+      <div style={{ display: editorActive || clickedNote ? 'none' : 'block' }}>
         {!editTitle &&
           <button
             type="button"
-            style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+            style={{ height: 'fit-content', width: 'fit-content' }}
             onClick={setActiveCategoryToFalse}
           >
             Back
@@ -95,26 +106,38 @@ export const CategoryNav = ({ singleCategory }: Props) => {
         }
         <button
           type="button"
-          style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+          style={{ height: 'fit-content', width: 'fit-content' }}
           onClick={changeEditTitleOnClick}
         >
           {editTitle ? 'Cancel' : 'Edit'}
         </button>
         <button
           type="button"
-          style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
+          style={{ height: 'fit-content', width: 'fit-content' }}
           onClick={setEditorActiveOnClick}
         >
           New note
         </button>
+        <button
+          type="button"
+          style={{ height: 'fit-content', width: 'fit-content' }}
+        >
+          Sort by date added
+        </button>
+        <button type="button" style={{ height: 'fit-content', width: 'fit-content' }}>
+          Sort by date modified
+        </button>
         {checkbox[0] &&
-          <button
-            type="button"
-            style={{ height: 'fit-content', width: 'fit-content', margin: '0.7rem' }}
-            onClick={deleteCheckedNotesOnClick}
-          >
-            Delete
-          </button>
+          <>
+            <button
+              type="button"
+              style={{ height: 'fit-content', width: 'fit-content' }}
+              onClick={deleteCheckedNotesOnClick}
+            >
+              Delete
+            </button>
+            <p>{checkbox.length} selected</p>
+          </>
         }
       </div>
     </NavStyles>

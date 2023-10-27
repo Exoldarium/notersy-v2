@@ -10,6 +10,9 @@ export const EditorStyles = styled.div`
     p {
       margin: 0;
     }
+    h1, h2, h3 {
+      margin: 0;
+    }
   }
 `;
 
@@ -21,6 +24,9 @@ export const NoteEditorStyles = styled.li`
     border: 1px solid black;
     border-radius: 3px;
     p {
+      margin: 0;
+    }
+    h1, h2, h3 {
       margin: 0;
     }
   }
