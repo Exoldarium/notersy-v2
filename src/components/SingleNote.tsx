@@ -68,8 +68,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
           unixTimeModified: Date.now()
         };
 
-        void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-        void dispatch(updateExistingCategory(categories, updatedCategory));
+        void dispatch(updateExistingNote(categories, updatedCategory, noteToEdit));
       }
     };
 

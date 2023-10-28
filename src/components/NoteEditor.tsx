@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorStyles } from './styles/NoteEditorStyles';
-import { addNewNote, updateExistingCategory } from '../reducers/categoryReducer';
+import { addNewNote } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { BaseCategoryEntry } from '../types';
 import { setEditorActive } from '../reducers/editorActiveReducer';
@@ -50,8 +50,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
           unixTimeModified: Date.now()
         };
 
-        void dispatch(updateExistingCategory(categories, updatedCategory));
-        void dispatch(addNewNote(categories, singleCategory, noteContent));
+        void dispatch(addNewNote(categories, updatedCategory, noteContent));
         dispatch(setEditorActive(false));
       }
     };

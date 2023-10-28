@@ -60,19 +60,18 @@ export const CategoryNav = ({ singleCategory }: Props) => {
   };
 
   const setEditorActiveOnClick = () => {
-    const updatedCategory: BaseCategoryEntry = {
-      ...singleCategory,
-      title: inputs.title,
-      dateModified: getDate(),
-      unixTimeModified: Date.now()
-    };
-
-    void dispatch(updateExistingCategory(categories, updatedCategory));
     dispatch(setClickedNote('')); // close any notes that are being edited
     dispatch(setEditorActive(true));
   };
 
   const deleteCheckedNotesOnClick = () => {
+    const updatedCategory: BaseCategoryEntry = {
+      ...singleCategory,
+      dateModified: getDate(),
+      unixTimeModified: Date.now()
+    };
+
+    void dispatch(updateExistingCategory(categories, updatedCategory));
     void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
     dispatch(updateCheckedId([]));
   };
