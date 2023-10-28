@@ -101,7 +101,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   const getCheckedIdOnClick = (
     e: React.MouseEvent<HTMLInputElement>
   ) => {
-    dispatch(setChecboxChecked(e, checkbox));
+    dispatch(setChecboxChecked(e, checkbox, note.id));
     dispatch(setClickedNote(''));
   };
 

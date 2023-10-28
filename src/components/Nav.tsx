@@ -28,12 +28,6 @@ export const Nav = () => {
     dispatch(updateCheckedId([]));
   };
 
-  const sortCategoriesOnClick = (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    dispatch(sortCategories(e.currentTarget.name));
-  };
-
   return (
     <NavStyles>
       <h1>Notersy</h1>
@@ -55,8 +49,7 @@ export const Nav = () => {
         <button
           type="button"
           style={{ height: 'fit-content', width: 'fit-content' }}
-          name="dateAdded"
-          onClick={sortCategoriesOnClick}
+          onClick={() => dispatch(sortCategories('dateAdded'))}
         >
           Sort by date added
         </button>
@@ -64,7 +57,7 @@ export const Nav = () => {
           type="button"
           style={{ height: 'fit-content', width: 'fit-content' }}
           name="dateModified"
-          onClick={sortCategoriesOnClick}
+          onClick={() => dispatch(sortCategories('dateModified'))}
         >
           Sort by date modified
         </button>

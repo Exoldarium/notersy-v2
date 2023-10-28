@@ -34,7 +34,7 @@ export const CategoryList = ({ category }: Props) => {
 
   const getCheckedIdOnClick = (
     e: React.MouseEvent<HTMLInputElement>
-  ) => dispatch(setChecboxChecked(e, checkbox));
+  ) => dispatch(setChecboxChecked(e, checkbox, category.id));
 
   console.log(checkbox);
 
