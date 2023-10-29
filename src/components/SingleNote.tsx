@@ -17,6 +17,9 @@ interface Props {
   editable: boolean;
 }
 
+// TODO:
+// add a way to copy note content
+
 export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   const [noteContent, setNoteContent] = useState('');
   const categories = useAppSelector(({ categories }) => {
@@ -118,6 +121,14 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
   return (
     <NoteEditorStyles>
+      <form style={{ alignSelf: 'flex-end' }}>
+        <input
+          type="checkbox"
+          id={note.id}
+          name="checked"
+          onClick={getCheckedIdOnClick}
+        />
+      </form>
       <div style={{ display: editable ? 'block' : 'none' }}>
         <button
           type="button"
@@ -172,14 +183,6 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
         </button>
       </div>
       <EditorContent editor={editor} id={note.id} onClick={setEditNoteOnClick} />
-      <form>
-        <input
-          type="checkbox"
-          id={note.id}
-          name="checked"
-          onClick={getCheckedIdOnClick}
-        />
-      </form>
     </NoteEditorStyles>
   );
 };

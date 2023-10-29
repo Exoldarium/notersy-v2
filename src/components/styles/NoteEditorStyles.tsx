@@ -17,12 +17,15 @@ export const EditorStyles = styled.div`
 `;
 
 export const NoteEditorStyles = styled.li`
+  border: 1px solid black;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
   .tiptap {
     min-height: 100px;
     height: fit-content;
-    padding: 0.2rem;
-    border: 1px solid black;
-    border-radius: 3px;
+    /* padding: 1.5rem 0.2rem 0.2rem 0.2rem; */
     p {
       margin: 0;
     }

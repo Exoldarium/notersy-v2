@@ -8,8 +8,6 @@ import { getDate } from '../utils/helpers';
 import { parseError, parseStorage } from '../utils/parseData';
 
 const initialState: BaseCategoryEntry[] = [];
-// TODO: add sorting, the user could choose to sort by name or date
-// TODO: we could add last viewed where the viewed property could be updated depending on when the category was clicked
 
 // controls notes and categories CRUD
 const categorySlice = createSlice({
@@ -77,7 +75,7 @@ export const addNewCategory = (categories: BaseCategoryEntry[]) => {
       // parse data
       const parsedCategoryEntry = toNewCategoryEntry(newCategoryEntry);
 
-      await setStorage('storedData', categories.concat(parsedCategoryEntry));
+      // await setStorage('storedData', categories.concat(parsedCategoryEntry));
 
       dispatch(addCategory(parsedCategoryEntry));
       console.log(categories, 'a new category added');
@@ -97,7 +95,7 @@ export const updateExistingCategory = (
     try {
       const updatedCategories = categories.filter(category => category.id !== categoryToUpdate.id);
 
-      await setStorage('storedData', updatedCategories.concat(categoryToUpdate));
+      // await setStorage('storedData', updatedCategories.concat(categoryToUpdate));
 
       dispatch(updateCategory(updatedCategories.concat(categoryToUpdate)));
     } catch (err) {
@@ -118,7 +116,7 @@ export const deleteExistingCategory = (
       const ids = checkedIdValues.map(item => item.id);
       const updatedCategories = categories.filter(category => !ids.includes(category.id));
 
-      await setStorage('storedData', updatedCategories);
+      // await setStorage('storedData', updatedCategories);
 
       dispatch(deleteCategory(updatedCategories));
     } catch (err) {
@@ -159,7 +157,7 @@ export const addNewNote = (
       // filter the category that we are updating with a new note
       const updatedCategories = categories.filter(category => category.id !== categoryWithNotes.id);
 
-      await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
+      // await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
       dispatch(addNote(updatedCategories.concat(categoryWithNotes)));
       console.log(updatedCategories, 'a new note added');
@@ -190,7 +188,7 @@ export const updateExistingNote = (
 
       const updatedCategories = categories.filter(category => category.id !== categoryWithNotes.id);
 
-      await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
+      // await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
       dispatch(updateNote(updatedCategories.concat(categoryWithNotes)));
       console.log(updatedCategories, 'a new note added');
@@ -219,7 +217,7 @@ export const deleteExistingNote = (
 
       const updatedCategories = categories.filter(category => category.id !== categoryWithNotes.id);
 
-      await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
+      // await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
       dispatch(updateNote(updatedCategories.concat(categoryWithNotes)));
     } catch (err) {

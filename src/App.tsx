@@ -15,15 +15,17 @@ import { setNotificationMesage } from './reducers/messageReducer';
 // add a button that will resize the popup when notes are active, redisign category display
 // TODO:
 // choose appropriate license
+// TODO:
+// add a back to top button
+
 const GlobalStyles = createGlobalStyle`
   html {
     box-sizing: border-box;
     /* width: 750px;
-    min-height: 350px;
-    height: fit-content; */
+    min-height: 350px; */
+    /* height: fit-content; */
     width: 375px;
     height: 600px;
-    border: 1px solid black;
   }
   *, *:before, *:after {
     box-sizing: inherit;

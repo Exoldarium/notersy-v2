@@ -1,4 +1,6 @@
-import { beforeAll, vi } from 'vitest';
+import { afterEach, beforeAll, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import '@testing-library/jest-dom/vitest';
 
 // mock chrome methods
 beforeAll(() => {
@@ -51,4 +53,8 @@ beforeAll(() => {
   };
 
   vi.stubGlobal('chrome', chromeMock);
+});
+
+afterEach(() => {
+  cleanup();
 });
