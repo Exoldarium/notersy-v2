@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 import { CategoryList } from './components/CategoryList';
@@ -31,6 +31,8 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export const App = () => {
+  const [sortCategories, setSortCategories] = useState('');
+  const [sortNotes, setSortNotes] = useState('');
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -41,10 +43,26 @@ export const App = () => {
     void dispatch(initializeCategories());
   }, [dispatch]);
 
-  // shallow copy categories using slice and sort them 
-  // const sortedCategories = categories
-  //   .slice()
-  //   .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
+  const sortByDateAdded = categories.slice().sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
+  const sortByDateModified = categories.slice().sort((a, b) => b.unixTimeModified - a.unixTimeModified);
+  const sortMostRecentLast = categories.slice().sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
+
+  const renderSortedCategories = () => {
+    switch (sortCategories) {
+      case 'dateAdded':
+        return sortByDateAdded.map((category) => (
+          <CategoryList category={category} key={category.id} />
+        ));
+      case 'dateModified':
+        return sortByDateModified.map((category) => (
+          <CategoryList category={category} key={category.id} />
+        ));
+      default:
+        return sortMostRecentLast.map((category) => (
+          <CategoryList category={category} key={category.id} />
+        ));
+    }
+  };
 
   // match the route param with a category id, return a message it the note couldn't be found
   const singleCategory = match ?
@@ -68,13 +86,15 @@ export const App = () => {
       {activeCategory ?
         <CategoryNav
           singleCategory={activeCategory}
+          setSortNotes={setSortNotes}
         /> :
-        <Nav />
+        <Nav setSortCategories={setSortCategories} />
       }
       <Routes>
         <Route path="/:id" element={
           singleCategory ?
             <SingleCategory
+              sortNotes={sortNotes}
               singleCategory={singleCategory}
             /> :
             <Notification />
@@ -83,15 +103,12 @@ export const App = () => {
         {activeCategory ?
           <Route path="/" element={
             <SingleCategory
+              sortNotes={sortNotes}
               singleCategory={activeCategory}
             />
           }
           /> :
-          <Route path="/" element={
-            categories.map((category) => (
-              <CategoryList category={category} key={category.id} />
-            ))
-          }
+          <Route path="/" element={renderSortedCategories()}
           />
         }
       </Routes>

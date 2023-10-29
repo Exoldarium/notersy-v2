@@ -5,7 +5,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-import { updateExistingCategory, updateExistingNote } from '../reducers/categoryReducer';
+import { updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked } from '../reducers/checkboxReducer';
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
@@ -93,8 +93,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
       unixTimeModified: Date.now()
     };
 
-    void dispatch(updateExistingNote(categories, singleCategory, noteToEdit));
-    void dispatch(updateExistingCategory(categories, updatedCategory));
+    void dispatch(updateExistingNote(categories, updatedCategory, noteToEdit));
     dispatch(setClickedNote(''));
   };
 

@@ -1,10 +1,14 @@
 import { NavStyles } from './styles/NavStyles';
-import { addNewCategory, deleteExistingCategory, sortCategories } from '../reducers/categoryReducer';
+import { addNewCategory, deleteExistingCategory } from '../reducers/categoryReducer';
 import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateCheckedId } from '../reducers/checkboxReducer';
 
-export const Nav = () => {
+interface Props {
+  setSortCategories: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export const Nav = ({ setSortCategories }: Props) => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -49,7 +53,7 @@ export const Nav = () => {
         <button
           type="button"
           style={{ height: 'fit-content', width: 'fit-content' }}
-          onClick={() => dispatch(sortCategories('dateAdded'))}
+          onClick={() => setSortCategories('dateAdded')}
         >
           Sort by date added
         </button>
@@ -57,7 +61,7 @@ export const Nav = () => {
           type="button"
           style={{ height: 'fit-content', width: 'fit-content' }}
           name="dateModified"
-          onClick={() => dispatch(sortCategories('dateModified'))}
+          onClick={() => setSortCategories('dateModified')}
         >
           Sort by date modified
         </button>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavStyles } from './styles/NavStyles';
 import { BaseCategoryEntry } from '../types';
@@ -12,9 +12,10 @@ import { getDate } from '../utils/helpers';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
+  setSortNotes: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const CategoryNav = ({ singleCategory }: Props) => {
+export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -120,10 +121,15 @@ export const CategoryNav = ({ singleCategory }: Props) => {
         <button
           type="button"
           style={{ height: 'fit-content', width: 'fit-content' }}
+          onClick={() => setSortNotes('dateAdded')}
         >
           Sort by date added
         </button>
-        <button type="button" style={{ height: 'fit-content', width: 'fit-content' }}>
+        <button
+          type="button"
+          style={{ height: 'fit-content', width: 'fit-content' }}
+          onClick={() => setSortNotes('dateModified')}
+        >
           Sort by date modified
         </button>
         {checkbox[0] &&

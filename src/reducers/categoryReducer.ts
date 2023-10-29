@@ -33,16 +33,6 @@ const categorySlice = createSlice({
     },
     updateNote(_, action: PayloadAction<BaseCategoryEntry[]>) {
       return action.payload;
-    },
-    sortCategories(state, action: PayloadAction<string>) {
-      if (action.payload === 'dateAdded') {
-        return state
-          .slice()
-          .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
-      } else if (action.payload === 'dateModified') {
-        return state.slice()
-          .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
-      }
     }
   }
 });
@@ -53,8 +43,7 @@ export const {
   updateCategory,
   deleteCategory,
   addNote,
-  updateNote,
-  sortCategories
+  updateNote
 } = categorySlice.actions;
 
 export const initializeCategories = () => {
@@ -162,7 +151,7 @@ export const addNewNote = (
 
       // add a new note to the notes array and create an updated category
       const notes = category.notes.concat(parsedNoteEntry);
-      const categoryWithNotes = {
+      const categoryWithNotes: BaseCategoryEntry = {
         ...category,
         notes,
       };
@@ -194,7 +183,7 @@ export const updateExistingNote = (
       // filter the note that we are updating
       const notesToUpdate = category.notes.filter(note => note.id !== parsedNoteEntry.id);
       const updatedNotes = notesToUpdate.concat(parsedNoteEntry);
-      const categoryWithNotes = {
+      const categoryWithNotes: BaseCategoryEntry = {
         ...category,
         notes: updatedNotes
       };
@@ -223,7 +212,7 @@ export const deleteExistingNote = (
       // delete selected notes based on their matching ids that are stored in checkbox state
       const ids = checkedIdValues.map(item => item.id);
       const updatedNotes = category.notes.filter(note => !ids.includes(note.id));
-      const categoryWithNotes = {
+      const categoryWithNotes: BaseCategoryEntry = {
         ...category,
         notes: updatedNotes
       };

@@ -63,7 +63,13 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   });
 
   const addNewNoteOnClick = () => {
-    void dispatch(addNewNote(categories, singleCategory, noteContent));
+    const updatedCategory: BaseCategoryEntry = {
+      ...singleCategory,
+      dateModified: getDate(),
+      unixTimeModified: Date.now()
+    };
+
+    void dispatch(addNewNote(categories, updatedCategory, noteContent));
     dispatch(setEditorActive(false));
   };
 
