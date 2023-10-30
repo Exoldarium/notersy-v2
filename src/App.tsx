@@ -110,7 +110,11 @@ export const App = () => {
             />
           }
           /> :
-          <Route path="/" element={renderSortedCategories()}
+          <Route path="/" element={
+            <ul style={{ listStyle: 'none', padding: 0 }}>
+              {renderSortedCategories()}
+            </ul>
+          }
           />
         }
       </Routes>

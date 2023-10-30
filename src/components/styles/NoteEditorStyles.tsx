@@ -16,12 +16,26 @@ export const EditorStyles = styled.div`
   }
 `;
 
-export const NoteEditorStyles = styled.li`
+export const NoteEditorStyles = styled.li<{ editable?: boolean }>`
   border: 1px solid black;
   border-radius: 3px;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
+  cursor: ${props => !props.editable && 'pointer'};
+  form {
+   position: relative;
+   height: 1rem;
+   width: 100%;
+  }
+  form:hover > input {
+    display: ${props => props.editable ? 'none' : 'block'};
+  }
+  input {
+    cursor: pointer;
+    display: none;
+    float: right;
+  }
+  input:checked {
+    display: block;
+  }
   .tiptap {
     min-height: 100px;
     height: fit-content;

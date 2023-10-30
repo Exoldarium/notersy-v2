@@ -6,7 +6,7 @@ import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateExistingNote } from '../reducers/categoryReducer';
-import { setChecboxChecked } from '../reducers/checkboxReducer';
+import { setChecboxChecked, updateCheckedId } from '../reducers/checkboxReducer';
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { getDate } from '../utils/helpers';
@@ -27,6 +27,9 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   });
   const checkbox = useAppSelector(({ checkbox }) => {
     return checkbox;
+  });
+  const clickedNote = useAppSelector(({ clickedNote }) => {
+    return clickedNote;
   });
   const dispatch = useAppDispatch();
 
@@ -105,11 +108,13 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   ) => {
     dispatch(setChecboxChecked(e, checkbox, note.id));
     dispatch(setClickedNote(''));
+    dispatch(setEditorActive(false));
   };
 
   const setEditNoteOnClick = () => {
     dispatch(setClickedNote(note.id));
     dispatch(setEditorActive(false));
+    dispatch(updateCheckedId([]));
   };
 
   const cancelEditNoteOnClick = () => {
@@ -120,14 +125,16 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   if (!editor) return null;
 
   return (
-    <NoteEditorStyles>
-      <form style={{ alignSelf: 'flex-end' }}>
-        <input
-          type="checkbox"
-          id={note.id}
-          name="checked"
-          onClick={getCheckedIdOnClick}
-        />
+    <NoteEditorStyles editable={editable}>
+      <form>
+        {!editable && !clickedNote &&
+          <input
+            type="checkbox"
+            id={note.id}
+            name="checked"
+            onClick={getCheckedIdOnClick}
+          />
+        }
       </form>
       <div style={{ display: editable ? 'block' : 'none' }}>
         <button

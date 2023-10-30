@@ -39,13 +39,7 @@ export const CategoryList = ({ category }: Props) => {
   console.log(checkbox);
 
   return (
-    <ul style={{ display: 'flex', flexDirection: 'row', listStyle: 'none', padding: 0 }}>
-      <CategoryStyles onClick={setCategoryActiveOnClick} id={category.id}>
-        <Link to={`/${category.id}`}>
-          {category.title}
-        </Link>
-      </CategoryStyles>
-      {/* TODO: move form into the categoryStyles */}
+    <CategoryStyles onClick={setCategoryActiveOnClick} id={category.id}>
       <form>
         <input
           type="checkbox"
@@ -54,6 +48,9 @@ export const CategoryList = ({ category }: Props) => {
           onClick={getCheckedIdOnClick}
         />
       </form>
-    </ul>
+      <Link to={`/${category.id}`}>
+        {category.title}
+      </Link>
+    </CategoryStyles>
   );
 };
