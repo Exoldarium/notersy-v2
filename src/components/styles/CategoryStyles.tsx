@@ -5,14 +5,19 @@ export const CategoryStyles = styled.li`
   height: 90px;
   width: 350px;
   margin: 0.2rem 0 0.2rem 0.2rem;
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
+  div {
+    flex: 1;
+  }
   form {
    position: relative;
    height: 1rem;
    width: 100%;
   }
   form:hover > input {
-    display: 'block';
+    display: block;
   }
   input {
     cursor: pointer;

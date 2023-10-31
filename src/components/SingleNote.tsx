@@ -18,7 +18,8 @@ interface Props {
 }
 
 // TODO:
-// add a way to copy note content
+// dropdown for sorting, sorting type should be displayed
+// add options, should have a clear storage option
 
 export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   const [noteContent, setNoteContent] = useState('');
@@ -60,7 +61,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   useEffect(() => {
     // listen for visibility change (popup window closing)
     const updateNoteOnVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
+      if (document.visibilityState === 'hidden' && editable) {
         const updatedCategory: BaseCategoryEntry = {
           ...singleCategory,
           dateModified: getDate(),

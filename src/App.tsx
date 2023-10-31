@@ -17,6 +17,8 @@ import { setNotificationMesage } from './reducers/messageReducer';
 // choose appropriate license
 // TODO:
 // add a back to top button
+// TODO:
+// component testing
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -44,27 +46,6 @@ export const App = () => {
   useEffect(() => {
     void dispatch(initializeCategories());
   }, [dispatch]);
-
-  const sortByDateAdded = categories.slice().sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
-  const sortByDateModified = categories.slice().sort((a, b) => b.unixTimeModified - a.unixTimeModified);
-  const sortMostRecentLast = categories.slice().sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
-
-  const renderSortedCategories = () => {
-    switch (sortCategories) {
-      case 'dateAdded':
-        return sortByDateAdded.map((category) => (
-          <CategoryList category={category} key={category.id} />
-        ));
-      case 'dateModified':
-        return sortByDateModified.map((category) => (
-          <CategoryList category={category} key={category.id} />
-        ));
-      default:
-        return sortMostRecentLast.map((category) => (
-          <CategoryList category={category} key={category.id} />
-        ));
-    }
-  };
 
   // match the route param with a category id, return a message it the note couldn't be found
   const singleCategory = match ?
@@ -112,7 +93,34 @@ export const App = () => {
           /> :
           <Route path="/" element={
             <ul style={{ listStyle: 'none', padding: 0 }}>
-              {renderSortedCategories()}
+              {((): JSX.Element[] => {
+                switch (sortCategories) {
+                  case 'dateAdded':
+                    const sortByDateAdded = categories
+                      .slice()
+                      .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
+
+                    return sortByDateAdded.map((category) => (
+                      <CategoryList category={category} key={category.id} />
+                    ));
+                  case 'dateModified':
+                    const sortByDateModified = categories
+                      .slice()
+                      .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
+
+                    return sortByDateModified.map((category) => (
+                      <CategoryList category={category} key={category.id} />
+                    ));
+                  default:
+                    const sortMostRecentLast = categories
+                      .slice()
+                      .sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
+
+                    return sortMostRecentLast.map((category) => (
+                      <CategoryList category={category} key={category.id} />
+                    ));
+                }
+              })()}
             </ul>
           }
           />

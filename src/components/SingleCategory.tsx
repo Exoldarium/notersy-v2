@@ -16,48 +16,54 @@ export const SingleCategory = ({ singleCategory, sortNotes }: Props) => {
     return clickedNote;
   });
 
-  const sortByDateAdded = singleCategory.notes.slice().sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
-  const sortByDateModified = singleCategory.notes.slice().sort((a, b) => b.unixTimeModified - a.unixTimeModified);
-  const sortMostRecentLast = singleCategory.notes.slice().sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
-
-  const renderSortedNotes = () => {
-    switch (sortNotes) {
-      case 'dateAdded':
-        return sortByDateAdded.map((note) => (
-          <SingleNote
-            note={note}
-            key={note.id}
-            singleCategory={singleCategory}
-            editable={clickedNote === note.id}
-          />
-        ));
-      case 'dateModified':
-        return sortByDateModified.map((note) => (
-          <SingleNote
-            note={note}
-            key={note.id}
-            singleCategory={singleCategory}
-            editable={clickedNote === note.id}
-          />
-        ));
-      default:
-        return sortMostRecentLast.map(note =>
-          <SingleNote
-            note={note}
-            key={note.id}
-            singleCategory={singleCategory}
-            editable={clickedNote === note.id}
-          />
-        );
-    }
-  };
-
   console.log('single category has rendered');
 
   return (
     <>
       <ul style={{ listStyle: 'none', padding: 0 }}>
-        {renderSortedNotes()}
+        {((): JSX.Element[] => {
+          switch (sortNotes) {
+            case 'dateAdded':
+              const sortByDateAdded = singleCategory.notes
+                .slice()
+                .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
+
+              return sortByDateAdded.map((note) => (
+                <SingleNote
+                  note={note}
+                  key={note.id}
+                  singleCategory={singleCategory}
+                  editable={clickedNote === note.id}
+                />
+              ));
+            case 'dateModified':
+              const sortByDateModified = singleCategory.notes
+                .slice()
+                .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
+
+              return sortByDateModified.map((note) => (
+                <SingleNote
+                  note={note}
+                  key={note.id}
+                  singleCategory={singleCategory}
+                  editable={clickedNote === note.id}
+                />
+              ));
+            default:
+              const sortMostRecentLast = singleCategory.notes
+                .slice()
+                .sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
+
+              return sortMostRecentLast.map(note =>
+                <SingleNote
+                  note={note}
+                  key={note.id}
+                  singleCategory={singleCategory}
+                  editable={clickedNote === note.id}
+                />
+              );
+          }
+        })()}
       </ul>
       {editorActive && <NoteEditor singleCategory={singleCategory} />}
     </>

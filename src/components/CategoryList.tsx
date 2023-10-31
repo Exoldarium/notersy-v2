@@ -19,7 +19,7 @@ export const CategoryList = ({ category }: Props) => {
     return checkbox;
   });
 
-  const setCategoryActiveOnClick = (e: React.MouseEvent<HTMLLIElement>) => {
+  const setCategoryActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const id = e.currentTarget.id;
 
     const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
@@ -39,7 +39,7 @@ export const CategoryList = ({ category }: Props) => {
   console.log(checkbox);
 
   return (
-    <CategoryStyles onClick={setCategoryActiveOnClick} id={category.id}>
+    <CategoryStyles>
       <form>
         <input
           type="checkbox"
@@ -48,9 +48,11 @@ export const CategoryList = ({ category }: Props) => {
           onClick={getCheckedIdOnClick}
         />
       </form>
-      <Link to={`/${category.id}`}>
-        {category.title}
-      </Link>
+      <div onClick={setCategoryActiveOnClick} id={category.id}>
+        <Link to={`/${category.id}`}>
+          {category.title}
+        </Link>
+      </div>
     </CategoryStyles>
   );
 };
