@@ -9,7 +9,6 @@ import { CategoryNav } from './components/CategoryNav';
 import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
-import { setNotificationMesage } from './reducers/messageReducer';
 
 // TODO: 
 // add a button that will resize the popup when notes are active, redisign category display
@@ -40,8 +39,17 @@ export const App = () => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
+  const message = useAppSelector(({ message }) => {
+    if (message && message.type === 'ERROR') {
+      return message.content;
+    }
+
+    return null;
+  });
   const dispatch = useAppDispatch();
   const match = useMatch('/:id');
+
+  console.log(message, 'message here');
 
   useEffect(() => {
     void dispatch(initializeCategories());
@@ -51,10 +59,7 @@ export const App = () => {
   const singleCategory = match ?
     toNewCategoryEntry(categories.find(category => category.id === match.params.id))
     :
-    dispatch(setNotificationMesage({
-      type: 'ERROR',
-      content: 'Invalid note'
-    }));
+    null;
 
   // check if there's an active category, the category that the user has selected
   const activeCategory = categories.find(entry => entry.active);
@@ -73,14 +78,14 @@ export const App = () => {
         /> :
         <Nav setSortCategories={setSortCategories} />
       }
+      {message && <Notification />}
       <Routes>
         <Route path="/:id" element={
-          singleCategory ?
-            <SingleCategory
-              sortNotes={sortNotes}
-              singleCategory={singleCategory}
-            /> :
-            <Notification />
+          singleCategory &&
+          <SingleCategory
+            sortNotes={sortNotes}
+            singleCategory={singleCategory}
+          />
         }
         />
         {activeCategory ?

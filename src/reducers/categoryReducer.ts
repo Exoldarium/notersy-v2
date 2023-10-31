@@ -6,6 +6,7 @@ import { AppDispatch } from '../store';
 import { toNewCategoryEntry, toNewNoteEntry } from '../utils/parseStorageEntry';
 import { getDate } from '../utils/helpers';
 import { parseError, parseStorage } from '../utils/parseData';
+import { setNotificationMesage } from './messageReducer';
 
 const initialState: BaseCategoryEntry[] = [];
 
@@ -81,6 +82,12 @@ export const addNewCategory = (categories: BaseCategoryEntry[]) => {
       console.log(categories, 'a new category added');
     } catch (err) {
       const error = parseError(err);
+
+      dispatch(setNotificationMesage({
+        type: 'ERROR',
+        content: error
+      }, 5));
+
       console.error('addNewCategory action Error', error);
       throw new Error(error);
     }
@@ -163,6 +170,12 @@ export const addNewNote = (
       console.log(updatedCategories, 'a new note added');
     } catch (err) {
       const error = parseError(err);
+
+      dispatch(setNotificationMesage({
+        type: 'ERROR',
+        content: error
+      }, 5));
+
       console.error('addNewNote action Error', error);
       throw new Error(error);
     }

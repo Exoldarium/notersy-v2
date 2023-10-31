@@ -48,7 +48,7 @@ export const parseError = (error: unknown) => {
   let errorMessage = 'There was an error.';
 
   if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message;
+    errorMessage = `${error.name}: ${error.message}`;
   }
 
   return errorMessage;

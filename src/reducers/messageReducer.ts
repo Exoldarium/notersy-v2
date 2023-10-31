@@ -22,7 +22,7 @@ export const {
   setMessage
 } = messageReducerSlice.actions;
 
-export const setNotificationMesage = (message: Message) => {
+export const setNotificationMesage = (message: Message, time: number) => {
   return (dispatch: AppDispatch) => {
     const newMessage = {
       type: message.type,
@@ -30,6 +30,12 @@ export const setNotificationMesage = (message: Message) => {
     };
 
     dispatch(setMessage(newMessage));
+    setTimeout(() => {
+      dispatch(setMessage({
+        type: '',
+        content: ''
+      }));
+    }, time * 1000);
   };
 };
 
