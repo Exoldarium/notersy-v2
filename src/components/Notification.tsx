@@ -1,8 +1,5 @@
 import { useAppSelector } from '../hooks/useReduxTypes';
 
-// TODO:
-// message should be visible when an error happens
-
 export const Notification = () => {
   const message = useAppSelector(({ message }) => {
     if (message && message.type === 'ERROR') {

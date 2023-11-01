@@ -53,6 +53,12 @@ export const initializeCategories = () => {
       dispatch(setCategories(storedData));
     } catch (err) {
       const error = parseError(err);
+
+      dispatch(setNotificationMesage({
+        type: 'ERROR',
+        content: error
+      }, 5));
+
       console.error('initializeCategories action Error', error);
       throw new Error(error);
     }
@@ -107,6 +113,12 @@ export const updateExistingCategory = (
       dispatch(updateCategory(updatedCategories.concat(categoryToUpdate)));
     } catch (err) {
       const error = parseError(err);
+
+      dispatch(setNotificationMesage({
+        type: 'ERROR',
+        content: error
+      }, 5));
+
       console.error('updateExistingCategory action Error', error);
       throw new Error(error);
     }
@@ -128,6 +140,12 @@ export const deleteExistingCategory = (
       dispatch(deleteCategory(updatedCategories));
     } catch (err) {
       const error = parseError(err);
+
+      dispatch(setNotificationMesage({
+        type: 'ERROR',
+        content: error
+      }, 5));
+
       console.error('deletExistingCategory action Error', error);
       throw new Error(error);
     }
@@ -207,6 +225,12 @@ export const updateExistingNote = (
       console.log(updatedCategories, 'a new note added');
     } catch (err) {
       const error = parseError(err);
+
+      dispatch(setNotificationMesage({
+        type: 'ERROR',
+        content: error
+      }, 5));
+
       console.error('addNewNote action Error', error);
       throw new Error(error);
     }
@@ -235,6 +259,12 @@ export const deleteExistingNote = (
       dispatch(updateNote(updatedCategories.concat(categoryWithNotes)));
     } catch (err) {
       const error = parseError(err);
+
+      dispatch(setNotificationMesage({
+        type: 'ERROR',
+        content: error
+      }, 5));
+
       console.error('deletExistingCategory action Error', error);
       throw new Error(error);
     }
