@@ -18,6 +18,8 @@ import { toNewCategoryEntry } from './utils/parseStorageEntry';
 // add a back to top button
 // TODO:
 // component testing
+// TODO:
+// each of the editor buttons should display active state eg, bold is active
 
 const GlobalStyles = createGlobalStyle`
   html {
