@@ -1,4 +1,5 @@
 import { useAppSelector } from '../hooks/useReduxTypes';
+import { NotificationStyles } from './styles/NotificationStyles';
 
 export const Notification = () => {
   const message = useAppSelector(({ message }) => {
@@ -11,7 +12,11 @@ export const Notification = () => {
 
   if (message) {
     return (
-      <div>{message}</div>
+      <NotificationStyles>
+        <p>
+          {message}
+        </p>
+      </NotificationStyles>
     );
   }
 };

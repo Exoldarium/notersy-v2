@@ -84,29 +84,54 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   }
 
   return (
-    <EditorStyles>
-      <div>
+    <EditorStyles $editorActive={editorActive}>
+      <div className="editorButtons">
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleBold()
+              .run()
+          }
+          className={editor.isActive('bold') ? 'is-active' : ''}
         >
           Bold
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleItalic()
+              .run()
+          }
+          className={editor.isActive('italic') ? 'is-active' : ''}
         >
           Italic
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleBulletList()
+              .run()
+          }
+          className={editor.isActive('bulletList') ? 'is-active' : ''}
         >
           Bullet
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+          className={editor.isActive('heading') ? 'is-active' : ''}
         >
           Heading
         </button>

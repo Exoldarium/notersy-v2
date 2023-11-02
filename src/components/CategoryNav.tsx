@@ -81,36 +81,39 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
 
   return (
     <NavStyles>
-      {!editTitle && <h1>{singleCategory.title}</h1>}
+      {!editTitle && (editorActive || clickedNote) && <h1>{singleCategory.title}</h1>}
       {/* editNav buttons are hidden if the note editor is active */}
       <div style={{ display: editorActive || clickedNote ? 'none' : 'block' }}>
-        {!editTitle &&
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          {!editTitle &&
+            <button
+              type="button"
+              style={{ height: 'fit-content', width: 'fit-content' }}
+              onClick={setActiveCategoryToFalse}
+            >
+              Back
+            </button>
+          }
+          {!editTitle && <h1>{singleCategory.title}</h1>}
+          {editTitle &&
+            <form onSubmit={updateTitleOnClick}>
+              <input
+                type="text"
+                name="title"
+                value={inputs.title}
+                onChange={handleInputs}
+              />
+              <button type="submit">Submit</button>
+            </form>
+          }
           <button
             type="button"
             style={{ height: 'fit-content', width: 'fit-content' }}
-            onClick={setActiveCategoryToFalse}
+            onClick={changeEditTitleOnClick}
           >
-            Back
+            {editTitle ? 'Cancel' : 'Edit'}
           </button>
-        }
-        {editTitle &&
-          <form onSubmit={updateTitleOnClick}>
-            <input
-              type="text"
-              name="title"
-              value={inputs.title}
-              onChange={handleInputs}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        }
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          onClick={changeEditTitleOnClick}
-        >
-          {editTitle ? 'Cancel' : 'Edit'}
-        </button>
+        </div>
         <button
           type="button"
           style={{ height: 'fit-content', width: 'fit-content' }}

@@ -126,7 +126,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   if (!editor) return null;
 
   return (
-    <NoteEditorStyles editable={editable}>
+    <NoteEditorStyles $editable={editable}>
       <form>
         {!editable && !clickedNote &&
           <input
@@ -137,28 +137,53 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
           />
         }
       </form>
-      <div style={{ display: editable ? 'block' : 'none' }}>
+      <div className="noteEditorButtons">
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleBold()
+              .run()
+          }
+          className={editor.isActive('bold') ? 'is-active' : ''}
         >
           Bold
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleItalic()
+              .run()
+          }
+          className={editor.isActive('italic') ? 'is-active' : ''}
         >
           Italic
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleBulletList()
+              .run()
+          }
+          className={editor.isActive('bulletList') ? 'is-active' : ''}
         >
           Bullet
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+          className={editor.isActive('heading') ? 'is-active' : ''}
         >
           Heading
         </button>
