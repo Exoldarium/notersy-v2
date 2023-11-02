@@ -135,6 +135,13 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
         >
           Sort by date modified
         </button>
+        <button
+          type="button"
+          style={{ height: 'fit-content', width: 'fit-content' }}
+          onClick={() => setSortNotes('')}
+        >
+          Sort by default
+        </button>
         {checkbox[0] &&
           <>
             <button

@@ -65,6 +65,14 @@ export const Nav = ({ setSortCategories }: Props) => {
         >
           Sort by date modified
         </button>
+        <button
+          type="button"
+          style={{ height: 'fit-content', width: 'fit-content' }}
+          name="dateModified"
+          onClick={() => setSortCategories('')}
+        >
+          Sort by default
+        </button>
       </div>
       {checkbox[0] &&
         <>

@@ -20,6 +20,8 @@ import { toNewCategoryEntry } from './utils/parseStorageEntry';
 // component testing
 // TODO:
 // each of the editor buttons should display active state eg, bold is active
+// TODO:
+// for sorting buttons, we can pass the state to the component and based on that designate if the button is active or not
 
 const GlobalStyles = createGlobalStyle`
   html {
