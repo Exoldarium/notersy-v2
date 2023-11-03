@@ -18,6 +18,9 @@ import { toNewCategoryEntry } from './utils/parseStorageEntry';
 // add a back to top button
 // TODO:
 // component testing
+// TODO:
+// add context menu, when adding selected text it should be added as a new note in a new category
+// that category should be set to active immediately, website link should be present in the note too
 
 const GlobalStyles = createGlobalStyle`
   html {

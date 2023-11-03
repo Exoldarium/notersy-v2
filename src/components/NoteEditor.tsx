@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -25,6 +25,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     return editorActive;
   });
   const dispatch = useAppDispatch();
+  const ref = useRef<null | HTMLDivElement>(null);
 
   const editor = useEditor({
     extensions: [
@@ -81,10 +82,11 @@ export const NoteEditor = ({ singleCategory }: Props) => {
 
   if (editorActive) {
     editor.commands.focus();
+    ref.current?.scrollIntoView();
   }
 
   return (
-    <EditorStyles $editorActive={editorActive}>
+    <EditorStyles $editorActive={editorActive} ref={ref}>
       <div className="editorButtons">
         <button
           type="button"

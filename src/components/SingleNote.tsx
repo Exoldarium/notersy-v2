@@ -18,7 +18,6 @@ interface Props {
 }
 
 // TODO:
-// dropdown for sorting, sorting type should be displayed
 // add options, should have a clear storage option
 
 export const SingleNote = ({ note, singleCategory, editable }: Props) => {
