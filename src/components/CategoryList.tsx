@@ -7,7 +7,7 @@ import { toNewCategoryEntry } from '../utils/parseStorageEntry';
 import { setChecboxChecked, updateCheckedId } from '../reducers/checkboxReducer';
 
 interface Props {
-  category: BaseCategoryEntry
+  category: BaseCategoryEntry;
 }
 
 export const CategoryList = ({ category }: Props) => {

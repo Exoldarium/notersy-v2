@@ -18,10 +18,6 @@ import { toNewCategoryEntry } from './utils/parseStorageEntry';
 // add a back to top button
 // TODO:
 // component testing
-// TODO:
-// each of the editor buttons should display active state eg, bold is active
-// TODO:
-// for sorting buttons, we can pass the state to the component and based on that designate if the button is active or not
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -35,11 +31,14 @@ const GlobalStyles = createGlobalStyle`
   *, *:before, *:after {
     box-sizing: inherit;
   }
+  body {
+    padding-bottom: 0.5rem;
+  }
 `;
 
 export const App = () => {
-  const [sortCategories, setSortCategories] = useState('');
-  const [sortNotes, setSortNotes] = useState('');
+  const [sortCategories, setSortCategories] = useState('default');
+  const [sortNotes, setSortNotes] = useState('default');
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -79,8 +78,12 @@ export const App = () => {
         <CategoryNav
           singleCategory={activeCategory}
           setSortNotes={setSortNotes}
+          sortNotes={sortNotes}
         /> :
-        <Nav setSortCategories={setSortCategories} />
+        <Nav
+          setSortCategories={setSortCategories}
+          sortCategories={sortCategories}
+        />
       }
       {message && <Notification />}
       <Routes>
@@ -104,7 +107,7 @@ export const App = () => {
             <ul style={{ listStyle: 'none', padding: 0 }}>
               {((): JSX.Element[] => {
                 switch (sortCategories) {
-                  case 'dateAdded':
+                  case 'added':
                     const sortByDateAdded = categories
                       .slice()
                       .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
@@ -112,7 +115,7 @@ export const App = () => {
                     return sortByDateAdded.map((category) => (
                       <CategoryList category={category} key={category.id} />
                     ));
-                  case 'dateModified':
+                  case 'modified':
                     const sortByDateModified = categories
                       .slice()
                       .sort((a, b) => b.unixTimeModified - a.unixTimeModified);

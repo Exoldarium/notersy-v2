@@ -3,12 +3,15 @@ import { addNewCategory, deleteExistingCategory } from '../reducers/categoryRedu
 import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateCheckedId } from '../reducers/checkboxReducer';
+import { useState } from 'react';
 
 interface Props {
   setSortCategories: React.Dispatch<React.SetStateAction<string>>;
+  sortCategories: string;
 }
 
-export const Nav = ({ setSortCategories }: Props) => {
+export const Nav = ({ setSortCategories, sortCategories }: Props) => {
+  const [dropdown, setDropdown] = useState(false);
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -35,7 +38,7 @@ export const Nav = ({ setSortCategories }: Props) => {
   return (
     <NavStyles>
       <h1>Notersy</h1>
-      <div style={{ display: 'block' }}>
+      <div style={{ display: 'flex' }}>
         <button
           type="button"
           style={{ height: 'fit-content', width: 'fit-content' }}
@@ -50,29 +53,44 @@ export const Nav = ({ setSortCategories }: Props) => {
         >
           Clear
         </button>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          onClick={() => setSortCategories('dateAdded')}
-        >
-          Sort by date added
-        </button>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          name="dateModified"
-          onClick={() => setSortCategories('dateModified')}
-        >
-          Sort by date modified
-        </button>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          name="dateModified"
-          onClick={() => setSortCategories('')}
-        >
-          Sort by default
-        </button>
+        <p>
+          Sorting by
+        </p>
+        <div className="navDropdown">
+          <button
+            type="button"
+            onClick={() => setDropdown(!dropdown)}
+          >
+            {sortCategories}
+          </button>
+          {dropdown &&
+            <div onClick={() => setDropdown(!dropdown)} style={{ zIndex: 2 }}>
+              <button
+                type="button"
+                onClick={() => setSortCategories('added')}
+                className="dropDownButton"
+              >
+                added
+              </button>
+              <button
+                type="button"
+                name="dateModified"
+                onClick={() => setSortCategories('modified')}
+                className="dropDownButton"
+              >
+                modified
+              </button>
+              <button
+                type="button"
+                name="dateModified"
+                onClick={() => setSortCategories('default')}
+                className="dropDownButton"
+              >
+                default
+              </button>
+            </div>
+          }
+        </div>
       </div>
       {checkbox[0] &&
         <>

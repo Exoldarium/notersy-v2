@@ -13,10 +13,12 @@ import { getDate } from '../utils/helpers';
 interface Props {
   singleCategory: BaseCategoryEntry;
   setSortNotes: React.Dispatch<React.SetStateAction<string>>;
+  sortNotes: string;
 }
 
-export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
+export const CategoryNav = ({ singleCategory, setSortNotes, sortNotes }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -83,7 +85,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
     <NavStyles>
       {!editTitle && (editorActive || clickedNote) && <h1>{singleCategory.title}</h1>}
       {/* editNav buttons are hidden if the note editor is active */}
-      <div style={{ display: editorActive || clickedNote ? 'none' : 'block' }}>
+      <div style={{ display: editorActive || clickedNote ? 'none' : 'flex' }}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {!editTitle &&
             <button
@@ -121,27 +123,44 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
         >
           New note
         </button>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          onClick={() => setSortNotes('dateAdded')}
-        >
-          Sort by date added
-        </button>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          onClick={() => setSortNotes('dateModified')}
-        >
-          Sort by date modified
-        </button>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          onClick={() => setSortNotes('')}
-        >
-          Sort by default
-        </button>
+        <p>
+          Sorting by
+        </p>
+        <div className="navDropdown">
+          <button
+            type="button"
+            onClick={() => setDropdown(!dropdown)}
+          >
+            {sortNotes}
+          </button>
+          {dropdown &&
+            <div onClick={() => setDropdown(!dropdown)} style={{ zIndex: 2 }}>
+              <button
+                type="button"
+                onClick={() => setSortNotes('added')}
+                className="dropDownButton"
+              >
+                added
+              </button>
+              <button
+                type="button"
+                name="dateModified"
+                onClick={() => setSortNotes('modified')}
+                className="dropDownButton"
+              >
+                modified
+              </button>
+              <button
+                type="button"
+                name="dateModified"
+                onClick={() => setSortNotes('default')}
+                className="dropDownButton"
+              >
+                default
+              </button>
+            </div>
+          }
+        </div>
         {checkbox[0] &&
           <>
             <button

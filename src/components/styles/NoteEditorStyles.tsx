@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const EditorStyles = styled.div<{ $editorActive?: boolean }>`
+  margin: 0.5rem 0 0.5rem 0;
   .editorButtons{ 
     display: ${props => props.$editorActive ? 'flex' : 'none'};
     border-bottom: 1px solid black;

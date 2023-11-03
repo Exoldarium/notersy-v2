@@ -23,7 +23,7 @@ export const SingleCategory = ({ singleCategory, sortNotes }: Props) => {
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {((): JSX.Element[] => {
           switch (sortNotes) {
-            case 'dateAdded':
+            case 'added':
               const sortByDateAdded = singleCategory.notes
                 .slice()
                 .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
@@ -36,7 +36,7 @@ export const SingleCategory = ({ singleCategory, sortNotes }: Props) => {
                   editable={clickedNote === note.id}
                 />
               ));
-            case 'dateModified':
+            case 'modified':
               const sortByDateModified = singleCategory.notes
                 .slice()
                 .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
