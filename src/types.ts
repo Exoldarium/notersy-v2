@@ -19,11 +19,6 @@ export interface BaseCategoryEntry {
   notes: BaseNoteEntry[];
 }
 
-export interface BaseStoredNoteContent {
-  id: string;
-  content: string;
-}
-
 export interface BaseStorageEntry {
   storedData: BaseCategoryEntry[];
 }

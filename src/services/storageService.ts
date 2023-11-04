@@ -1,4 +1,4 @@
-import { BaseCategoryEntry, BaseStoredNoteContent } from '../types';
+import { BaseCategoryEntry } from '../types';
 import { parseError } from '../utils/parseData';
 
 // grab data from storage
@@ -27,7 +27,7 @@ const getStorage = async (key: string) => {
 };
 
 // set data to storage
-const setStorage = async (key: string, value: BaseCategoryEntry[] | BaseStoredNoteContent[]) => {
+const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
   try {
     await chrome.storage.local.set({ [key]: value });
   } catch (err) {

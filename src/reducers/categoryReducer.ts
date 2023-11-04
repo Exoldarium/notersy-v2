@@ -10,7 +10,7 @@ import { setNotificationMessage } from './messageReducer';
 
 const initialState: BaseCategoryEntry[] = [];
 
-// controls notes and categories CRUD
+// notes and categories CRUD
 const categorySlice = createSlice({
   name: 'categories',
   initialState,
@@ -161,7 +161,6 @@ export const addNewNote = (
     try {
       const newNoteEntry: BaseNoteEntry = {
         id: uuidv4(),
-
         title: 'New Category',
         dateAdded: getDate(),
         unixTimeAdded: Date.now(),
