@@ -20,10 +20,11 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener((text) => {
-  console.log(text, 'selected text');
   void (async () => {
     const { storedData } = await parseStorage('storedData');
+
     const findActiveCategory = storedData.find(category => category.active);
+
     const newNoteEntry: BaseNoteEntry = {
       id: uuidv4(),
       title: 'New Category',
@@ -52,14 +53,12 @@ chrome.contextMenus.onClicked.addListener((text) => {
     } else {
       const parsedNoteEntry = toNewNoteEntry(newNoteEntry);
 
-      // add a new note to the notes array and create an updated category
       const notes = findActiveCategory.notes.concat(parsedNoteEntry);
       const categoryWithNotes: BaseCategoryEntry = {
         ...findActiveCategory,
         notes,
       };
 
-      // filter the category that we are updating with a new note
       const updatedCategories = storedData.filter(category => category.id !== categoryWithNotes.id);
 
       void setStorage('storedData', updatedCategories.concat(categoryWithNotes));
