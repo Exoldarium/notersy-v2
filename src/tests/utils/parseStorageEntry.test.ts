@@ -22,6 +22,7 @@ describe('functions return correct value', () => {
             content: 'some content',
             dateModified: 'Sat Oct 08 2023 18:36:08',
             unixTimeModified: 1696749520,
+            url: ''
           },
           {
             id: '4321',
@@ -31,6 +32,7 @@ describe('functions return correct value', () => {
             content: 'some other content',
             dateModified: 'Sat Oct 08 2023 18:36:08',
             unixTimeModified: 1696749520,
+            url: ''
           }
         ]
       },
@@ -51,6 +53,7 @@ describe('functions return correct value', () => {
             content: 'some new other content',
             dateModified: 'Sat Oct 08 2023 18:36:08',
             unixTimeModified: 1696749520,
+            url: 'asasdasd'
           }
         ]
       }

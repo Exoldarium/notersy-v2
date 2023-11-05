@@ -14,7 +14,8 @@ const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
     'id' in object &&
     'unixTimeAdded' in object &&
     'dateModified' in object &&
-    'unixTimeModified' in object
+    'unixTimeModified' in object &&
+    'url' in object
   ) {
     // parse each value and return correct type 
     const newEntry: BaseNoteEntry = {
@@ -24,7 +25,8 @@ const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
       id: parseToString(object.id),
       unixTimeAdded: parseToNumber(object.unixTimeAdded),
       dateModified: parseToString(object.dateModified),
-      unixTimeModified: parseToNumber(object.unixTimeModified)
+      unixTimeModified: parseToNumber(object.unixTimeModified),
+      url: parseToString(object.url)
     };
 
     return newEntry;

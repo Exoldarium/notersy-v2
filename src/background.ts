@@ -20,6 +20,7 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener((text) => {
+  console.log(text, 'selected text');
   void (async () => {
     const { storedData } = await parseStorage('storedData');
     const findActiveCategory = storedData.find(category => category.active);
@@ -31,6 +32,7 @@ chrome.contextMenus.onClicked.addListener((text) => {
       dateModified: getDate(),
       unixTimeModified: Date.now(),
       content: parseToString(text.selectionText),
+      url: parseToString(text.pageUrl)
     };
 
     if (!findActiveCategory) {

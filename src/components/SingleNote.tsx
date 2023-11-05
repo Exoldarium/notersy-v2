@@ -215,6 +215,21 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
         </button>
       </div>
       <EditorContent editor={editor} id={note.id} onClick={setEditNoteOnClick} />
+      {note.url &&
+        <a
+          style={{
+            paddingLeft: '0.5rem',
+            fontWeight: 'bold',
+            textDecoration: 'none',
+            color: 'black'
+          }}
+          href={note.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {new URL(note.url).hostname}
+        </a>
+      }
     </NoteEditorStyles>
   );
 };

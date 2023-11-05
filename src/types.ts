@@ -6,6 +6,7 @@ export interface BaseNoteEntry {
   dateModified: string;
   unixTimeModified: number;
   unixTimeAdded: number;
+  url: string;
 }
 
 export interface BaseCategoryEntry {

@@ -15,6 +15,10 @@ export const isBool = (bool: unknown): bool is boolean => {
   return typeof bool === 'boolean' || bool instanceof Boolean;
 };
 
+export const isNode = (node: unknown): node is Node => {
+  return node instanceof Node;
+};
+
 export const isDate = (date: unknown): boolean => {
   if (!isString(date)) throw new Error('Invalid date input');
   return Boolean(Date.parse(date));

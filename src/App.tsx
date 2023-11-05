@@ -19,8 +19,6 @@ import { toNewCategoryEntry } from './utils/parseStorageEntry';
 // TODO:
 // component testing
 // TODO: improve comments
-// TODO:
-// add a small link at the bottom when the notes are added from the context menu
 
 const GlobalStyles = createGlobalStyle`
   html {

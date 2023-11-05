@@ -4,6 +4,7 @@ import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateCheckedId } from '../reducers/checkboxReducer';
 import { useState } from 'react';
+import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
 
 interface Props {
   setSortCategories: React.Dispatch<React.SetStateAction<string>>;
@@ -12,6 +13,9 @@ interface Props {
 
 export const Nav = ({ setSortCategories, sortCategories }: Props) => {
   const [dropdown, setDropdown] = useState(false);
+  const dropdownRef = useDetectOutsideClick(() => {
+    setDropdown(false);
+  });
   const dispatch = useAppDispatch();
   const categories = useAppSelector(({ categories }) => {
     return categories;
@@ -56,10 +60,10 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
         <p>
           Sorting by
         </p>
-        <div className="navDropdown">
+        <div className="navDropdown" ref={dropdownRef}>
           <button
             type="button"
-            onClick={() => setDropdown(!dropdown)}
+            onClick={() => setDropdown(true)}
           >
             {sortCategories}
           </button>

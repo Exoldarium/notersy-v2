@@ -166,6 +166,7 @@ export const addNewNote = (
         unixTimeAdded: Date.now(),
         dateModified: getDate(),
         unixTimeModified: Date.now(),
+        url: '',
         content,
       };
 

@@ -9,6 +9,7 @@ import { updateCheckedId } from '../reducers/checkboxReducer';
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { getDate } from '../utils/helpers';
+import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -19,6 +20,9 @@ interface Props {
 export const CategoryNav = ({ singleCategory, setSortNotes, sortNotes }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const dropdownRef = useDetectOutsideClick(() => {
+    setDropdown(false);
+  });
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -126,7 +130,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes, sortNotes }: Props) 
         <p>
           Sorting by
         </p>
-        <div className="navDropdown">
+        <div className="navDropdown" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setDropdown(!dropdown)}
