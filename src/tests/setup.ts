@@ -31,6 +31,7 @@ beforeAll(() => {
                   content: 'some content',
                   dateModified: 'Sat Oct 08 2023 18:36:08',
                   unixTimeModified: 1696749520,
+                  url: ''
                 },
                 {
                   id: '4321',
@@ -40,6 +41,7 @@ beforeAll(() => {
                   content: 'some other content',
                   dateModified: 'Sat Oct 08 2023 18:36:08',
                   unixTimeModified: 1696749520,
+                  url: ''
                 }
               ]
             }

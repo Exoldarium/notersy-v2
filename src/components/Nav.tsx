@@ -89,6 +89,7 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
                 name="dateModified"
                 onClick={() => setSortCategories('default')}
                 className="dropDownButton"
+                data-testid="defaultDropdownTest"
               >
                 default
               </button>

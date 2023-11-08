@@ -159,6 +159,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes, sortNotes }: Props) 
                 name="dateModified"
                 onClick={() => setSortNotes('default')}
                 className="dropDownButton"
+                data-testid="defaultDropdownTest"
               >
                 default
               </button>

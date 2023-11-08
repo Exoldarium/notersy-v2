@@ -17,7 +17,6 @@ const getStorage = async (key: string) => {
       return res;
     }
 
-    console.log(res, 'this is res');
     return res;
   } catch (err) {
     const error = parseError(err);

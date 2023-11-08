@@ -22,7 +22,6 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.contextMenus.onClicked.addListener((text) => {
   void (async () => {
     const { storedData } = await parseStorage('storedData');
-
     const findActiveCategory = storedData.find(category => category.active);
 
     const newNoteEntry: BaseNoteEntry = {
