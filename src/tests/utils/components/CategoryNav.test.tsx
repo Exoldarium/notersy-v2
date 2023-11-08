@@ -75,14 +75,14 @@ describe('<CategoryNav />', () => {
 
     renderWithProviders(<Wrapper />, { store });
 
-    await userEvent.click(screen.getByText(/default/i));
+    await userEvent.click(screen.getByText('default'));
 
-    expect(screen.getByText(/added/i)).toBeInTheDocument();
-    expect(screen.getByText(/modified/i)).toBeInTheDocument();
-    expect(screen.getByTestId(/defaultDropdownTest/i)).toBeInTheDocument();
+    expect(screen.getByText('added')).toBeInTheDocument();
+    expect(screen.getByText('modified')).toBeInTheDocument();
+    expect(screen.getByTestId('defaultDropdownTest')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByText(/added/i));
+    await userEvent.click(screen.getByText('added'));
 
-    expect(screen.getByText(/added/i)).toBeInTheDocument();
+    expect(screen.getByText('added')).toBeInTheDocument();
   });
 });
