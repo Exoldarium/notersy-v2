@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, test } from "vitest";
 import { CategoryNav } from "../../../components/CategoryNav";
 import { renderWithProviders } from "../../test-utils";
 import { BaseCategoryEntry } from "../../../types";
@@ -62,7 +62,8 @@ describe('<CategoryNav />', () => {
     expect(screen.getByText('default')).toBeInTheDocument();
     screen.debug();
   });
-  it('changes sorting information correctly on click', async () => {
+
+  test('sorting information is changed on click', async () => {
     const Wrapper = () => {
       const [sortNotes, setSortNotes] = useState('default');
 

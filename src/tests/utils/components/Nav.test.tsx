@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, test } from "vitest";
 import { screen } from '@testing-library/react';
 import { renderWithProviders } from "../../test-utils";
 import { Nav } from "../../../components/Nav";
@@ -22,7 +22,8 @@ describe('<Nav />', () => {
     expect(screen.getByText('Notersy')).toBeInTheDocument();
     expect(screen.getByText('default')).toBeInTheDocument();
   });
-  it('changes sorting information correctly on click', async () => {
+
+  test('sorting information is changed on click', async () => {
     const Wrapper = () => {
       const [sortCategories, setSortCategories] = useState('default');
 

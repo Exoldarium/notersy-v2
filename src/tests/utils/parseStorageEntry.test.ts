@@ -74,8 +74,5 @@ describe('functions return correct value', () => {
       .toThrowError('Invalid data input');
 
     expect(parsedNotes).toStrictEqual(mockData.storedData[0].notes);
-    // expect(() => mockData.storedData[0].notes
-    //   .map(note => toNewNoteEntry(note.edit)))
-    //   .toThrowError('Invalid data input');
   });
 });

@@ -6,9 +6,10 @@ import { Nav } from './components/Nav';
 import { SingleCategory } from './components/SingleCategory';
 import { Notification } from './components/Notification';
 import { CategoryNav } from './components/CategoryNav';
-import { addNewCategory, initializeCategories } from './reducers/categoryReducer';
+import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
+import { NoCategories } from './components/NoCategories';
 
 // TODO: 
 // add a button that will resize the popup when notes are active, redisign category display
@@ -67,8 +68,6 @@ export const App = () => {
 
   // check if there's an active category, the category that the user has selected
   const activeCategory = categories.find(entry => entry.active);
-
-  const addNewCategoryOnClick = () => dispatch(addNewCategory(categories));
 
   console.log('App', categories);
 
@@ -139,18 +138,7 @@ export const App = () => {
           />
         }
       </Routes>
-      {categories.length === 0 &&
-        <div>
-          <p>This is Notersy!</p>
-          <p>Create a category to start!</p>
-          <button
-            type="button"
-            onClick={addNewCategoryOnClick}
-          >
-            Create
-          </button>
-        </div>
-      }
+      <NoCategories categories={categories} />
     </>
   );
 };
