@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
-import { CategoryList } from './components/CategoryList';
 import { Nav } from './components/Nav';
 import { SingleCategory } from './components/SingleCategory';
 import { Notification } from './components/Notification';
@@ -10,6 +9,7 @@ import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
 import { NoCategories } from './components/NoCategories';
+import { Categories } from './components/Categories';
 
 // TODO: 
 // add a button that will resize the popup when notes are active, redisign category display
@@ -103,38 +103,7 @@ export const App = () => {
             />
           }
           /> :
-          <Route path="/" element={
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              {((): JSX.Element[] => {
-                switch (sortCategories) {
-                  case 'added':
-                    const sortByDateAdded = categories
-                      .slice()
-                      .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
-
-                    return sortByDateAdded.map((category) => (
-                      <CategoryList category={category} key={category.id} />
-                    ));
-                  case 'modified':
-                    const sortByDateModified = categories
-                      .slice()
-                      .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
-
-                    return sortByDateModified.map((category) => (
-                      <CategoryList category={category} key={category.id} />
-                    ));
-                  default:
-                    const sortMostRecentLast = categories
-                      .slice()
-                      .sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
-
-                    return sortMostRecentLast.map((category) => (
-                      <CategoryList category={category} key={category.id} />
-                    ));
-                }
-              })()}
-            </ul>
-          }
+          <Route path="/" element={<Categories sortCategories={sortCategories} />}
           />
         }
       </Routes>

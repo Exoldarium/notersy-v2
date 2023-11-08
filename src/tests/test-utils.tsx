@@ -20,16 +20,6 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 export const renderWithProviders = (
   ui: ReactElement,
   {
-    preloadedState = {
-      categories: [],
-      message: {
-        type: '',
-        content: ''
-      },
-      checkbox: [],
-      editorActive: false,
-      clickedNote: ""
-    },
     store = configureStore({
       reducer: {
         categories: categoryReducer,
@@ -37,8 +27,7 @@ export const renderWithProviders = (
         checkbox: checkboxReducer,
         editorActive: editorActiveReducer,
         clickedNote: clickedNoteReducer
-      },
-      preloadedState
+      }
     }),
     ...renderOptions
   }: ExtendedRenderOptions = {},
