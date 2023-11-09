@@ -52,6 +52,7 @@ export const CategoryList = ({ category }: Props) => {
         <Link to={`/${category.id}`}>
           {category.title}
         </Link>
+        <p>{category.notes.length !== 1 ? `${category.notes.length} notes` : `1 note`}</p>
       </div>
     </CategoryStyles>
   );
