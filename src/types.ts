@@ -31,3 +31,5 @@ export interface Message {
 export interface Checked {
   id: string,
 }
+
+export type Sorting = "default" | "added" | "modified";

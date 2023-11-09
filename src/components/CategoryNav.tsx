@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavStyles } from './styles/NavStyles';
-import { BaseCategoryEntry } from '../types';
+import { BaseCategoryEntry, Sorting } from '../types';
 import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { useForm } from '../hooks/useForm';
@@ -13,8 +13,8 @@ import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
-  setSortNotes: React.Dispatch<React.SetStateAction<string>>;
-  sortNotes: string;
+  setSortNotes: React.Dispatch<React.SetStateAction<Sorting>>;
+  sortNotes: Sorting;
 }
 
 export const CategoryNav = ({ singleCategory, setSortNotes, sortNotes }: Props) => {

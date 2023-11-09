@@ -1,11 +1,11 @@
 import { NoteEditor } from './NoteEditor';
-import { BaseCategoryEntry } from '../types';
+import { BaseCategoryEntry, Sorting } from '../types';
 import { SingleNote } from './SingleNote';
 import { useAppSelector } from '../hooks/useReduxTypes';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
-  sortNotes: string;
+  sortNotes: Sorting;
 }
 
 export const SingleCategory = ({ singleCategory, sortNotes }: Props) => {

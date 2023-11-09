@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { describe, expect, it, test } from "vitest";
-import { CategoryNav } from "../../../components/CategoryNav";
-import { renderWithProviders } from "../../test-utils";
-import { BaseCategoryEntry } from "../../../types";
-import { store } from '../../../store';
+import { CategoryNav } from "../../components/CategoryNav";
+import { renderWithProviders } from "../test-utils";
+import { BaseCategoryEntry } from "../../types";
+import { store } from '../../store';
 import { screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 

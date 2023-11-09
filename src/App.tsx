@@ -8,8 +8,8 @@ import { CategoryNav } from './components/CategoryNav';
 import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
-import { NoCategories } from './components/NoCategories';
 import { Categories } from './components/Categories';
+import { Sorting } from './types';
 
 // TODO: 
 // add a button that will resize the popup when notes are active, redisign category display
@@ -39,8 +39,8 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export const App = () => {
-  const [sortCategories, setSortCategories] = useState('default');
-  const [sortNotes, setSortNotes] = useState('default');
+  const [sortCategories, setSortCategories] = useState<Sorting>('default');
+  const [sortNotes, setSortNotes] = useState<Sorting>('default');
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -107,7 +107,6 @@ export const App = () => {
           />
         }
       </Routes>
-      <NoCategories categories={categories} />
     </>
   );
 };

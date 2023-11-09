@@ -5,10 +5,11 @@ import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateCheckedId } from '../reducers/checkboxReducer';
 import { useState } from 'react';
 import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
+import { Sorting } from '../types';
 
 interface Props {
-  setSortCategories: React.Dispatch<React.SetStateAction<string>>;
-  sortCategories: string;
+  setSortCategories: React.Dispatch<React.SetStateAction<Sorting>>;
+  sortCategories: Sorting;
 }
 
 export const Nav = ({ setSortCategories, sortCategories }: Props) => {

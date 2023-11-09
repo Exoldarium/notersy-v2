@@ -1,8 +1,8 @@
 import { describe, expect, it, test } from "vitest";
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from "../../test-utils";
-import { Nav } from "../../../components/Nav";
-import { store } from '../../../store';
+import { renderWithProviders } from "../test-utils";
+import { Nav } from "../../components/Nav";
+import { store } from '../../store';
 import { useState } from "react";
 import userEvent from '@testing-library/user-event';
 
