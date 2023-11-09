@@ -5,6 +5,7 @@ import { Nav } from "../../components/Nav";
 import { store } from '../../store';
 import { useState } from "react";
 import userEvent from '@testing-library/user-event';
+import { Sorting } from "../../types";
 
 // TODO:
 // add button testing when they are finished
@@ -12,7 +13,7 @@ import userEvent from '@testing-library/user-event';
 describe('<Nav />', () => {
   it('renders correct information', () => {
     const Wrapper = () => {
-      const [sortCategories, setSortCategories] = useState('default');
+      const [sortCategories, setSortCategories] = useState<Sorting>('default');
 
       return <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />;
     };
@@ -25,7 +26,7 @@ describe('<Nav />', () => {
 
   test('sorting information is changed on click', async () => {
     const Wrapper = () => {
-      const [sortCategories, setSortCategories] = useState('default');
+      const [sortCategories, setSortCategories] = useState<Sorting>('default');
 
       return <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />;
     };

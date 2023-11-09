@@ -2,7 +2,7 @@ import { useState } from "react";
 import { describe, expect, it, test } from "vitest";
 import { CategoryNav } from "../../components/CategoryNav";
 import { renderWithProviders } from "../test-utils";
-import { BaseCategoryEntry } from "../../types";
+import { BaseCategoryEntry, Sorting } from "../../types";
 import { store } from '../../store';
 import { screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
@@ -46,7 +46,7 @@ const singleCategoryMock: BaseCategoryEntry =
 describe('<CategoryNav />', () => {
   it('renders correctly', () => {
     const Wrapper = () => {
-      const [sortNotes, setSortNotes] = useState('default');
+      const [sortNotes, setSortNotes] = useState<Sorting>('default');
       // const [editTitle, setEditTitle] = useState(false);
       // const [dropdown, setDropdown] = useState(false);
 
@@ -65,7 +65,7 @@ describe('<CategoryNav />', () => {
 
   test('sorting information is changed on click', async () => {
     const Wrapper = () => {
-      const [sortNotes, setSortNotes] = useState('default');
+      const [sortNotes, setSortNotes] = useState<Sorting>('default');
 
       return <CategoryNav
         sortNotes={sortNotes}

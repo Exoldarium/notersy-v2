@@ -1,11 +1,14 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, test } from "vitest";
 import { renderWithProviders } from "../test-utils";
 import { Categories } from "../../components/Categories";
 import { store } from "../../store";
-import { setCategories } from "../../reducers/categoryReducer";
+import { addCategory, setCategories } from "../../reducers/categoryReducer";
 import { act } from "react-dom/test-utils";
+import { Nav } from "../../components/Nav";
+import { useState } from "react";
+import { Sorting } from "../../types";
 
-const mockCategory = [
+const mockCategories = [
   {
     id: '123',
     active: true,
@@ -61,16 +64,53 @@ describe('<Categories />', () => {
 
     expect(container).toHaveTextContent('This is Notersy!');
   });
+
   it('renders categories correctly', () => {
     const render = renderWithProviders(<Categories sortCategories="default" />, { store });
 
     act(() => {
-      render.store.dispatch(setCategories(mockCategory));
+      render.store.dispatch(setCategories(mockCategories));
     });
 
     const { container } = renderWithProviders(<Categories sortCategories="default" />, { store });
 
     expect(container).toHaveTextContent('New Category');
     expect(container).toHaveTextContent('Another Category');
+  });
+
+  test('new categories can be added', () => {
+    const Wrapper = () => {
+      const [sortCategories, setSortCategories] = useState<Sorting>('default');
+
+      return (
+        <>
+          <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />
+          <Categories sortCategories={sortCategories} />
+        </>
+      );
+    };
+
+    const render = renderWithProviders(<Wrapper />, { store });
+    act(() => {
+      render.store.dispatch(setCategories(mockCategories));
+    });
+    act(() => {
+      const categoryToAdd = {
+        id: '5123253',
+        active: true,
+        title: 'Added Category',
+        dateAdded: 'Sat Oct 07 2023 18:36:08',
+        unixTimeAdded: 1696749517,
+        dateModified: 'Sat Oct 08 2023 18:36:08',
+        unixTimeModified: 1696749520,
+        notes: []
+      };
+
+      render.store.dispatch(addCategory(categoryToAdd));
+    });
+
+    const { container } = renderWithProviders(<Wrapper />, { store });
+
+    expect(container).toHaveTextContent('Added Category');
   });
 }); 
