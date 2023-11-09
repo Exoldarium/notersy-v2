@@ -1,71 +1,58 @@
-import { NoteEditor } from './NoteEditor';
-import { BaseCategoryEntry, Sorting } from '../types';
-import { SingleNote } from './SingleNote';
-import { useAppSelector } from '../hooks/useReduxTypes';
+import { Link } from 'react-router-dom';
+import { CategoryStyles } from './styles/CategoryStyles';
+import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
+import { updateExistingCategory } from '../reducers/categoryReducer';
+import { BaseCategoryEntry } from '../types';
+import { toNewCategoryEntry } from '../utils/parseStorageEntry';
+import { setChecboxChecked, updateCheckedId } from '../reducers/checkboxReducer';
 
 interface Props {
-  singleCategory: BaseCategoryEntry;
-  sortNotes: Sorting;
+  category: BaseCategoryEntry;
 }
 
-export const SingleCategory = ({ singleCategory, sortNotes }: Props) => {
-  const editorActive = useAppSelector(({ editorActive }) => {
-    return editorActive;
+export const CategoryList = ({ category }: Props) => {
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(({ categories }) => {
+    return categories;
   });
-  const clickedNote = useAppSelector(({ clickedNote }) => {
-    return clickedNote;
+  const checkbox = useAppSelector(({ checkbox }) => {
+    return checkbox;
   });
 
-  console.log('single category has rendered');
+  const setCategoryActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const id = e.currentTarget.id;
+
+    const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
+    const updatedCategory: BaseCategoryEntry = {
+      ...categoryToUpdate,
+      active: true
+    };
+
+    dispatch(updateCheckedId([])); // clear active checkbox id's from state
+    void dispatch(updateExistingCategory(categories, updatedCategory));
+  };
+
+  const getCheckedIdOnClick = (
+    e: React.MouseEvent<HTMLInputElement>
+  ) => dispatch(setChecboxChecked(e, checkbox, category.id));
+
+  console.log(checkbox);
 
   return (
-    <>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {((): JSX.Element[] => {
-          switch (sortNotes) {
-            case 'added':
-              const sortByDateAdded = singleCategory.notes
-                .slice()
-                .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
-
-              return sortByDateAdded.map((note) => (
-                <SingleNote
-                  note={note}
-                  key={note.id}
-                  singleCategory={singleCategory}
-                  editable={clickedNote === note.id}
-                />
-              ));
-            case 'modified':
-              const sortByDateModified = singleCategory.notes
-                .slice()
-                .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
-
-              return sortByDateModified.map((note) => (
-                <SingleNote
-                  note={note}
-                  key={note.id}
-                  singleCategory={singleCategory}
-                  editable={clickedNote === note.id}
-                />
-              ));
-            default:
-              const sortMostRecentLast = singleCategory.notes
-                .slice()
-                .sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
-
-              return sortMostRecentLast.map(note =>
-                <SingleNote
-                  note={note}
-                  key={note.id}
-                  singleCategory={singleCategory}
-                  editable={clickedNote === note.id}
-                />
-              );
-          }
-        })()}
-      </ul>
-      {editorActive && <NoteEditor singleCategory={singleCategory} />}
-    </>
+    <CategoryStyles>
+      <form>
+        <input
+          type="checkbox"
+          id={category.id}
+          name="checked"
+          onClick={getCheckedIdOnClick}
+        />
+      </form>
+      <div onClick={setCategoryActiveOnClick} id={category.id}>
+        <Link to={`/${category.id}`}>
+          {category.title}
+        </Link>
+      </div>
+    </CategoryStyles>
   );
 };

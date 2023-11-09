@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 import { Nav } from './components/Nav';
-import { SingleCategory } from './components/SingleCategory';
+import { SingleCategory } from './components/NoteList';
 import { Notification } from './components/Notification';
 import { CategoryNav } from './components/CategoryNav';
 import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
-import { Categories } from './components/Categories';
+import { Categories } from './components/CategoryList';
 import { Sorting } from './types';
 
 // TODO: 
