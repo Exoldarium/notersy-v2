@@ -58,45 +58,45 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
             <Icon.Trash />
           </button>
         }
+      </div>
+      <div className="navDropdown" ref={dropdownRef}>
         <p>
           Sorting by
         </p>
-        <div className="navDropdown" ref={dropdownRef}>
-          <button
-            type="button"
-            onClick={() => setDropdown(true)}
-          >
-            {sortCategories}
-          </button>
-          {dropdown &&
-            <div onClick={() => setDropdown(!dropdown)} style={{ zIndex: 2 }}>
-              <button
-                type="button"
-                onClick={() => setSortCategories('added')}
-                className="dropDownButton"
-              >
-                added
-              </button>
-              <button
-                type="button"
-                name="dateModified"
-                onClick={() => setSortCategories('modified')}
-                className="dropDownButton"
-              >
-                modified
-              </button>
-              <button
-                type="button"
-                name="dateModified"
-                onClick={() => setSortCategories('default')}
-                className="dropDownButton"
-                data-testid="defaultDropdownTest"
-              >
-                default
-              </button>
-            </div>
-          }
-        </div>
+        <button
+          type="button"
+          onClick={() => setDropdown(true)}
+        >
+          {sortCategories}
+        </button>
+        {dropdown &&
+          <div onClick={() => setDropdown(!dropdown)} style={{ zIndex: 2 }}>
+            <button
+              type="button"
+              onClick={() => setSortCategories('added')}
+              className="dropDownButton"
+            >
+              added
+            </button>
+            <button
+              type="button"
+              name="dateModified"
+              onClick={() => setSortCategories('modified')}
+              className="dropDownButton"
+            >
+              modified
+            </button>
+            <button
+              type="button"
+              name="dateModified"
+              onClick={() => setSortCategories('default')}
+              className="dropDownButton"
+              data-testid="defaultDropdownTest"
+            >
+              default
+            </button>
+          </div>
+        }
       </div>
     </NavStyles>
   );

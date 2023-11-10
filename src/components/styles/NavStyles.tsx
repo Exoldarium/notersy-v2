@@ -7,11 +7,10 @@ export const NavStyles = styled.nav`
   margin: 0.2rem 0 0.2rem 0.2rem;
   border-bottom: 1px solid black;
   .headerDiv {
-    flex-grow: 0;
-    flex-shrink: 0;
     display: flex;
     flex-direction: row;
-    flex: 1;
+    flex: 1 0 0;
+    align-items: center;
     h1 {
       margin-right: 4rem;
     }
@@ -24,10 +23,10 @@ export const NavStyles = styled.nav`
   }
   .navButtons {
     display: flex;
-    flex: 1;
-    flex-grow: 0;
-    flex-shrink: 0;
+    flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
+    flex: 1 0 0;
     button {
       width: fit-content;
       height: fit-content;
@@ -40,6 +39,7 @@ export const NavStyles = styled.nav`
       svg {
         width: 1.4rem;
         height: 1.4rem;
+        transition: all 0.2s ease-out;
       }
       .tooltiptext {
         visibility: hidden;
@@ -67,10 +67,11 @@ export const NavStyles = styled.nav`
   }
   .navDropdown {
     display: flex;
-    flex-direction: column;
-    width: 5rem;
-    height: 2rem;
+    flex-direction: row;
+    flex: 1 0 0;
+    align-items: center;
     button {
+      height: 2rem;
       width: 5rem;
     }
   }

@@ -9,6 +9,7 @@ export const CategoryStyles = styled.li`
   flex-direction: column;
   background-color: #80808030;
   font-weight: bold;
+  transition: all 0.2s ease-out;
   &:hover {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
   }
