@@ -8,7 +8,7 @@ import { CategoryNav } from './components/CategoryNav';
 import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
-import { Categories } from './components/CategoryList';
+import { Categories } from './components/Categories';
 import { Sorting } from './types';
 
 // TODO: 
@@ -18,7 +18,7 @@ import { Sorting } from './types';
 // TODO:
 // add a back to top button
 // TODO:
-// component testing
+// add a dropdown that will have our sorting, depending which sorting mode is clicked display an indicator next to it
 // TODO: improve comments
 
 const GlobalStyles = createGlobalStyle`

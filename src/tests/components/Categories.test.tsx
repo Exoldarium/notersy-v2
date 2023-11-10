@@ -1,6 +1,6 @@
 import { describe, expect, it, test } from "vitest";
 import { renderWithProviders } from "../test-utils";
-import { Categories } from "../../components/CategoryList";
+import { Categories } from "../../components/Categories";
 import { store } from "../../store";
 import { addCategory, setCategories } from "../../reducers/categoryReducer";
 import { act } from "react-dom/test-utils";

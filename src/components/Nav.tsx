@@ -1,11 +1,11 @@
 import { NavStyles } from './styles/NavStyles';
 import { addNewCategory, deleteExistingCategory } from '../reducers/categoryReducer';
-import { setStorage } from '../services/storageService';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateCheckedId } from '../reducers/checkboxReducer';
 import { useState } from 'react';
 import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
 import { Sorting } from '../types';
+import * as Icon from 'react-bootstrap-icons';
 
 interface Props {
   setSortCategories: React.Dispatch<React.SetStateAction<Sorting>>;
@@ -30,11 +30,6 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
     dispatch(updateCheckedId([])); // update checkedIds state
   };
 
-  const clearStorageOnClick = async () => {
-    await setStorage('storedData', []);
-    dispatch(updateCheckedId([]));
-  };
-
   const deleteCheckedCategoriesOnClick = () => {
     void dispatch(deleteExistingCategory(categories, checkbox));
     dispatch(updateCheckedId([]));
@@ -42,22 +37,27 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
 
   return (
     <NavStyles>
-      <h1>Notersy</h1>
-      <div style={{ display: 'flex' }}>
+      <div className="headerDiv">
+        <h1>Notersy</h1>
+        {checkbox[0] && <p>{checkbox.length} selected</p>}
+      </div>
+      <div className="navButtons">
         <button
           type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
           onClick={addNewCategoryOnClick}
         >
-          Create
+          <span className="tooltiptext">Create</span>
+          <Icon.FolderPlus />
         </button>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          onClick={clearStorageOnClick}
-        >
-          Clear
-        </button>
+        {checkbox[0] &&
+          <button
+            type="button"
+            onClick={deleteCheckedCategoriesOnClick}
+          >
+            <span className="tooltiptext">Delete</span>
+            <Icon.Trash />
+          </button>
+        }
         <p>
           Sorting by
         </p>
@@ -98,18 +98,6 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
           }
         </div>
       </div>
-      {checkbox[0] &&
-        <>
-          <button
-            type="button"
-            style={{ height: 'fit-content', width: 'fit-content' }}
-            onClick={deleteCheckedCategoriesOnClick}
-          >
-            Delete
-          </button>
-          <p>{checkbox.length} selected</p>
-        </>
-      }
     </NavStyles>
   );
 };
