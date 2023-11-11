@@ -36,12 +36,22 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
   };
 
   return (
-    <NavStyles>
+    <NavStyles $checkbox={checkbox}>
       <div className="headerDiv">
         <h1>Notersy</h1>
         {checkbox[0] && <p>{checkbox.length} selected</p>}
       </div>
       <div className="navButtons">
+        {checkbox[0] &&
+          <button
+            type="button"
+            onClick={deleteCheckedCategoriesOnClick}
+            className="newCategory-button"
+          >
+            <span className="tooltiptext">Delete</span>
+            <Icon.Trash />
+          </button>
+        }
         <button
           type="button"
           onClick={addNewCategoryOnClick}
@@ -49,20 +59,8 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
           <span className="tooltiptext">Create</span>
           <Icon.FolderPlus />
         </button>
-        {checkbox[0] &&
-          <button
-            type="button"
-            onClick={deleteCheckedCategoriesOnClick}
-          >
-            <span className="tooltiptext">Delete</span>
-            <Icon.Trash />
-          </button>
-        }
       </div>
       <div className="navDropdown" ref={dropdownRef}>
-        <p>
-          Sorting by
-        </p>
         <button
           type="button"
           onClick={() => setDropdown(true)}

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Checked } from '../../types';
 
-export const NavStyles = styled.nav`
+export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
   display: flex;
   flex-direction: row;
   font-size: 10px;
@@ -9,15 +10,17 @@ export const NavStyles = styled.nav`
   .headerDiv {
     display: flex;
     flex-direction: row;
-    flex: 1 0 0;
     align-items: center;
+    flex: 1 0 0;
     h1 {
-      margin-right: 4rem;
+      margin: 0 4rem 0 0;
     }
     p {
+      width: fit-content;
       margin: 0;
-      align-self: center;
       text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
       font-size: 12px;
     }
   }
@@ -28,6 +31,7 @@ export const NavStyles = styled.nav`
     justify-content: flex-end;
     flex: 1 0 0;
     button {
+      flex: ${props => props.$checkbox?.length !== 0 ? '1 0 0' : ''};
       width: fit-content;
       height: fit-content;
       background: none;
