@@ -1,6 +1,7 @@
 import { useAppDispatch } from "../hooks/useReduxTypes";
 import { addNewCategory } from "../reducers/categoryReducer";
 import { BaseCategoryEntry } from "../types";
+import { NoCategoriesStyles } from "./styles/CategoryStyles";
 
 interface Props {
   categories: BaseCategoryEntry[];
@@ -11,7 +12,7 @@ export const NoCategories = ({ categories }: Props) => {
 
   if (categories.length === 0) {
     return (
-      <div>
+      <NoCategoriesStyles>
         <p>This is Notersy!</p>
         <p>Create a category to start!</p>
         <button
@@ -20,7 +21,7 @@ export const NoCategories = ({ categories }: Props) => {
         >
           Create
         </button>
-      </div>
+      </NoCategoriesStyles>
     );
   }
 };

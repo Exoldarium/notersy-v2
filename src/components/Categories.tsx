@@ -2,12 +2,14 @@ import { useAppSelector } from "../hooks/useReduxTypes";
 import { Sorting } from "../types";
 import { CategoryList } from "./CategoryList";
 import { NoCategories } from "./NoCategories";
+import { CategorySortingStyles } from "./styles/CategoryStyles";
 
 interface Props {
   sortCategories: Sorting;
+  setSortCategories: React.Dispatch<React.SetStateAction<Sorting>>;
 }
 
-export const Categories = ({ sortCategories }: Props) => {
+export const Categories = ({ sortCategories, setSortCategories }: Props) => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -20,36 +22,48 @@ export const Categories = ({ sortCategories }: Props) => {
     );
   } else {
     return (
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {((): JSX.Element[] => {
-          switch (sortCategories) {
-            case 'added':
-              const sortByDateAdded = categories
-                .slice()
-                .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
+      <>
+        {sortCategories !== 'default' &&
+          <CategorySortingStyles>
+            <p style={{ fontSize: '13px', margin: '0.4rem 0 0 0.4rem' }}>
+              {`Sorting by date ${sortCategories}`}
+            </p>
+            <button type="button" onClick={() => setSortCategories('default')}>
+              x
+            </button>
+          </CategorySortingStyles>
+        }
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {((): JSX.Element[] => {
+            switch (sortCategories) {
+              case 'added':
+                const sortByDateAdded = categories
+                  .slice()
+                  .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
 
-              return sortByDateAdded.map((category) => (
-                <CategoryList category={category} key={category.id} />
-              ));
-            case 'modified':
-              const sortByDateModified = categories
-                .slice()
-                .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
+                return sortByDateAdded.map((category) => (
+                  <CategoryList category={category} key={category.id} />
+                ));
+              case 'modified':
+                const sortByDateModified = categories
+                  .slice()
+                  .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
 
-              return sortByDateModified.map((category) => (
-                <CategoryList category={category} key={category.id} />
-              ));
-            default:
-              const sortMostRecentLast = categories
-                .slice()
-                .sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
+                return sortByDateModified.map((category) => (
+                  <CategoryList category={category} key={category.id} />
+                ));
+              default:
+                const sortMostRecentLast = categories
+                  .slice()
+                  .sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
 
-              return sortMostRecentLast.map((category) => (
-                <CategoryList category={category} key={category.id} />
-              ));
-          }
-        })()}
-      </ul>
+                return sortMostRecentLast.map((category) => (
+                  <CategoryList category={category} key={category.id} />
+                ));
+            }
+          })()}
+        </ul>
+      </>
     );
   }
 };

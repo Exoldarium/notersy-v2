@@ -46,3 +46,28 @@ export const CategoryStyles = styled.li`
     display: block;
   }
 `;
+
+export const NoCategoriesStyles = styled.div`
+    width: 350px;
+    margin: 0.7rem 0 0.7rem 0.2rem;
+`;
+
+export const CategorySortingStyles = styled.div`
+  display: flex;
+  flex-direction: row;
+  p {
+    font-size: 13px;
+    margin: 0.4rem 0 0 0.4rem;
+    align-self: center;
+    cursor: default;
+  }
+  button {
+    margin-top: 0.5rem;
+    margin-left: 0.2rem;
+    text-align: center;
+    background: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+`;

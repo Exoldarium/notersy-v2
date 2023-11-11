@@ -21,7 +21,6 @@ describe('<Nav />', () => {
     renderWithProviders(<Wrapper />, { store });
 
     expect(screen.getByText('Notersy')).toBeInTheDocument();
-    expect(screen.getByText('default')).toBeInTheDocument();
   });
 
   test('sorting information is changed on click', async () => {
@@ -33,14 +32,14 @@ describe('<Nav />', () => {
 
     renderWithProviders(<Wrapper />, { store });
 
-    await userEvent.click(screen.getByText('default'));
+    await userEvent.click(screen.getByTestId('navDropdown-test'));
 
-    expect(screen.getByText('added')).toBeInTheDocument();
-    expect(screen.getByText('modified')).toBeInTheDocument();
-    expect(screen.getByTestId('defaultDropdownTest')).toBeInTheDocument();
+    expect(screen.getByText('Sort by added')).toBeInTheDocument();
+    expect(screen.getByText('Sort by modified')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByText('added'));
+    // TODO: move this test to category testing because sorting information appears there
+    // await userEvent.click(screen.getByText('Sort by added'));
 
-    expect(screen.getByText('added')).toBeInTheDocument();
+    // expect(screen.getByText('Sorting by added')).toBeInTheDocument();
   });
 });

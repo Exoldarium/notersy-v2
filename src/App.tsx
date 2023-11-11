@@ -105,7 +105,10 @@ export const App = () => {
             />
           }
           /> :
-          <Route path="/" element={<Categories sortCategories={sortCategories} />}
+          <Route path="/" element={<Categories
+            sortCategories={sortCategories}
+            setSortCategories={setSortCategories} />
+          }
           />
         }
       </Routes>

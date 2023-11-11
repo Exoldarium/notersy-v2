@@ -12,7 +12,7 @@ interface Props {
   sortCategories: Sorting;
 }
 
-export const Nav = ({ setSortCategories, sortCategories }: Props) => {
+export const Nav = ({ setSortCategories }: Props) => {
   const [dropdown, setDropdown] = useState(false);
   const dropdownRef = useDetectOutsideClick(() => {
     setDropdown(false);
@@ -64,17 +64,19 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
         <button
           type="button"
           onClick={() => setDropdown(true)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+          data-testid="navDropdown-test"
         >
-          {sortCategories}
+          <Icon.ThreeDots />
         </button>
         {dropdown &&
-          <div onClick={() => setDropdown(!dropdown)} style={{ zIndex: 2 }}>
+          <div className="dropdown-menu" onClick={() => setDropdown(!dropdown)}>
             <button
               type="button"
               onClick={() => setSortCategories('added')}
               className="dropDownButton"
             >
-              added
+              Sort by added
             </button>
             <button
               type="button"
@@ -82,16 +84,7 @@ export const Nav = ({ setSortCategories, sortCategories }: Props) => {
               onClick={() => setSortCategories('modified')}
               className="dropDownButton"
             >
-              modified
-            </button>
-            <button
-              type="button"
-              name="dateModified"
-              onClick={() => setSortCategories('default')}
-              className="dropDownButton"
-              data-testid="defaultDropdownTest"
-            >
-              default
+              Sort by modified
             </button>
           </div>
         }

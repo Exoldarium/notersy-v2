@@ -53,26 +53,32 @@ const mockCategories = [
 ];
 
 describe('<Categories />', () => {
+  const CategoriesWrapper = () => {
+    const [sortCategories, setSortCategories] = useState<Sorting>('default');
+
+    return <Categories sortCategories={sortCategories} setSortCategories={setSortCategories} />;
+  };
+
   it('renders correct information if there are no categories present', () => {
-    const render = renderWithProviders(<Categories sortCategories="default" />, { store });
+    const render = renderWithProviders(<CategoriesWrapper />, { store });
 
     act(() => {
       render.store.dispatch(setCategories([]));
     });
 
-    const { container } = renderWithProviders(<Categories sortCategories="default" />, { store });
+    const { container } = renderWithProviders(<CategoriesWrapper />, { store });
 
     expect(container).toHaveTextContent('This is Notersy!');
   });
 
   it('renders categories correctly', () => {
-    const render = renderWithProviders(<Categories sortCategories="default" />, { store });
+    const render = renderWithProviders(<CategoriesWrapper />, { store });
 
     act(() => {
       render.store.dispatch(setCategories(mockCategories));
     });
 
-    const { container } = renderWithProviders(<Categories sortCategories="default" />, { store });
+    const { container } = renderWithProviders(<CategoriesWrapper />, { store });
 
     expect(container).toHaveTextContent('New Category');
     expect(container).toHaveTextContent('Another Category');
@@ -85,7 +91,7 @@ describe('<Categories />', () => {
       return (
         <>
           <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />
-          <Categories sortCategories={sortCategories} />
+          <CategoriesWrapper />
         </>
       );
     };
