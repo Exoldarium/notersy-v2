@@ -26,9 +26,15 @@ export const Categories = ({ sortCategories, setSortCategories }: Props) => {
         {sortCategories !== 'default' &&
           <CategorySortingStyles>
             <p style={{ fontSize: '13px', margin: '0.4rem 0 0 0.4rem' }}>
-              {`Sorting by date ${sortCategories}`}
+              {sortCategories === 'added' ?
+                `Sorting by date ${sortCategories}` : `Sorting by last ${sortCategories}`
+              }
             </p>
-            <button type="button" onClick={() => setSortCategories('default')}>
+            <button
+              type="button"
+              onClick={() => setSortCategories('default')}
+              data-testid="close-sorting"
+            >
               x
             </button>
           </CategorySortingStyles>

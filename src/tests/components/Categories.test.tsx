@@ -7,6 +7,9 @@ import { act } from "react-dom/test-utils";
 import { Nav } from "../../components/Nav";
 import { useState } from "react";
 import { Sorting } from "../../types";
+import userEvent from "@testing-library/user-event";
+import { screen } from "@testing-library/react";
+import { addCheckedId } from "../../reducers/checkboxReducer";
 
 const mockCategories = [
   {
@@ -119,4 +122,55 @@ describe('<Categories />', () => {
 
     expect(container).toHaveTextContent('Added Category');
   });
-}); 
+
+  test('sorting and removing sorting from categories displays correct information', async () => {
+    const Wrapper = () => {
+      const [sortCategories, setSortCategories] = useState<Sorting>('default');
+
+      return (
+        <>
+          <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />
+          <Categories sortCategories={sortCategories} setSortCategories={setSortCategories} />;
+        </>
+      );
+    };
+
+    renderWithProviders(<Wrapper />, { store });
+
+    await userEvent.click(screen.getByTestId('navDropdown-test'));
+
+    expect(screen.getByText('Sort by date added')).toBeInTheDocument();
+    expect(screen.getByText('Sort by last modified')).toBeInTheDocument();
+    expect(screen.getByText('Clear storage')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Sort by date added'));
+
+    expect(screen.getByText('Sorting by date added')).toBeInTheDocument();
+
+    const closeButton = screen.getByTestId('close-sorting');
+    await userEvent.click(screen.getByTestId('close-sorting'));
+
+    expect(closeButton).not.toBeInTheDocument();
+  });
+  test('checking a category displays correct information', () => {
+    const Wrapper = () => {
+      const [sortCategories, setSortCategories] = useState<Sorting>('default');
+
+      return (
+        <>
+          <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />
+          <CategoriesWrapper />
+        </>
+      );
+    };
+
+    const render = renderWithProviders(<Wrapper />, { store });
+
+    act(() => {
+      render.store.dispatch(addCheckedId({ id: '123' }));
+    });
+
+    expect(screen.getByText('1 selected')).toBeInTheDocument();
+    expect(screen.getByTestId('delete-category-test')).toBeInTheDocument();
+  });
+});

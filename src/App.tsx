@@ -17,9 +17,9 @@ import { Sorting } from './types';
 // choose appropriate license
 // TODO:
 // add a back to top button
-// TODO:
-// add a dropdown that will have our sorting, depending which sorting mode is clicked display an indicator next to it
 // TODO: improve comments
+// TODO:
+// add help link in dropdown, add donations link, add github link
 
 const GlobalStyles = createGlobalStyle`
   html {

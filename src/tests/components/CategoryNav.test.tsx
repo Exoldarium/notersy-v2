@@ -40,9 +40,6 @@ const singleCategoryMock: BaseCategoryEntry =
   ]
 };
 
-// TODO:
-// add button testing when they are finished
-
 describe('<CategoryNav />', () => {
   it('renders correctly', () => {
     const Wrapper = () => {

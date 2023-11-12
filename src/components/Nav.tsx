@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
 import { Sorting } from '../types';
 import * as Icon from 'react-bootstrap-icons';
+import { setStorage } from '../services/storageService';
 
 interface Props {
   setSortCategories: React.Dispatch<React.SetStateAction<Sorting>>;
@@ -35,6 +36,13 @@ export const Nav = ({ setSortCategories }: Props) => {
     dispatch(updateCheckedId([]));
   };
 
+  const clearStorageOnClick = async () => {
+    if (window.confirm('This will clear all your saved notes, are you sure you want to proceed?')) {
+      await setStorage('storedData', []);
+      dispatch(updateCheckedId([]));
+    }
+  };
+
   return (
     <NavStyles $checkbox={checkbox}>
       <div className="headerDiv">
@@ -47,6 +55,7 @@ export const Nav = ({ setSortCategories }: Props) => {
             type="button"
             onClick={deleteCheckedCategoriesOnClick}
             className="newCategory-button"
+            data-testid="delete-category-test"
           >
             <span className="tooltiptext">Delete</span>
             <Icon.Trash />
@@ -63,7 +72,7 @@ export const Nav = ({ setSortCategories }: Props) => {
       <div className="navDropdown" ref={dropdownRef}>
         <button
           type="button"
-          onClick={() => setDropdown(true)}
+          onClick={() => setDropdown(!dropdown)}
           style={{ background: 'none', border: 'none', cursor: 'pointer' }}
           data-testid="navDropdown-test"
         >
@@ -76,7 +85,7 @@ export const Nav = ({ setSortCategories }: Props) => {
               onClick={() => setSortCategories('added')}
               className="dropDownButton"
             >
-              Sort by added
+              Sort by date added
             </button>
             <button
               type="button"
@@ -84,7 +93,15 @@ export const Nav = ({ setSortCategories }: Props) => {
               onClick={() => setSortCategories('modified')}
               className="dropDownButton"
             >
-              Sort by modified
+              Sort by last modified
+            </button>
+            <span style={{ borderBottom: '1px solid black' }}></span>
+            <button
+              type="button"
+              onClick={clearStorageOnClick}
+              className="dropDownButton"
+            >
+              Clear storage
             </button>
           </div>
         }
