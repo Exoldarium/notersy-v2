@@ -10,7 +10,6 @@ import { setStorage } from '../services/storageService';
 
 interface Props {
   setSortCategories: React.Dispatch<React.SetStateAction<Sorting>>;
-  sortCategories: Sorting;
 }
 
 export const Nav = ({ setSortCategories }: Props) => {

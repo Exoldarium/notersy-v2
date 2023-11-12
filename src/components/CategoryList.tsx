@@ -1,59 +1,75 @@
-import { Link } from 'react-router-dom';
-import { CategoryStyles } from './styles/CategoryStyles';
-import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-import { updateExistingCategory } from '../reducers/categoryReducer';
-import { BaseCategoryEntry } from '../types';
-import { toNewCategoryEntry } from '../utils/parseStorageEntry';
-import { setChecboxChecked, updateCheckedId } from '../reducers/checkboxReducer';
+import { useAppSelector } from "../hooks/useReduxTypes";
+import { Sorting } from "../types";
+import { SingleCategory } from "./SingleCategory";
+import { NoCategories } from "./NoCategories";
+import { CategorySortingStyles } from "./styles/CategoryStyles";
 
 interface Props {
-  category: BaseCategoryEntry;
+  sortCategories: Sorting;
+  setSortCategories: React.Dispatch<React.SetStateAction<Sorting>>;
 }
 
-export const CategoryList = ({ category }: Props) => {
-  const dispatch = useAppDispatch();
+export const CategoryList = ({ sortCategories, setSortCategories }: Props) => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
-  const checkbox = useAppSelector(({ checkbox }) => {
-    return checkbox;
-  });
 
-  const setCategoryActiveOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const id = e.currentTarget.id;
+  if (categories.length === 0) {
+    return (
+      <>
+        <NoCategories categories={categories} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        {sortCategories !== 'default' &&
+          <CategorySortingStyles>
+            <p style={{ fontSize: '13px', margin: '0.4rem 0 0 0.4rem' }}>
+              {sortCategories === 'added' ?
+                `Sorting by date ${sortCategories}` : `Sorting by last ${sortCategories}`
+              }
+            </p>
+            <button
+              type="button"
+              onClick={() => setSortCategories('default')}
+              data-testid="close-sorting"
+            >
+              x
+            </button>
+          </CategorySortingStyles>
+        }
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {((): JSX.Element[] => {
+            switch (sortCategories) {
+              case 'added':
+                const sortByDateAdded = categories
+                  .slice()
+                  .sort((a, b) => b.unixTimeAdded - a.unixTimeAdded);
 
-    const categoryToUpdate = toNewCategoryEntry(categories.find(entry => entry.id === id));
-    const updatedCategory: BaseCategoryEntry = {
-      ...categoryToUpdate,
-      active: true
-    };
+                return sortByDateAdded.map((category) => (
+                  <SingleCategory category={category} key={category.id} />
+                ));
+              case 'modified':
+                const sortByDateModified = categories
+                  .slice()
+                  .sort((a, b) => b.unixTimeModified - a.unixTimeModified);
 
-    dispatch(updateCheckedId([])); // clear active checkbox id's from state
-    void dispatch(updateExistingCategory(categories, updatedCategory));
-  };
+                return sortByDateModified.map((category) => (
+                  <SingleCategory category={category} key={category.id} />
+                ));
+              default:
+                const sortMostRecentLast = categories
+                  .slice()
+                  .sort((a, b) => a.unixTimeAdded - b.unixTimeAdded);
 
-  const getCheckedIdOnClick = (
-    e: React.MouseEvent<HTMLInputElement>
-  ) => dispatch(setChecboxChecked(e, checkbox, category.id));
-
-  console.log(checkbox);
-
-  return (
-    <CategoryStyles>
-      <form>
-        <input
-          type="checkbox"
-          id={category.id}
-          name="checked"
-          onClick={getCheckedIdOnClick}
-        />
-      </form>
-      <div onClick={setCategoryActiveOnClick} id={category.id}>
-        <Link to={`/${category.id}`}>
-          {category.title}
-        </Link>
-        <p>{category.notes.length !== 1 ? `${category.notes.length} notes` : `1 note`}</p>
-      </div>
-    </CategoryStyles>
-  );
+                return sortMostRecentLast.map((category) => (
+                  <SingleCategory category={category} key={category.id} />
+                ));
+            }
+          })()}
+        </ul>
+      </>
+    );
+  }
 };

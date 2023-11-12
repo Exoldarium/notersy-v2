@@ -2,24 +2,24 @@ import { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 import { Nav } from './components/Nav';
-import { SingleCategory } from './components/NoteList';
+import { NoteList } from './components/NoteList';
 import { Notification } from './components/Notification';
 import { CategoryNav } from './components/CategoryNav';
 import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
-import { Categories } from './components/Categories';
+import { CategoryList } from './components/CategoryList';
 import { Sorting } from './types';
 
-// TODO: 
-// add a button that will resize the popup when notes are active, redisign category display
 // TODO:
 // choose appropriate license
 // TODO:
 // add a back to top button
 // TODO: improve comments
 // TODO:
-// add help link in dropdown, add donations link, add github link
+// add a way to download notes
+// TODO:
+// component names CategoryList has SingleCategory, NoteList has SingleNote
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -86,32 +86,32 @@ export const App = () => {
         <CategoryNav
           singleCategory={activeCategory}
           setSortNotes={setSortNotes}
-          sortNotes={sortNotes}
         /> :
         <Nav
           setSortCategories={setSortCategories}
-          sortCategories={sortCategories}
         />
       }
       {message && <Notification />}
       <Routes>
         <Route path="/:id" element={
           singleCategory &&
-          <SingleCategory
+          <NoteList
             sortNotes={sortNotes}
             singleCategory={singleCategory}
+            setSortNotes={setSortNotes}
           />
         }
         />
         {activeCategory ?
           <Route path="/" element={
-            <SingleCategory
+            <NoteList
               sortNotes={sortNotes}
               singleCategory={activeCategory}
+              setSortNotes={setSortNotes}
             />
           }
           /> :
-          <Route path="/" element={<Categories
+          <Route path="/" element={<CategoryList
             sortCategories={sortCategories}
             setSortCategories={setSortCategories} />
           }

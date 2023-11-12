@@ -2,13 +2,15 @@ import { NoteEditor } from './NoteEditor';
 import { BaseCategoryEntry, Sorting } from '../types';
 import { SingleNote } from './SingleNote';
 import { useAppSelector } from '../hooks/useReduxTypes';
+import { CategorySortingStyles } from './styles/CategoryStyles';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
   sortNotes: Sorting;
+  setSortNotes: React.Dispatch<React.SetStateAction<Sorting>>;
 }
 
-export const SingleCategory = ({ singleCategory, sortNotes }: Props) => {
+export const NoteList = ({ singleCategory, sortNotes, setSortNotes }: Props) => {
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
@@ -20,6 +22,22 @@ export const SingleCategory = ({ singleCategory, sortNotes }: Props) => {
 
   return (
     <>
+      {sortNotes !== 'default' &&
+        <CategorySortingStyles>
+          <p style={{ fontSize: '13px', margin: '0.4rem 0 0 0.4rem' }}>
+            {sortNotes === 'added' ?
+              `Sorting by date ${sortNotes}` : `Sorting by last ${sortNotes}`
+            }
+          </p>
+          <button
+            type="button"
+            onClick={() => setSortNotes('default')}
+            data-testid="close-sorting"
+          >
+            x
+          </button>
+        </CategorySortingStyles>
+      }
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {((): JSX.Element[] => {
           switch (sortNotes) {

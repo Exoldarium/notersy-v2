@@ -1,6 +1,6 @@
 import { describe, expect, it, test } from "vitest";
 import { renderWithProviders } from "../test-utils";
-import { Categories } from "../../components/Categories";
+import { CategoryList } from "../../components/CategoryList";
 import { store } from "../../store";
 import { addCategory, setCategories } from "../../reducers/categoryReducer";
 import { act } from "react-dom/test-utils";
@@ -59,7 +59,7 @@ describe('<Categories />', () => {
   const CategoriesWrapper = () => {
     const [sortCategories, setSortCategories] = useState<Sorting>('default');
 
-    return <Categories sortCategories={sortCategories} setSortCategories={setSortCategories} />;
+    return <CategoryList sortCategories={sortCategories} setSortCategories={setSortCategories} />;
   };
 
   it('renders correct information if there are no categories present', () => {
@@ -71,7 +71,7 @@ describe('<Categories />', () => {
 
     const { container } = renderWithProviders(<CategoriesWrapper />, { store });
 
-    expect(container).toHaveTextContent('This is Notersy!');
+    expect(container).toHaveTextContent('Welcome to Notersy!');
   });
 
   it('renders categories correctly', () => {
@@ -89,11 +89,11 @@ describe('<Categories />', () => {
 
   test('new categories can be added', () => {
     const Wrapper = () => {
-      const [sortCategories, setSortCategories] = useState<Sorting>('default');
+      const [, setSortCategories] = useState<Sorting>('default');
 
       return (
         <>
-          <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />
+          <Nav setSortCategories={setSortCategories} />
           <CategoriesWrapper />
         </>
       );
@@ -129,8 +129,8 @@ describe('<Categories />', () => {
 
       return (
         <>
-          <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />
-          <Categories sortCategories={sortCategories} setSortCategories={setSortCategories} />;
+          <Nav setSortCategories={setSortCategories} />
+          <CategoryList sortCategories={sortCategories} setSortCategories={setSortCategories} />;
         </>
       );
     };
@@ -154,11 +154,11 @@ describe('<Categories />', () => {
   });
   test('checking a category displays correct information', () => {
     const Wrapper = () => {
-      const [sortCategories, setSortCategories] = useState<Sorting>('default');
+      const [, setSortCategories] = useState<Sorting>('default');
 
       return (
         <>
-          <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />
+          <Nav setSortCategories={setSortCategories} />
           <CategoriesWrapper />
         </>
       );

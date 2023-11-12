@@ -17,9 +17,6 @@ interface Props {
   editable: boolean;
 }
 
-// TODO:
-// add options, should have a clear storage option
-
 export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   const [noteContent, setNoteContent] = useState('');
   const categories = useAppSelector(({ categories }) => {

@@ -9,9 +9,9 @@ import { Sorting } from "../../types";
 describe('<Nav />', () => {
   it('renders correct information', () => {
     const Wrapper = () => {
-      const [sortCategories, setSortCategories] = useState<Sorting>('default');
+      const [, setSortCategories] = useState<Sorting>('default');
 
-      return <Nav setSortCategories={setSortCategories} sortCategories={sortCategories} />;
+      return <Nav setSortCategories={setSortCategories} />;
     };
 
     renderWithProviders(<Wrapper />, { store });
