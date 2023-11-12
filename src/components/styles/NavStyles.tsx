@@ -17,6 +17,14 @@ export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
     flex: 1 0 0;
     h1 {
       margin: 0 4rem 0 0;
+      display: flex;
+      flex-direction: row;
+      span {
+        padding-left: 0.2rem;
+        padding-top: 0.4rem;
+        font-size: 9px;
+        text-align: center;
+      }
     }
     p {
       width: fit-content;

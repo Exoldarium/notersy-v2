@@ -39,6 +39,7 @@ export const Nav = ({ setSortCategories }: Props) => {
   const clearStorageOnClick = async () => {
     if (window.confirm('This will clear all your saved notes, are you sure you want to proceed?')) {
       await setStorage('storedData', []);
+
       dispatch(updateCheckedId([]));
       void dispatch(initializeCategories());
     }
@@ -47,7 +48,9 @@ export const Nav = ({ setSortCategories }: Props) => {
   return (
     <NavStyles $checkbox={checkbox}>
       <div className="headerDiv">
-        <h1>Notersy</h1>
+        <h1>
+          Notersy <span>v2.0.0</span>
+        </h1>
         {checkbox[0] && <p>{checkbox.length} selected</p>}
       </div>
       <div className="navButtons">
@@ -98,25 +101,25 @@ export const Nav = ({ setSortCategories }: Props) => {
             </button>
             <span style={{ borderBottom: '1px solid black' }}></span>
             <a
-              href="https://chromewebstore.google.com/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja"
+              href="mailto:shandoo91@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Need help? Visit the extension page.
+              Need help? Send me an e-mail
             </a>
             <a
               href="https://ko-fi.com/dusan36845"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Enjoying the extension? You can donate here to support me!
+              Enjoying the extension? Donate!
             </a>
             <a
               href="https://github.com/Exoldarium"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Check my github if you are interested in my other work
+              Check my github
             </a>
             <span style={{ borderBottom: '1px solid black' }}></span>
             <button

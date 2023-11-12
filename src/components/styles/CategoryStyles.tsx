@@ -52,6 +52,7 @@ export const NoCategoriesStyles = styled.div`
     padding-top: 10rem;
     text-align: center;
     font-size: 15px;
+    font-weight: bold;
     button {
       border-radius: 5px;
       background: none;
