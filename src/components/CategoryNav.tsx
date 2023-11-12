@@ -166,7 +166,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Enjoying the extension? Donate!
+                Buy me a coffee!
               </a>
               <a
                 href="https://github.com/Exoldarium"
