@@ -1,5 +1,5 @@
 import { NavStyles } from './styles/NavStyles';
-import { addNewCategory, deleteExistingCategory } from '../reducers/categoryReducer';
+import { addNewCategory, deleteExistingCategory, initializeCategories } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateCheckedId } from '../reducers/checkboxReducer';
 import { useState } from 'react';
@@ -40,6 +40,7 @@ export const Nav = ({ setSortCategories }: Props) => {
     if (window.confirm('This will clear all your saved notes, are you sure you want to proceed?')) {
       await setStorage('storedData', []);
       dispatch(updateCheckedId([]));
+      void dispatch(initializeCategories());
     }
   };
 
@@ -95,6 +96,28 @@ export const Nav = ({ setSortCategories }: Props) => {
             >
               Sort by last modified
             </button>
+            <span style={{ borderBottom: '1px solid black' }}></span>
+            <a
+              href="https://chromewebstore.google.com/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Need help? Visit the extension page.
+            </a>
+            <a
+              href="https://ko-fi.com/dusan36845"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Enjoying the extension? You can donate here to support me!
+            </a>
+            <a
+              href="https://github.com/Exoldarium"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Check my github if you are interested in my other work
+            </a>
             <span style={{ borderBottom: '1px solid black' }}></span>
             <button
               type="button"

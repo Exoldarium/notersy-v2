@@ -49,7 +49,14 @@ export const CategoryStyles = styled.li`
 
 export const NoCategoriesStyles = styled.div`
     width: 350px;
-    margin: 0.7rem 0 0.7rem 0.2rem;
+    padding-top: 10rem;
+    text-align: center;
+    font-size: 15px;
+    button {
+      border-radius: 5px;
+      background: none;
+      cursor: pointer;
+    }
 `;
 
 export const CategorySortingStyles = styled.div`

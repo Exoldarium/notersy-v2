@@ -101,9 +101,21 @@ export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
         padding: 0.4rem 0.4rem 0.4rem 0.4rem;
         background-color: whitesmoke;
         cursor: pointer;
-        font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
       .dropDownButton:hover {
+        background-color: #dbd8d8;
+      }
+      a {
+        text-align: left;
+        height: inherit;
+        text-decoration: none;
+        color: black;
+        font-size: 14px;
+        cursor: pointer;
+        padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+        background-color: whitesmoke;
+      }
+      a:hover {
         background-color: #dbd8d8;
       }
   }
