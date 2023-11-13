@@ -16,7 +16,7 @@ export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
     align-items: center;
     flex: 1 0 0;
     h1 {
-      margin: 0 4rem 0 0;
+      margin: 0 3rem 0 0;
       display: flex;
       flex-direction: row;
       span {
@@ -87,7 +87,7 @@ export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
     justify-content: flex-end;
     width: fit-content;
     position: relative;
-    margin-left: 1rem;
+    /* margin-left: 1rem; */
     padding-right: 0.2rem;
     .dropdown-menu {
         display: flex;

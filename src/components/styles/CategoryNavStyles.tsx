@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const CategoryNavStyles = styled.nav`
+export const CategoryNavStyles = styled.nav<{ $editorActive?: boolean, $clickedNote: string }>`
+  /* display: ${props => props.$editorActive || props.$clickedNote ? 'none' : 'flex'}; */
   display: flex;
   flex-direction: row;
   font-size: 10px;
@@ -10,7 +11,7 @@ export const CategoryNavStyles = styled.nav`
   position: relative;
   z-index: 1;
   align-items: center;
-  .navDropdown {
+  .categoryNavDropdown {
     display: flex;
     flex-direction: row;
     align-items: center;

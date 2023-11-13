@@ -28,7 +28,9 @@ export const SingleCategory = ({ category }: Props) => {
       active: true
     };
 
-    dispatch(updateCheckedId([])); // clear active checkbox id's from state
+    if (checkbox[0]) {
+      dispatch(updateCheckedId([]));
+    }
     void dispatch(updateExistingCategory(categories, updatedCategory));
   };
 

@@ -27,7 +27,10 @@ export const Nav = ({ setSortCategories }: Props) => {
 
   const addNewCategoryOnClick = () => {
     void dispatch(addNewCategory(categories));
-    dispatch(updateCheckedId([])); // update checkedIds state
+
+    if (checkbox[0]) {
+      dispatch(updateCheckedId([]));
+    }
   };
 
   const deleteCheckedCategoriesOnClick = () => {
@@ -39,7 +42,10 @@ export const Nav = ({ setSortCategories }: Props) => {
     if (window.confirm('This will clear all your saved notes, are you sure you want to proceed?')) {
       await setStorage('storedData', []);
 
-      dispatch(updateCheckedId([]));
+      if (checkbox[0]) {
+        dispatch(updateCheckedId([]));
+      }
+
       void dispatch(initializeCategories());
     }
   };

@@ -48,7 +48,15 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
     };
 
     void dispatch(updateExistingCategory(categories, updatedCategory));
-    dispatch(updateCheckedId([]));
+
+    if (checkbox[0]) {
+      dispatch(updateCheckedId([]));
+    } else if (clickedNote) {
+      dispatch(setClickedNote(''));
+    } else if (editorActive) {
+      dispatch(setEditorActive(false));
+    }
+
     navigate('/');
   };
 
@@ -67,7 +75,10 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   };
 
   const setEditorActiveOnClick = () => {
-    dispatch(setClickedNote('')); // close any notes that are being edited
+    if (clickedNote) {
+      dispatch(setClickedNote('')); // close any notes that are being edited
+    }
+
     dispatch(setEditorActive(true));
   };
 
@@ -86,10 +97,12 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   console.log(singleCategory, 'active category');
 
   return (
-    <CategoryNavStyles>
-      {!editTitle && (editorActive || clickedNote) && <h1>{singleCategory.title}</h1>}
-      {/* editNav buttons are hidden if the note editor is active */}
-      <div style={{ display: editorActive || clickedNote ? 'none' : 'flex' }}>
+    <>
+      {/* {!editTitle && (editorActive || clickedNote) &&
+        <h1 style={{ fontSize: '15px', borderBottom: '1px solid black' }}>{singleCategory.title}</h1>
+      } */}
+      <CategoryNavStyles $editorActive={editorActive} $clickedNote={clickedNote}>
+        {/* editNav buttons are hidden if the note editor is active */}
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {!editTitle &&
             <button
@@ -127,7 +140,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
         >
           New note
         </button>
-        <div className="navDropdown" ref={dropdownRef}>
+        <div className="categoryNavDropdown" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setDropdown(!dropdown)}
@@ -199,7 +212,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
             <p>{checkbox.length} selected</p>
           </>
         }
-      </div>
-    </CategoryNavStyles>
+      </CategoryNavStyles>
+    </>
   );
 };

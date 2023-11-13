@@ -87,9 +87,7 @@ export const App = () => {
           singleCategory={activeCategory}
           setSortNotes={setSortNotes}
         /> :
-        <Nav
-          setSortCategories={setSortCategories}
-        />
+        <Nav setSortCategories={setSortCategories} />
       }
       {message && <Notification />}
       <Routes>
@@ -111,9 +109,11 @@ export const App = () => {
             />
           }
           /> :
-          <Route path="/" element={<CategoryList
-            sortCategories={sortCategories}
-            setSortCategories={setSortCategories} />
+          <Route path="/" element={
+            <CategoryList
+              sortCategories={sortCategories}
+              setSortCategories={setSortCategories}
+            />
           }
           />
         }

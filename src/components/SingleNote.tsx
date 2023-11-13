@@ -28,6 +28,9 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   const clickedNote = useAppSelector(({ clickedNote }) => {
     return clickedNote;
   });
+  const editorActive = useAppSelector(({ editorActive }) => {
+    return editorActive;
+  });
   const dispatch = useAppDispatch();
 
   const editor = useEditor({
@@ -104,18 +107,29 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
     e: React.MouseEvent<HTMLInputElement>
   ) => {
     dispatch(setChecboxChecked(e, checkbox, note.id));
-    dispatch(setClickedNote(''));
-    dispatch(setEditorActive(false));
+
+    if (clickedNote) {
+      dispatch(setClickedNote(''));
+    } else if (editorActive) {
+      dispatch(setEditorActive(false));
+    }
   };
 
   const setEditNoteOnClick = () => {
     dispatch(setClickedNote(note.id));
-    dispatch(setEditorActive(false));
-    dispatch(updateCheckedId([]));
+
+    if (editorActive) {
+      dispatch(setEditorActive(false));
+    } else if (checkbox[0]) {
+      dispatch(updateCheckedId([]));
+    }
   };
 
   const cancelEditNoteOnClick = () => {
-    dispatch(setClickedNote(''));
+    if (clickedNote) {
+      dispatch(setClickedNote(''));
+    }
+
     editor?.commands.setContent(note.content);
   };
 
