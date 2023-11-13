@@ -39,6 +39,8 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const shortenCategoryTitle = singleCategory.title.slice(0, 15) + '...';
+
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
   const setActiveCategoryToFalse = () => {
@@ -55,6 +57,8 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
       dispatch(setClickedNote(''));
     } else if (editorActive) {
       dispatch(setEditorActive(false));
+    } else if (editTitle) {
+      setEditTitle(false);
     }
 
     navigate('/');
@@ -76,7 +80,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
 
   const setEditorActiveOnClick = () => {
     if (clickedNote) {
-      dispatch(setClickedNote('')); // close any notes that are being edited
+      dispatch(setClickedNote(''));
     }
 
     dispatch(setEditorActive(true));
@@ -101,19 +105,33 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
       {/* {!editTitle && (editorActive || clickedNote) &&
         <h1 style={{ fontSize: '15px', borderBottom: '1px solid black' }}>{singleCategory.title}</h1>
       } */}
-      <CategoryNavStyles $editorActive={editorActive} $clickedNote={clickedNote}>
+      <CategoryNavStyles
+        $editorActive={editorActive}
+        $clickedNote={clickedNote}
+        $checkbox={checkbox}
+      >
         {/* editNav buttons are hidden if the note editor is active */}
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className="title-edit">
           {!editTitle &&
             <button
               type="button"
-              style={{ height: 'fit-content', width: 'fit-content' }}
               onClick={setActiveCategoryToFalse}
             >
+              <span className="tooltiptext">Back</span>
               <Icon.ArrowLeft />
             </button>
           }
-          {!editTitle && <h1>{singleCategory.title}</h1>}
+          {!editTitle &&
+            <h1>
+              {singleCategory.title.length >= 15 ?
+                <>
+                  <span className="tooltiptext">{singleCategory.title}</span>
+                  {shortenCategoryTitle}
+                </> :
+                singleCategory.title
+              }
+            </h1>
+          }
           {editTitle &&
             <form onSubmit={updateTitleOnClick}>
               <input
@@ -122,24 +140,45 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
                 value={inputs.title}
                 onChange={handleInputs}
               />
-              <button type="submit">Submit</button>
+              <button type="submit">
+                <Icon.Check />
+              </button>
             </form>
           }
           <button
             type="button"
-            style={{ height: 'fit-content', width: 'fit-content' }}
             onClick={changeEditTitleOnClick}
+            className="editTitle-button"
           >
-            {editTitle ? 'Cancel' : 'Edit'}
+            {editTitle ? 'x' : <>
+              <span className="tooltiptext">Edit</span>
+              <Icon.Pencil />
+            </>}
           </button>
         </div>
-        <button
-          type="button"
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          onClick={setEditorActiveOnClick}
-        >
-          New note
-        </button>
+        <div className="categoryNav-NoteButtons">
+          {checkbox[0] &&
+            <>
+              <p>{checkbox.length} selected</p>
+              <button
+                type="button"
+                style={{ height: 'fit-content', width: 'fit-content' }}
+                onClick={deleteCheckedNotesOnClick}
+              >
+                <span className="tooltiptext">Delete</span>
+                <Icon.Trash />
+              </button>
+            </>
+          }
+          <button
+            type="button"
+            style={{ height: 'fit-content', width: 'fit-content' }}
+            onClick={setEditorActiveOnClick}
+          >
+            <span className="tooltiptext">Create</span>
+            <Icon.FolderPlus />
+          </button>
+        </div>
         <div className="categoryNavDropdown" ref={dropdownRef}>
           <button
             type="button"
@@ -200,18 +239,6 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
             </div>
           }
         </div>
-        {checkbox[0] &&
-          <>
-            <button
-              type="button"
-              style={{ height: 'fit-content', width: 'fit-content' }}
-              onClick={deleteCheckedNotesOnClick}
-            >
-              Delete
-            </button>
-            <p>{checkbox.length} selected</p>
-          </>
-        }
       </CategoryNavStyles>
     </>
   );

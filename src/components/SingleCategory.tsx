@@ -31,6 +31,7 @@ export const SingleCategory = ({ category }: Props) => {
     if (checkbox[0]) {
       dispatch(updateCheckedId([]));
     }
+
     void dispatch(updateExistingCategory(categories, updatedCategory));
   };
 
