@@ -1,7 +1,12 @@
 import styled from "styled-components";
 import { Checked } from "../../types";
 
-export const CategoryNavStyles = styled.nav<{ $editorActive?: boolean, $clickedNote: string, $checkbox: Checked[] }>`
+export const CategoryNavStyles = styled.nav<{
+  $editorActive?: boolean,
+  $clickedNote: string,
+  $checkbox: Checked[],
+  $editTitle: boolean
+}>`
   /* display: ${props => props.$editorActive || props.$clickedNote ? 'none' : 'flex'}; */
   display: flex;
   flex-direction: row;
@@ -33,8 +38,9 @@ export const CategoryNavStyles = styled.nav<{ $editorActive?: boolean, $clickedN
     align-items: center;
     flex: 1 0 0;
     h1 {
+      /* flex: 1 0 0; */
       margin: 0;
-      padding: 0 0.4rem 0.2rem 0.4rem;
+      padding-bottom: 0.2rem;
       cursor: default;
       &:hover > .tooltiptext{
         left: 0;
@@ -48,16 +54,28 @@ export const CategoryNavStyles = styled.nav<{ $editorActive?: boolean, $clickedN
       input {
         border-radius: 5px;
       }
-      button {
-        border: currentColor;
+      .confirm-edit-button {
+        flex: 1 0 0;
+        background: none;
+        border: none;
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+        cursor: pointer;
+        svg {
+          width: 1.2rem;
+          height: 1.2rem;
+          transition: all 0.2s ease-out;
+      }
       }
     }
-    button {
+    .back-button {
+      flex: 1 0 0;
       background: none;
       border: none;
       width: fit-content;
       height: fit-content;
-      position: relative;
+      padding: 0;
       cursor: pointer;
       svg {
         width: 1.4rem;
@@ -74,6 +92,14 @@ export const CategoryNavStyles = styled.nav<{ $editorActive?: boolean, $clickedN
       }
     }
     .editTitle-button {
+      flex: 1 0 0;
+      background: none;
+      padding: 0;
+      border: none;
+      width: fit-content;
+      height: fit-content;
+      position: relative;
+      cursor: pointer;
       svg {
         width: 1rem;
         height: 1rem;
@@ -83,8 +109,8 @@ export const CategoryNavStyles = styled.nav<{ $editorActive?: boolean, $clickedN
         visibility: visible;
       }
       svg:hover {
-        width: 1.4rem;
-        height: 1.4rem;
+        width: ${props => !props.$editTitle && "1.4rem"};
+        height: ${props => !props.$editTitle && "1.4rem"};
       }
     }
   }
@@ -125,44 +151,44 @@ export const CategoryNavStyles = styled.nav<{ $editorActive?: boolean, $clickedN
     justify-content: flex-end;
     width: fit-content;
     position: relative;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
     padding-right: 0.2rem;
     .dropdown-menu {
-        display: flex;
-        flex-direction: column;
-        z-index: 1; 
-        position: absolute;
-        right: 10px;
-        top: 40px;
-        width: 250px;
-        height: fit-content;
-        box-shadow: 0 3px 10px rgb(0 0 0 / 0.4);
-        border-radius: 5px;
-        overflow: hidden
-      }
-      .dropDownButton {
-        text-align: left;
-        height: inherit;
-        border: none;
-        padding: 0.4rem 0.4rem 0.4rem 0.4rem;
-        background-color: whitesmoke;
-        cursor: pointer;
-      }
-      .dropDownButton:hover {
-        background-color: #dbd8d8;
-      }
-      a {
-        text-align: left;
-        height: inherit;
-        text-decoration: none;
-        color: black;
-        font-size: 14px;
-        cursor: pointer;
-        padding: 0.4rem 0.4rem 0.4rem 0.4rem;
-        background-color: whitesmoke;
-      }
-      a:hover {
-        background-color: #dbd8d8;
-      }
+      display: flex;
+      flex-direction: column;
+      z-index: 1; 
+      position: absolute;
+      right: 10px;
+      top: 40px;
+      width: 250px;
+      height: fit-content;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 0.4);
+      border-radius: 5px;
+      overflow: hidden
+    }
+    .dropDownButton {
+      text-align: left;
+      height: inherit;
+      border: none;
+      padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+      background-color: whitesmoke;
+      cursor: pointer;
+    }
+    .dropDownButton:hover {
+      background-color: #dbd8d8;
+    }
+    a {
+      text-align: left;
+      height: inherit;
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+      background-color: whitesmoke;
+    }
+    a:hover {
+      background-color: #dbd8d8;
+    }
   }
 `;

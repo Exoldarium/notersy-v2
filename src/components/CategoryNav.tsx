@@ -39,7 +39,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const shortenCategoryTitle = singleCategory.title.slice(0, 15) + '...';
+  const shortenCategoryTitle = singleCategory.title.slice(0, 10) + '...';
 
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
@@ -109,6 +109,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
         $editorActive={editorActive}
         $clickedNote={clickedNote}
         $checkbox={checkbox}
+        $editTitle={editTitle}
       >
         {/* editNav buttons are hidden if the note editor is active */}
         <div className="title-edit">
@@ -116,6 +117,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
             <button
               type="button"
               onClick={setActiveCategoryToFalse}
+              className="back-button"
             >
               <span className="tooltiptext">Back</span>
               <Icon.ArrowLeft />
@@ -123,7 +125,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
           }
           {!editTitle &&
             <h1>
-              {singleCategory.title.length >= 15 ?
+              {singleCategory.title.length >= 12 ?
                 <>
                   <span className="tooltiptext">{singleCategory.title}</span>
                   {shortenCategoryTitle}
@@ -140,7 +142,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
                 value={inputs.title}
                 onChange={handleInputs}
               />
-              <button type="submit">
+              <button type="submit" className="confirm-edit-button">
                 <Icon.Check />
               </button>
             </form>
@@ -150,7 +152,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
             onClick={changeEditTitleOnClick}
             className="editTitle-button"
           >
-            {editTitle ? 'x' : <>
+            {editTitle ? <Icon.X /> : <>
               <span className="tooltiptext">Edit</span>
               <Icon.Pencil />
             </>}
