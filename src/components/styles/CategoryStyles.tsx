@@ -72,6 +72,7 @@ export const CategorySortingStyles = styled.div`
   button {
     margin-top: 0.5rem;
     margin-left: 0.2rem;
+    padding: 0 0.2rem 0.2rem 0.2rem;
     text-align: center;
     background: none;
     border-radius: 3px;

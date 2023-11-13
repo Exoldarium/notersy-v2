@@ -19,7 +19,7 @@ import { Sorting } from './types';
 // TODO:
 // add a way to download notes
 // TODO:
-// component names CategoryList has SingleCategory, NoteList has SingleNote
+// categorynav menu title should extend if there is nothing selected and contract if there are notes selected
 
 const GlobalStyles = createGlobalStyle`
   html {

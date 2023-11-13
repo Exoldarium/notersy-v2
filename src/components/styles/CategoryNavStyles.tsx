@@ -38,7 +38,7 @@ export const CategoryNavStyles = styled.nav<{
     align-items: center;
     flex: 1 0 0;
     h1 {
-      /* flex: 1 0 0; */
+      flex: 1 0 0;
       margin: 0;
       padding-bottom: 0.2rem;
       cursor: default;
@@ -76,6 +76,7 @@ export const CategoryNavStyles = styled.nav<{
       width: fit-content;
       height: fit-content;
       padding: 0;
+      margin: 0;
       cursor: pointer;
       svg {
         width: 1.4rem;
@@ -99,6 +100,7 @@ export const CategoryNavStyles = styled.nav<{
       width: fit-content;
       height: fit-content;
       position: relative;
+      margin: 0;
       cursor: pointer;
       svg {
         width: 1rem;
@@ -128,7 +130,7 @@ export const CategoryNavStyles = styled.nav<{
       border: none;
       position: relative;
       padding: 0;
-      margin: 0;
+      margin-left: 2rem;
       cursor: pointer;
       svg {
         width: 1.4rem;
@@ -159,7 +161,7 @@ export const CategoryNavStyles = styled.nav<{
       z-index: 1; 
       position: absolute;
       right: 10px;
-      top: 40px;
+      top: 30px;
       width: 250px;
       height: fit-content;
       box-shadow: 0 3px 10px rgb(0 0 0 / 0.4);
