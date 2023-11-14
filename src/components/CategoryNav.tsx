@@ -39,23 +39,6 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const renderCategoryTitle = () => {
-    switch (true) {
-      case (singleCategory.title.length >= 9 && checkbox[0] !== undefined):
-        return <>
-          <span className="tooltiptext">{singleCategory.title}</span>
-          {singleCategory.title.slice(0, 9) + '...'}
-        </>;
-      case (singleCategory.title.length >= 20):
-        return <>
-          <span className="tooltiptext">{singleCategory.title}</span>
-          {singleCategory.title.slice(0, 20) + '...'}
-        </>;
-      default:
-        return singleCategory.title;
-    }
-  };
-
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
   const setActiveCategoryToFalse = () => {
@@ -136,7 +119,22 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
           }
           {!editTitle &&
             <h1 onClick={changeEditTitleOnClick}>
-              {renderCategoryTitle()}
+              {((): JSX.Element | string => {
+                switch (true) {
+                  case (singleCategory.title.length >= 9 && checkbox[0] !== undefined):
+                    return <>
+                      <span className="tooltiptext">{singleCategory.title}</span>
+                      {singleCategory.title.slice(0, 9) + '...'}
+                    </>;
+                  case (singleCategory.title.length >= 20):
+                    return <>
+                      <span className="tooltiptext">{singleCategory.title}</span>
+                      {singleCategory.title.slice(0, 20) + '...'}
+                    </>;
+                  default:
+                    return singleCategory.title;
+                }
+              })()}
             </h1>
           }
           {editTitle &&
