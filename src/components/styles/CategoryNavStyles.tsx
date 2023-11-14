@@ -19,15 +19,16 @@ export const CategoryNavStyles = styled.nav<{
   align-items: center;
   .tooltiptext {
     visibility: hidden;
-    width: 100px;
+    width: fit-content;
+    max-width: 350px;
     font-size: 12px;
     background-color: black;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 2px 0;
+    padding: 0.2rem;
     position: absolute;
-    top: 30px;
+    top: 40px;
     z-index: 2;
     opacity: 0.9;
     right: 0;
@@ -36,12 +37,13 @@ export const CategoryNavStyles = styled.nav<{
     display: flex;
     flex-direction: row;
     align-items: center;
-    flex: 1 0 0;
+    flex: ${props => props.$checkbox.length !== 0 ? '' : '1 0 0'};
     h1 {
-      flex: 1 0 0;
+      /* flex: 1 0 0; */
       margin: 0;
       padding-bottom: 0.2rem;
-      cursor: default;
+      cursor: pointer;
+      white-space: nowrap;
       &:hover > .tooltiptext{
         left: 0;
         visibility: visible;
@@ -55,7 +57,7 @@ export const CategoryNavStyles = styled.nav<{
         border-radius: 5px;
       }
       .confirm-edit-button {
-        flex: 1 0 0;
+        /* flex: 1 0 0; */
         background: none;
         border: none;
         width: fit-content;
@@ -70,7 +72,7 @@ export const CategoryNavStyles = styled.nav<{
       }
     }
     .back-button {
-      flex: 1 0 0;
+      /* flex: 1 0 0; */
       background: none;
       border: none;
       width: fit-content;
@@ -93,7 +95,7 @@ export const CategoryNavStyles = styled.nav<{
       }
     }
     .editTitle-button {
-      flex: 1 0 0;
+      /* flex: 1 0 0; */
       background: none;
       padding: 0;
       border: none;
@@ -116,28 +118,90 @@ export const CategoryNavStyles = styled.nav<{
       }
     }
   }
-  .categoryNav-NoteButtons {
-    display: flex;
+  .trash-button-div {
+    display: ${props => (props.$checkbox.length !== 0 && !props.$editTitle) ? 'flex' : 'none'};
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
     flex: 1 0 0;
+    padding-left: 4rem;
+    p {
+      cursor: default;
+      white-space: nowrap;
+      font-size: 12px;
+    }
     button {
-      flex: ${props => props.$checkbox?.length !== 0 ? '1 0 0' : ''};
+      margin-left: 0.7rem;
       width: fit-content;
       height: fit-content;
       background: none;
       border: none;
       position: relative;
       padding: 0;
-      margin-left: 2rem;
       cursor: pointer;
       svg {
         width: 1.4rem;
         height: 1.4rem;
         transition: all 0.2s ease-out;
       }
-      &:hover > .tooltiptext{
+      .tooltiptext {
+        visibility: hidden;
+        width: fit-content;
+        max-width: 350px;
+        font-size: 12px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 2px 0;
+        position: absolute;
+        top: 30px;
+        z-index: 2;
+        opacity: 0.9;
+        right: 0;
+      }
+      &:hover > .tooltiptext {
+        visibility: visible;
+      }
+      svg:hover {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+    }
+  }
+  .newNote-button-div {
+    display: flex;
+    justify-content: flex-end;
+    flex: ${props => props.$checkbox.length !== 0 ? '1 0 0' : ''};
+    button {
+      width: fit-content;
+      height: fit-content;
+      border-radius: 5px;
+      border: none;
+      position: relative;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      svg {
+        width: 1.4rem;
+        height: 1.4rem;
+        transition: all 0.2s ease-out;
+      }
+      .tooltiptext {
+        visibility: hidden;
+        width: 100px;
+        font-size: 12px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 2px 0;
+        position: absolute;
+        top: 30px;
+        z-index: 2;
+        opacity: 0.9;
+        right: 0;
+      }
+      &:hover > .tooltiptext {
         visibility: visible;
       }
       svg:hover {
@@ -153,7 +217,7 @@ export const CategoryNavStyles = styled.nav<{
     justify-content: flex-end;
     width: fit-content;
     position: relative;
-    margin-left: 0.5rem;
+    margin-left: 0.7rem;
     padding-right: 0.2rem;
     .dropdown-menu {
       display: flex;
@@ -161,7 +225,7 @@ export const CategoryNavStyles = styled.nav<{
       z-index: 1; 
       position: absolute;
       right: 10px;
-      top: 30px;
+      top: 40px;
       width: 250px;
       height: fit-content;
       box-shadow: 0 3px 10px rgb(0 0 0 / 0.4);

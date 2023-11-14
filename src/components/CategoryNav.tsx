@@ -39,7 +39,22 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const shortenCategoryTitle = singleCategory.title.slice(0, 10) + '...';
+  const renderCategoryTitle = () => {
+    switch (true) {
+      case (singleCategory.title.length >= 9 && checkbox[0] !== undefined):
+        return <>
+          <span className="tooltiptext">{singleCategory.title}</span>
+          {singleCategory.title.slice(0, 9) + '...'}
+        </>;
+      case (singleCategory.title.length >= 20):
+        return <>
+          <span className="tooltiptext">{singleCategory.title}</span>
+          {singleCategory.title.slice(0, 20) + '...'}
+        </>;
+      default:
+        return singleCategory.title;
+    }
+  };
 
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
@@ -102,16 +117,12 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
 
   return (
     <>
-      {/* {!editTitle && (editorActive || clickedNote) &&
-        <h1 style={{ fontSize: '15px', borderBottom: '1px solid black' }}>{singleCategory.title}</h1>
-      } */}
       <CategoryNavStyles
         $editorActive={editorActive}
         $clickedNote={clickedNote}
         $checkbox={checkbox}
         $editTitle={editTitle}
       >
-        {/* editNav buttons are hidden if the note editor is active */}
         <div className="title-edit">
           {!editTitle &&
             <button
@@ -124,14 +135,8 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
             </button>
           }
           {!editTitle &&
-            <h1>
-              {singleCategory.title.length >= 12 ?
-                <>
-                  <span className="tooltiptext">{singleCategory.title}</span>
-                  {shortenCategoryTitle}
-                </> :
-                singleCategory.title
-              }
+            <h1 onClick={changeEditTitleOnClick}>
+              {renderCategoryTitle()}
             </h1>
           }
           {editTitle &&
@@ -152,13 +157,10 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
             onClick={changeEditTitleOnClick}
             className="editTitle-button"
           >
-            {editTitle ? <Icon.X /> : <>
-              <span className="tooltiptext">Edit</span>
-              <Icon.Pencil />
-            </>}
+            {editTitle && <Icon.X />}
           </button>
         </div>
-        <div className="categoryNav-NoteButtons">
+        <div className="trash-button-div">
           {checkbox[0] &&
             <>
               <p>{checkbox.length} selected</p>
@@ -172,6 +174,8 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
               </button>
             </>
           }
+        </div>
+        <div className="newNote-button-div">
           <button
             type="button"
             style={{ height: 'fit-content', width: 'fit-content' }}

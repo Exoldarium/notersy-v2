@@ -10,6 +10,7 @@ export const CategoryStyles = styled.li`
   background-color: #80808030;
   font-weight: bold;
   transition: all 0.2s ease-out;
+  position: relative;
   &:hover {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   }

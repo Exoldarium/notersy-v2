@@ -53,7 +53,12 @@ export const SingleCategory = ({ category }: Props) => {
       </form>
       <div onClick={setCategoryActiveOnClick} id={category.id}>
         <Link to={`/${category.id}`}>
-          {category.title}
+          {category.title.length >= 25 ?
+            <>
+              {category.title.slice(0, 25) + '...'}
+            </> :
+            category.title
+          }
         </Link>
         <p>{category.notes.length !== 1 ? `${category.notes.length} notes` : `1 note`}</p>
       </div>
