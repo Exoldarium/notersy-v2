@@ -56,20 +56,24 @@ export const Nav = ({ setSortCategories }: Props) => {
         <h1>
           Notersy <span>v2.0.0</span>
         </h1>
-        {checkbox[0] && <p>{checkbox.length} selected</p>}
       </div>
-      <div className="navButtons">
+      <div className="trash-button-div">
         {checkbox[0] &&
-          <button
-            type="button"
-            onClick={deleteCheckedCategoriesOnClick}
-            className="newCategory-button"
-            data-testid="delete-category-test"
-          >
-            <span className="tooltiptext">Delete</span>
-            <Icon.Trash />
-          </button>
+          <>
+            <p>{checkbox.length} selected</p>
+            <button
+              type="button"
+              onClick={deleteCheckedCategoriesOnClick}
+              className="newCategory-button"
+              data-testid="delete-category-test"
+            >
+              <span className="tooltiptext">Delete</span>
+              <Icon.Trash />
+            </button>
+          </>
         }
+      </div>
+      <div className="newCategory-button-div">
         <button
           type="button"
           onClick={addNewCategoryOnClick}
