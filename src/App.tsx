@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 import { Nav } from './components/Nav';
@@ -58,6 +58,7 @@ export const App = () => {
   });
   const dispatch = useAppDispatch();
   const match = useMatch('/:id');
+  const topRef = useRef<null | HTMLDivElement>(null);
 
   console.log(message, 'message here');
 
@@ -74,11 +75,14 @@ export const App = () => {
   // check if there's an active category, the category that the user has selected
   const activeCategory = categories.find(entry => entry.active);
 
+  console.log('height', screen.height);
+  console.log('inner', window.innerHeight);
   console.log('App', categories);
 
   return (
     <>
       <GlobalStyles />
+      <div ref={topRef}></div>
       {activeCategory ?
         <CategoryNav
           singleCategory={activeCategory}
@@ -110,6 +114,7 @@ export const App = () => {
             <CategoryList
               sortCategories={sortCategories}
               setSortCategories={setSortCategories}
+              topRef={topRef}
             />
           }
           />

@@ -5,6 +5,7 @@ export const EditorStyles = styled.div<{ $editorActive?: boolean }>`
   border: 1px solid black;
   border-radius: 5px;
   overflow: hidden;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   .editorButtons{ 
     display: ${props => props.$editorActive ? 'flex' : 'none'};
     button {
@@ -16,7 +17,7 @@ export const EditorStyles = styled.div<{ $editorActive?: boolean }>`
       padding: 0.3rem;
     }
     .is-active {
-      background-color: #959494;
+      background-color: #0909092c;
     }
     svg {
       width: 1rem;
@@ -43,6 +44,10 @@ export const NoteEditorStyles = styled.li<{ $editable?: boolean }>`
   cursor: ${props => !props.$editable && 'pointer'};
   margin: 0.5rem 0 0.5rem 0;
   overflow: hidden;
+  transition: all 0.2s ease-out;
+  &:hover {
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  }
   form {
    display: ${props => props.$editable ? 'none' : 'block'};
    position: relative;
@@ -70,9 +75,10 @@ export const NoteEditorStyles = styled.li<{ $editable?: boolean }>`
       width: fit-content;
       height: fit-content;
       flex: 1;
+      padding: 0.3rem;
     }
     .is-active {
-      background-color: #959494;
+      background-color: #0909092c;
     }
     svg {
       width: 1rem;

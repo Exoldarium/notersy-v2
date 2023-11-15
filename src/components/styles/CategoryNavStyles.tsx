@@ -34,16 +34,18 @@ export const CategoryNavStyles = styled.nav<{ $checkbox: Checked[], $editTitle: 
     padding-right: 4.5rem;
     h1 {
       display: flex;
-      max-width: fit-content;
-      padding: 0.2rem 0.2rem 0.4rem 0.2rem;
+      width: 100px;
       cursor: pointer;
       white-space: nowrap;
+      p {
+        padding: 0.2rem 0.2rem 0.4rem 0.2rem; 
+      }
       &:hover > .tooltiptext{
         left: 0;
         visibility: visible;
         transition-delay: 500ms;
       }
-      &:hover {
+      p:hover {
         border-radius: 5px;
         background-color: #dbd8d8;
       }

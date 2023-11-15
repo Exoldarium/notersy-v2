@@ -68,7 +68,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
 
     const updatedCategory: BaseCategoryEntry = {
       ...singleCategory,
-      title: inputs.title,
+      title: inputs.title === '' ? 'New Category' : inputs.title,
       dateModified: getDate(),
       unixTimeModified: Date.now()
     };
@@ -126,20 +126,20 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
                 <Icon.ArrowLeft />
               </button>
               <h1 onClick={changeEditTitleOnClick}>
-                {((): JSX.Element | string => {
+                {((): JSX.Element => {
                   switch (true) {
                     case (singleCategory.title.length >= 9 && checkbox[0] !== undefined):
                       return <>
                         <span className="tooltiptext">{singleCategory.title}</span>
-                        {singleCategory.title.slice(0, 9) + '...'}
+                        <p>{singleCategory.title.slice(0, 9) + '...'}</p>
                       </>;
                     case (singleCategory.title.length >= 20):
                       return <>
                         <span className="tooltiptext">{singleCategory.title}</span>
-                        {singleCategory.title.slice(0, 20) + '...'}
+                        <p>{singleCategory.title.slice(0, 20) + '...'}</p>
                       </>;
                     default:
-                      return singleCategory.title;
+                      return <p>{singleCategory.title}</p>;
                   }
                 })()}
               </h1>
@@ -233,11 +233,18 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
                 Buy me a coffee!
               </a>
               <a
-                href="https://github.com/Exoldarium"
+                href="https://chromewebstore.google.com/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja?pli=1"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Check my github
+                Notersy on Chrome
+              </a>
+              <a
+                href="https://microsoftedge.microsoft.com/addons/detail/notersy/kmakjohiodknfghojeadaalgilbnndha"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Notersy on Edge
               </a>
               <span style={{ borderBottom: '1px solid black' }}></span>
               <button
