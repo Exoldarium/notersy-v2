@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BaseCategoryEntry, Sorting } from '../types';
-import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
+import { deleteExistingNote, initializeCategories, updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { useForm } from '../hooks/useForm';
 import { updateCheckedId } from '../reducers/checkboxReducer';
@@ -11,6 +11,7 @@ import { getDate } from '../utils/helpers';
 import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
 import { CategoryNavStyles } from './styles/CategoryNavStyles';
 import * as Icon from 'react-bootstrap-icons';
+import { setStorage } from '../services/storageService';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -96,46 +97,53 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
     dispatch(updateCheckedId([]));
   };
 
+  const clearStorageOnClick = async () => {
+    if (window.confirm('This will clear all your saved notes, are you sure you want to proceed?')) {
+      await setStorage('storedData', []);
+
+      if (checkbox[0]) {
+        dispatch(updateCheckedId([]));
+      }
+
+      void dispatch(initializeCategories());
+    }
+  };
+
   console.log(singleCategory, 'active category');
 
   return (
     <>
-      <CategoryNavStyles
-        $editorActive={editorActive}
-        $clickedNote={clickedNote}
-        $checkbox={checkbox}
-        $editTitle={editTitle}
-      >
+      <CategoryNavStyles $checkbox={checkbox} $editTitle={editTitle}>
         <div className="title-edit">
           {!editTitle &&
-            <button
-              type="button"
-              onClick={setActiveCategoryToFalse}
-              className="back-button"
-            >
-              <span className="tooltiptext">Back</span>
-              <Icon.ArrowLeft />
-            </button>
-          }
-          {!editTitle &&
-            <h1 onClick={changeEditTitleOnClick}>
-              {((): JSX.Element | string => {
-                switch (true) {
-                  case (singleCategory.title.length >= 9 && checkbox[0] !== undefined):
-                    return <>
-                      <span className="tooltiptext">{singleCategory.title}</span>
-                      {singleCategory.title.slice(0, 9) + '...'}
-                    </>;
-                  case (singleCategory.title.length >= 20):
-                    return <>
-                      <span className="tooltiptext">{singleCategory.title}</span>
-                      {singleCategory.title.slice(0, 20) + '...'}
-                    </>;
-                  default:
-                    return singleCategory.title;
-                }
-              })()}
-            </h1>
+            <>
+              <button
+                type="button"
+                onClick={setActiveCategoryToFalse}
+                className="back-button"
+              >
+                <span className="tooltiptext">Back</span>
+                <Icon.ArrowLeft />
+              </button>
+              <h1 onClick={changeEditTitleOnClick}>
+                {((): JSX.Element | string => {
+                  switch (true) {
+                    case (singleCategory.title.length >= 9 && checkbox[0] !== undefined):
+                      return <>
+                        <span className="tooltiptext">{singleCategory.title}</span>
+                        {singleCategory.title.slice(0, 9) + '...'}
+                      </>;
+                    case (singleCategory.title.length >= 20):
+                      return <>
+                        <span className="tooltiptext">{singleCategory.title}</span>
+                        {singleCategory.title.slice(0, 20) + '...'}
+                      </>;
+                    default:
+                      return singleCategory.title;
+                  }
+                })()}
+              </h1>
+            </>
           }
           {editTitle &&
             <form onSubmit={updateTitleOnClick}>
@@ -211,11 +219,11 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
               </button>
               <span style={{ borderBottom: '1px solid black' }}></span>
               <a
-                href="mailto:shandoo91@gmail.com"
+                href="https://github.com/Exoldarium/notersy-v2"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Need help? Send me an e-mail
+                Report a problem
               </a>
               <a
                 href="https://ko-fi.com/dusan36845"
@@ -234,8 +242,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
               <span style={{ borderBottom: '1px solid black' }}></span>
               <button
                 type="button"
-                // TODO:
-                // onClick={clearStorageOnClick}
+                onClick={clearStorageOnClick}
                 className="dropDownButton"
               >
                 Clear storage

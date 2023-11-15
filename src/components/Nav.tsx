@@ -110,11 +110,11 @@ export const Nav = ({ setSortCategories }: Props) => {
             </button>
             <span style={{ borderBottom: '1px solid black' }}></span>
             <a
-              href="mailto:shandoo91@gmail.com"
+              href="https://github.com/Exoldarium/notersy-v2"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Need help? Send me an e-mail
+              Report a problem
             </a>
             <a
               href="https://ko-fi.com/dusan36845"
@@ -124,11 +124,18 @@ export const Nav = ({ setSortCategories }: Props) => {
               Buy me a coffee!
             </a>
             <a
-              href="https://github.com/Exoldarium"
+              href="https://chromewebstore.google.com/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja?pli=1"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Check my github
+              Notersy on Chrome
+            </a>
+            <a
+              href="https://microsoftedge.microsoft.com/addons/detail/notersy/kmakjohiodknfghojeadaalgilbnndha"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Notersy on Edge
             </a>
             <span style={{ borderBottom: '1px solid black' }}></span>
             <button

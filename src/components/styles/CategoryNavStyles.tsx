@@ -1,13 +1,7 @@
 import styled from "styled-components";
 import { Checked } from "../../types";
 
-export const CategoryNavStyles = styled.nav<{
-  $editorActive?: boolean,
-  $clickedNote: string,
-  $checkbox: Checked[],
-  $editTitle: boolean
-}>`
-  /* display: ${props => props.$editorActive || props.$clickedNote ? 'none' : 'flex'}; */
+export const CategoryNavStyles = styled.nav<{ $checkbox: Checked[], $editTitle: boolean }>`
   display: flex;
   flex-direction: row;
   font-size: 10px;
@@ -37,16 +31,21 @@ export const CategoryNavStyles = styled.nav<{
     display: flex;
     flex-direction: row;
     align-items: center;
-    flex: ${props => props.$checkbox.length !== 0 ? '' : '1 0 0'};
+    padding-right: 4.5rem;
     h1 {
-      /* flex: 1 0 0; */
-      margin: 0;
-      padding-bottom: 0.2rem;
+      display: flex;
+      max-width: fit-content;
+      padding: 0.2rem 0.2rem 0.4rem 0.2rem;
       cursor: pointer;
       white-space: nowrap;
       &:hover > .tooltiptext{
         left: 0;
         visibility: visible;
+        transition-delay: 500ms;
+      }
+      &:hover {
+        border-radius: 5px;
+        background-color: #dbd8d8;
       }
     }
     form {
@@ -57,7 +56,6 @@ export const CategoryNavStyles = styled.nav<{
         border-radius: 5px;
       }
       .confirm-edit-button {
-        /* flex: 1 0 0; */
         background: none;
         border: none;
         width: fit-content;
@@ -72,30 +70,28 @@ export const CategoryNavStyles = styled.nav<{
       }
     }
     .back-button {
-      /* flex: 1 0 0; */
+      display: flex;
+      justify-self: flex-start;
       background: none;
       border: none;
       width: fit-content;
       height: fit-content;
-      padding: 0;
+      padding-right: 0.5rem;
       margin: 0;
       cursor: pointer;
       svg {
         width: 1.4rem;
         height: 1.4rem;
         transition: all 0.2s ease-out;
+        flex: 1
       }
       &:hover > .tooltiptext{
         left: 0;
         visibility: visible;
-      }
-      svg:hover {
-        width: 1.6rem;
-        height: 1.6rem;
+        transition-delay: 500ms;
       }
     }
     .editTitle-button {
-      /* flex: 1 0 0; */
       background: none;
       padding: 0;
       border: none;
@@ -111,6 +107,7 @@ export const CategoryNavStyles = styled.nav<{
       }
       &:hover > .tooltiptext{
         visibility: visible;
+        transition-delay: 500ms;
       }
       svg:hover {
         width: ${props => !props.$editTitle && "1.4rem"};
@@ -122,15 +119,14 @@ export const CategoryNavStyles = styled.nav<{
     display: ${props => (props.$checkbox.length !== 0 && !props.$editTitle) ? 'flex' : 'none'};
     flex-direction: row;
     align-items: center;
-    flex: 1 0 0;
-    padding-left: 4rem;
+    justify-self: flex-end;
     p {
       cursor: default;
       white-space: nowrap;
       font-size: 12px;
     }
     button {
-      margin-left: 0.7rem;
+      margin-left: 0.2rem;
       width: fit-content;
       height: fit-content;
       background: none;
@@ -152,7 +148,7 @@ export const CategoryNavStyles = styled.nav<{
         color: #fff;
         text-align: center;
         border-radius: 6px;
-        padding: 2px 0;
+        padding: 0.2rem;
         position: absolute;
         top: 30px;
         z-index: 2;
@@ -161,6 +157,7 @@ export const CategoryNavStyles = styled.nav<{
       }
       &:hover > .tooltiptext {
         visibility: visible;
+        transition-delay: 500ms;
       }
       svg:hover {
         width: 1.6rem;
@@ -171,7 +168,7 @@ export const CategoryNavStyles = styled.nav<{
   .newNote-button-div {
     display: flex;
     justify-content: flex-end;
-    flex: ${props => props.$checkbox.length !== 0 ? '1 0 0' : ''};
+    flex: 1 0 0;
     button {
       width: fit-content;
       height: fit-content;
@@ -188,13 +185,13 @@ export const CategoryNavStyles = styled.nav<{
       }
       .tooltiptext {
         visibility: hidden;
-        width: 100px;
+        width: fit-content;
         font-size: 12px;
         background-color: black;
         color: #fff;
         text-align: center;
         border-radius: 6px;
-        padding: 2px 0;
+        padding: 0.2rem;
         position: absolute;
         top: 30px;
         z-index: 2;
@@ -203,6 +200,7 @@ export const CategoryNavStyles = styled.nav<{
       }
       &:hover > .tooltiptext {
         visibility: visible;
+        transition-delay: 500ms;
       }
       svg:hover {
         width: 1.6rem;

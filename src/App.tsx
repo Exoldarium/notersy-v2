@@ -18,8 +18,6 @@ import { Sorting } from './types';
 // TODO: improve comments
 // TODO:
 // add a way to download notes
-// TODO:
-// categorynav menu title should extend if there is nothing selected and contract if there are notes selected
 
 const GlobalStyles = createGlobalStyle`
   html {

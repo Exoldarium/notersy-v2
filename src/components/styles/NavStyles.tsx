@@ -64,13 +64,13 @@ export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
       }
       .tooltiptext {
         visibility: hidden;
-        width: 100px;
+        width: fit-content;
         font-size: 12px;
         background-color: black;
         color: #fff;
         text-align: center;
         border-radius: 6px;
-        padding: 2px 0;
+        padding: 0.2rem;
         position: absolute;
         top: 30px;
         z-index: 2;
@@ -79,6 +79,7 @@ export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
       }
       &:hover > .tooltiptext {
         visibility: visible;
+        transition-delay: 500ms;
       }
       svg:hover {
         width: 1.6rem;
@@ -106,13 +107,13 @@ export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
       }
       .tooltiptext {
         visibility: hidden;
-        width: 100px;
+        width: fit-content;
         font-size: 12px;
         background-color: black;
         color: #fff;
         text-align: center;
         border-radius: 6px;
-        padding: 2px 0;
+        padding: 0.2rem;
         position: absolute;
         top: 30px;
         z-index: 2;
@@ -121,6 +122,7 @@ export const NavStyles = styled.nav<{ $checkbox?: Checked[] }>`
       }
       &:hover > .tooltiptext {
         visibility: visible;
+        transition-delay: 500ms;
       }
       svg:hover {
         width: 1.6rem;
