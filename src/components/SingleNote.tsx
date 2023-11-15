@@ -10,6 +10,7 @@ import { setChecboxChecked, updateCheckedId } from '../reducers/checkboxReducer'
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { getDate } from '../utils/helpers';
+import * as Icon from 'react-bootstrap-icons';
 
 interface Props {
   note: BaseNoteEntry;
@@ -160,7 +161,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
           }
           className={editor.isActive('bold') ? 'is-active' : ''}
         >
-          Bold
+          <Icon.TypeBold />
         </button>
         <button
           type="button"
@@ -174,7 +175,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
           }
           className={editor.isActive('italic') ? 'is-active' : ''}
         >
-          Italic
+          <Icon.TypeItalic />
         </button>
         <button
           type="button"
@@ -188,41 +189,41 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
           }
           className={editor.isActive('bulletList') ? 'is-active' : ''}
         >
-          Bullet
+          <Icon.ListTask />
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           className={editor.isActive('heading') ? 'is-active' : ''}
         >
-          Heading
+          H
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
         >
-          Undo
+          <Icon.ArrowCounterclockwise />
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
         >
-          Redo
+          <Icon.ArrowClockwise />
         </button>
         <button
           type="button"
           onClick={updateNoteOnClick}
           disabled={editor.getHTML() === '<p></p>'}
         >
-          Add note
+          <Icon.CheckLg />
         </button>
         <button
           type="button"
           onClick={cancelEditNoteOnClick}
         >
-          Cancel
+          <Icon.XLg />
         </button>
       </div>
       <EditorContent editor={editor} id={note.id} onClick={setEditNoteOnClick} />

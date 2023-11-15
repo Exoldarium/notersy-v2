@@ -2,24 +2,32 @@ import styled from 'styled-components';
 
 export const EditorStyles = styled.div<{ $editorActive?: boolean }>`
   margin: 0.5rem 0 0.5rem 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  overflow: hidden;
   .editorButtons{ 
     display: ${props => props.$editorActive ? 'flex' : 'none'};
-    border-bottom: 1px solid black;
     button {
-      width: 2.5rem;
-      height: 3rem;
+      border: none;
+      cursor: pointer;
+      width: fit-content;
+      height: fit-content;
       flex: 1;
+      padding: 0.3rem;
     }
     .is-active {
-      background-color: peachpuff;
+      background-color: #959494;
+    }
+    svg {
+      width: 1rem;
+      height: 1rem;
     }
   }
   .tiptap {
     min-height: 100px;
     height: fit-content;
     padding: 0.2rem;
-    border: 1px solid black;
-    border-radius: 3px;
+    border: none;
     p {
       margin: 0;
     }
@@ -31,9 +39,10 @@ export const EditorStyles = styled.div<{ $editorActive?: boolean }>`
 
 export const NoteEditorStyles = styled.li<{ $editable?: boolean }>`
   border: 1px solid black;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: ${props => !props.$editable && 'pointer'};
   margin: 0.5rem 0 0.5rem 0;
+  overflow: hidden;
   form {
    display: ${props => props.$editable ? 'none' : 'block'};
    position: relative;
@@ -55,20 +64,26 @@ export const NoteEditorStyles = styled.li<{ $editable?: boolean }>`
   }
   .noteEditorButtons{ 
     display: ${props => props.$editable ? 'flex' : 'none'};
-    border-bottom: 1px solid black;
     button {
-      width: 2.5rem;
-      height: 3rem;
+      border: none;
+      cursor: pointer;
+      width: fit-content;
+      height: fit-content;
       flex: 1;
     }
     .is-active {
-      background-color: peachpuff;
+      background-color: #959494;
+    }
+    svg {
+      width: 1rem;
+      height: 1rem;
     }
   }
   .tiptap {
     min-height: 100px;
     height: fit-content;
     padding: 0.5rem 0.5rem 1rem 0.5rem;
+    border: none;
     p {
       margin: 0;
     }

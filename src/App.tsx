@@ -18,13 +18,12 @@ import { Sorting } from './types';
 // TODO: improve comments
 // TODO:
 // add a way to download notes
+// TODO:
+// add options page
 
 const GlobalStyles = createGlobalStyle`
   html {
     box-sizing: border-box;
-    /* width: 750px;
-    min-height: 350px; */
-    /* height: fit-content; */
     width: 375px;
     height: 600px;
     background-color: whitesmoke;
