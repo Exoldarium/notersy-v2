@@ -89,8 +89,6 @@ export const App = () => {
     }
   };
 
-  console.log('height', screen.height);
-  console.log('inner', window.innerHeight);
   console.log('App', categories);
 
   return (
