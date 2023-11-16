@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { createGlobalStyle } from 'styled-components';
 import { Route, Routes, useMatch } from 'react-router-dom';
 import { Nav } from './components/Nav';
 import { NoteList } from './components/NoteList';
@@ -13,6 +12,7 @@ import { Sorting } from './types';
 import { useNavVisible } from './hooks/useNavVisible';
 import { ScrollToTopButtonStyles } from './components/styles/ScrollToTopButtonStyles';
 import { ChevronUp } from 'react-bootstrap-icons';
+import { AppGlobalStyles } from './components/styles/GlobalStyles';
 
 // TODO:
 // choose appropriate license
@@ -21,28 +21,6 @@ import { ChevronUp } from 'react-bootstrap-icons';
 // add a way to download notes
 // TODO:
 // add options page
-
-const GlobalStyles = createGlobalStyle`
-  html {
-    box-sizing: border-box;
-    width: 375px;
-    height: 600px;
-    background-color: whitesmoke;
-    font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-  body {
-    padding-bottom: 0.5rem;
-  }
-  button {
-    font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  } 
-  a {
-    font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-`;
 
 export const App = () => {
   const [sortCategories, setSortCategories] = useState<Sorting>('default');
@@ -93,7 +71,7 @@ export const App = () => {
 
   return (
     <>
-      <GlobalStyles />
+      <AppGlobalStyles />
       <div ref={topRef}></div>
       {activeCategory ?
         <CategoryNav

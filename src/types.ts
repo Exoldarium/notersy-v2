@@ -23,6 +23,7 @@ export interface BaseCategoryEntry {
 export interface BaseStorageEntry {
   storedData: BaseCategoryEntry[];
 }
+
 export interface Message {
   type: string;
   content: string;

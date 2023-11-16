@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BaseCategoryEntry, Sorting } from '../types';
-import { deleteExistingNote, initializeCategories, updateExistingCategory } from '../reducers/categoryReducer';
+import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { useForm } from '../hooks/useForm';
 import { updateCheckedId } from '../reducers/checkboxReducer';
@@ -11,7 +11,6 @@ import { getDate } from '../utils/helpers';
 import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
 import { CategoryNavStyles } from './styles/CategoryNavStyles';
 import * as Icon from 'react-bootstrap-icons';
-import { setStorage } from '../services/storageService';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
@@ -95,18 +94,6 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
     void dispatch(updateExistingCategory(categories, updatedCategory));
     void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
     dispatch(updateCheckedId([]));
-  };
-
-  const clearStorageOnClick = async () => {
-    if (window.confirm('This will clear all your saved notes, are you sure you want to proceed?')) {
-      await setStorage('storedData', []);
-
-      if (checkbox[0]) {
-        dispatch(updateCheckedId([]));
-      }
-
-      void dispatch(initializeCategories());
-    }
   };
 
   console.log(singleCategory, 'active category');
@@ -232,28 +219,14 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
               >
                 Buy me a coffee!
               </a>
-              <a
-                href="https://chromewebstore.google.com/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja?pli=1"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Notersy on Chrome
-              </a>
-              <a
-                href="https://microsoftedge.microsoft.com/addons/detail/notersy/kmakjohiodknfghojeadaalgilbnndha"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Notersy on Edge
-              </a>
               <span style={{ borderBottom: '1px solid black' }}></span>
-              <button
-                type="button"
-                onClick={clearStorageOnClick}
-                className="dropDownButton"
+              <a
+                href="options.html"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Clear storage
-              </button>
+                Options
+              </a>
             </div>
           }
         </div>

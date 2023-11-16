@@ -1,12 +1,11 @@
 import { NavStyles } from './styles/NavStyles';
-import { addNewCategory, deleteExistingCategory, initializeCategories } from '../reducers/categoryReducer';
+import { addNewCategory, deleteExistingCategory } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { updateCheckedId } from '../reducers/checkboxReducer';
 import { useState } from 'react';
 import { useDetectOutsideClick } from '../hooks/useDetectOutsideClick';
 import { Sorting } from '../types';
 import * as Icon from 'react-bootstrap-icons';
-import { setStorage } from '../services/storageService';
 
 interface Props {
   setSortCategories: React.Dispatch<React.SetStateAction<Sorting>>;
@@ -36,18 +35,6 @@ export const Nav = ({ setSortCategories }: Props) => {
   const deleteCheckedCategoriesOnClick = () => {
     void dispatch(deleteExistingCategory(categories, checkbox));
     dispatch(updateCheckedId([]));
-  };
-
-  const clearStorageOnClick = async () => {
-    if (window.confirm('This will clear all your saved notes, are you sure you want to proceed?')) {
-      await setStorage('storedData', []);
-
-      if (checkbox[0]) {
-        dispatch(updateCheckedId([]));
-      }
-
-      void dispatch(initializeCategories());
-    }
   };
 
   return (
@@ -123,28 +110,14 @@ export const Nav = ({ setSortCategories }: Props) => {
             >
               Buy me a coffee!
             </a>
-            <a
-              href="https://chromewebstore.google.com/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja?pli=1"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Notersy on Chrome
-            </a>
-            <a
-              href="https://microsoftedge.microsoft.com/addons/detail/notersy/kmakjohiodknfghojeadaalgilbnndha"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Notersy on Edge
-            </a>
             <span style={{ borderBottom: '1px solid black' }}></span>
-            <button
-              type="button"
-              onClick={clearStorageOnClick}
-              className="dropDownButton"
+            <a
+              href="options.html"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Clear storage
-            </button>
+              Options
+            </a>
           </div>
         }
       </div>
