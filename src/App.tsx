@@ -10,11 +10,12 @@ import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
 import { CategoryList } from './components/CategoryList';
 import { Sorting } from './types';
+import { useNavVisible } from './hooks/useNavVisible';
+import { ScrollToTopButtonStyles } from './components/styles/ScrollToTopButtonStyles';
+import { ChevronUp } from 'react-bootstrap-icons';
 
 // TODO:
 // choose appropriate license
-// TODO:
-// add a back to top button
 // TODO: improve comments
 // TODO:
 // add a way to download notes
@@ -56,9 +57,16 @@ export const App = () => {
 
     return null;
   });
+  const editorActive = useAppSelector(({ editorActive }) => {
+    return editorActive;
+  });
+  const clickedNote = useAppSelector(({ clickedNote }) => {
+    return clickedNote;
+  });
   const dispatch = useAppDispatch();
   const match = useMatch('/:id');
   const topRef = useRef<null | HTMLDivElement>(null);
+  const navVisible = useNavVisible(topRef);
 
   console.log(message, 'message here');
 
@@ -74,6 +82,12 @@ export const App = () => {
 
   // check if there's an active category, the category that the user has selected
   const activeCategory = categories.find(entry => entry.active);
+
+  const scrollToTopOnClick = () => {
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   console.log('height', screen.height);
   console.log('inner', window.innerHeight);
@@ -114,12 +128,19 @@ export const App = () => {
             <CategoryList
               sortCategories={sortCategories}
               setSortCategories={setSortCategories}
-              topRef={topRef}
             />
           }
           />
         }
       </Routes>
+      {!navVisible && (!editorActive && clickedNote === '') &&
+        <ScrollToTopButtonStyles
+          type="button"
+          onClick={scrollToTopOnClick}
+        >
+          <ChevronUp />
+        </ScrollToTopButtonStyles>
+      }
     </>
   );
 };

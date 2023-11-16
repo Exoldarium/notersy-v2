@@ -3,25 +3,16 @@ import { Sorting } from "../types";
 import { SingleCategory } from "./SingleCategory";
 import { NoCategories } from "./NoCategories";
 import { CategorySortingStyles } from "./styles/CategoryStyles";
-import { MutableRefObject } from "react";
-import { ScrollToTopButtonStyles } from "./styles/ScrollToTopButtonStyles";
 
 interface Props {
   sortCategories: Sorting;
   setSortCategories: React.Dispatch<React.SetStateAction<Sorting>>;
-  topRef: MutableRefObject<null | HTMLDivElement>;
 }
 
-export const CategoryList = ({ sortCategories, setSortCategories, topRef }: Props) => {
+export const CategoryList = ({ sortCategories, setSortCategories }: Props) => {
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
-
-  const scrollToTopOnClick = () => {
-    if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   if (categories.length === 0) {
     return (
@@ -77,12 +68,6 @@ export const CategoryList = ({ sortCategories, setSortCategories, topRef }: Prop
                 ));
             }
           })()}
-          <ScrollToTopButtonStyles
-            type="button"
-            onClick={scrollToTopOnClick}
-          >
-            Up
-          </ScrollToTopButtonStyles>
         </ul>
       </>
     );
