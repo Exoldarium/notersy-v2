@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const ScrollToTopButtonStyles = styled.button`
-  position: absolute;
-  /* bottom: 0; */
-  margin-top: -5rem;
+  position: fixed;
+  bottom: 50px;
   left: 300px;
   cursor: pointer;
   background: none;

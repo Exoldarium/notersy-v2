@@ -31,9 +31,7 @@ export const OptionsPage = () => {
         <button type="button" onClick={clearStorageOnClick}>
           Clear
         </button>
-        <h2>
-          Have a problem or a suggestion?
-        </h2>
+        <h2>Have a problem or a suggestion?</h2>
         <p>
           You can send it through the official repository <a href="https://github.com/Exoldarium/notersy-v2">here</a>,
           or you can send me an e-mail at <a href="mailto:shandoo91@gmail.com">shandoo91@gmail.com</a>

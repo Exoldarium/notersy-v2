@@ -20,7 +20,7 @@ import { AppGlobalStyles } from './components/styles/GlobalStyles';
 // TODO:
 // add a way to download notes
 // TODO:
-// add options page
+// improve scroll to top button, it should always be visible in the viewport if the nav is not visible
 
 export const App = () => {
   const [sortCategories, setSortCategories] = useState<Sorting>('default');
@@ -109,7 +109,7 @@ export const App = () => {
           />
         }
       </Routes>
-      {!navVisible && (!editorActive && clickedNote === '') &&
+      {!navVisible && !editorActive && clickedNote === '' &&
         <ScrollToTopButtonStyles
           type="button"
           onClick={scrollToTopOnClick}
