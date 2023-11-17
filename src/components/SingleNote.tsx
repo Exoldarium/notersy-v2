@@ -43,14 +43,12 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
     editable,
     content: note.content,
     onUpdate({ editor }) {
-      // grab the text and sanitize the inputs
       const clean = DOMPurify.sanitize(editor.getHTML());
       setNoteContent(clean);
     }
   });
 
   useEffect(() => {
-    // sets editor editable property and focuses the editor
     editor?.setEditable(editable);
 
     if (editable) {
@@ -59,9 +57,8 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   }, [editor, editable]);
 
   useEffect(() => {
-    // listen for visibility change (popup window closing)
     const updateNoteOnVisibilityChange = () => {
-      if (document.visibilityState === 'hidden' && editable) {
+      if (document.visibilityState === 'hidden' && editable) { // listen for visibility change (popup window closing)
         const updatedCategory: BaseCategoryEntry = {
           ...singleCategory,
           dateModified: getDate(),
@@ -197,6 +194,19 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
           className={editor.isActive('heading') ? 'is-active' : ''}
         >
           H
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleCode().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleCode()
+              .run()
+          }
+          className={editor.isActive('code') ? 'is-active' : ''}
+        >
+          {`<>`}
         </button>
         <button
           type="button"

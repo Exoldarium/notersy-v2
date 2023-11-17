@@ -1,7 +1,6 @@
 import { BaseCategoryEntry } from '../types';
 import { parseError } from '../utils/parseData';
 
-// grab data from storage
 const getStorage = async (key: string) => {
   try {
     const res = await chrome.storage.local.get(key);
@@ -25,7 +24,6 @@ const getStorage = async (key: string) => {
   }
 };
 
-// set data to storage
 const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
   try {
     await chrome.storage.local.set({ [key]: value });
@@ -36,6 +34,7 @@ const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
   }
 };
 
+// not being used at the moment
 const clearStorage = async () => {
   try {
     await chrome.storage.local.clear();

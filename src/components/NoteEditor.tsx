@@ -14,9 +14,6 @@ interface Props {
   singleCategory: BaseCategoryEntry;
 }
 
-// TODO:
-// add different headers and paragraph options into a dropdown menu
-
 export const NoteEditor = ({ singleCategory }: Props) => {
   const [noteContent, setNoteContent] = useState('');
   const categories = useAppSelector(({ categories }) => {
@@ -36,16 +33,14 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     ],
     content: '',
     onUpdate({ editor }) {
-      // grab the text and sanitize the inputs
       const clean = DOMPurify.sanitize(editor.getHTML());
       setNoteContent(clean);
     }
   });
 
   useEffect(() => {
-    // listen for visibility change (popup window closing)
     const addNoteOnVisibilityChange = () => {
-      if (document.visibilityState === 'hidden' && noteContent) {
+      if (document.visibilityState === 'hidden' && noteContent) { // listen for visibility change (popup window closing)
         const updatedCategory: BaseCategoryEntry = {
           ...singleCategory,
           dateModified: getDate(),
@@ -137,6 +132,19 @@ export const NoteEditor = ({ singleCategory }: Props) => {
           className={editor.isActive('heading') ? 'is-active' : ''}
         >
           H
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleCode().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleCode()
+              .run()
+          }
+          className={editor.isActive('code') ? 'is-active' : ''}
+        >
+          {`<>`}
         </button>
         <button
           type="button"

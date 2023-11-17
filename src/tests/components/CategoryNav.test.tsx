@@ -44,8 +44,6 @@ describe('<CategoryNav />', () => {
   it('renders correctly', () => {
     const Wrapper = () => {
       const [, setSortNotes] = useState<Sorting>('default');
-      // const [editTitle, setEditTitle] = useState(false);
-      // const [dropdown, setDropdown] = useState(false);
 
       return <CategoryNav
         setSortNotes={setSortNotes}
@@ -55,10 +53,9 @@ describe('<CategoryNav />', () => {
 
     renderWithProviders(<Wrapper />, { store });
 
-    // TODO:
-    // test all the buttons
-
-    // expect(screen.getByText('default')).toBeInTheDocument();
+    expect(screen.getByText('New Category')).toBeInTheDocument();
+    expect(screen.getByText('Back')).toBeInTheDocument();
+    expect(screen.getByText('Create')).toBeInTheDocument();
     screen.debug();
   });
 
@@ -79,15 +76,5 @@ describe('<CategoryNav />', () => {
 
     expect(screen.getByText('Sort by date added')).toBeInTheDocument();
     expect(screen.getByText('Sort by last modified')).toBeInTheDocument();
-    // expect(screen.getByText('Clear storage')).toBeInTheDocument();
-
-    // await userEvent.click(screen.getByText('Sort by date added'));
-
-    // expect(screen.getByText('Sorting by date added')).toBeInTheDocument();
-
-    // const closeButton = screen.getByTestId('close-sorting');
-    // await userEvent.click(screen.getByTestId('close-sorting'));
-
-    // expect(closeButton).not.toBeInTheDocument();
   });
 });

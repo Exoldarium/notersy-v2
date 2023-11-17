@@ -2,11 +2,10 @@ import { BaseCategoryEntry, BaseNoteEntry, BaseStorageEntry } from '../types';
 import { parseDate, parseToBool, parseToNumber, parseToString } from './parseData';
 
 // validate and parse the entries
-// parse each note
-const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
+
+const toNewNoteEntry = (object: unknown): BaseNoteEntry => { // parse each note
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
-  // check if correct keys are present in each entry
   if (
     'content' in object &&
     'dateAdded' in object &&
@@ -17,7 +16,6 @@ const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
     'unixTimeModified' in object &&
     'url' in object
   ) {
-    // parse each value and return correct type 
     const newEntry: BaseNoteEntry = {
       content: parseToString(object.content),
       dateAdded: parseDate(object.dateAdded),
@@ -35,8 +33,7 @@ const toNewNoteEntry = (object: unknown): BaseNoteEntry => {
   throw new Error('Incorrect data input or some fileds might be missing');
 };
 
-// parse each category
-const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
+const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => { // parse each category
   if (!object || typeof object !== 'object') throw new Error('Invalid data input');
 
   if (
@@ -50,7 +47,6 @@ const toNewCategoryEntry = (object: unknown): BaseCategoryEntry => {
     'unixTimeModified' in object &&
     Array.isArray(object.notes)
   ) {
-    // parse each individual note
     const parsedNotes = object.notes.map(note => toNewNoteEntry(note));
 
     const newEntry: BaseCategoryEntry = {
@@ -77,7 +73,6 @@ const toNewStorageEntry = (object: unknown): BaseStorageEntry => {
     'storedData' in object &&
     Array.isArray(object.storedData)
   ) {
-    // parse each individual category
     const parsedCategories = object.storedData.map(category => toNewCategoryEntry(category));
 
     const newEntry: BaseStorageEntry = {

@@ -141,7 +141,6 @@ describe('<Categories />', () => {
 
     expect(screen.getByText('Sort by date added')).toBeInTheDocument();
     expect(screen.getByText('Sort by last modified')).toBeInTheDocument();
-    expect(screen.getByText('Clear storage')).toBeInTheDocument();
 
     await userEvent.click(screen.getByText('Sort by date added'));
 

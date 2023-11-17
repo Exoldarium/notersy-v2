@@ -16,11 +16,8 @@ import { AppGlobalStyles } from './components/styles/GlobalStyles';
 
 // TODO:
 // choose appropriate license
-// TODO: improve comments
 // TODO:
 // add a way to download notes
-// TODO:
-// improve scroll to top button, it should always be visible in the viewport if the nav is not visible
 
 export const App = () => {
   const [sortCategories, setSortCategories] = useState<Sorting>('default');

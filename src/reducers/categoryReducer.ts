@@ -79,8 +79,7 @@ export const addNewCategory = (categories: BaseCategoryEntry[]) => {
         notes: [],
       };
 
-      // parse data
-      const parsedCategoryEntry = toNewCategoryEntry(newCategoryEntry);
+      const parsedCategoryEntry = toNewCategoryEntry(newCategoryEntry); // parse data
 
       await setStorage('storedData', categories.concat(parsedCategoryEntry));
 
@@ -131,8 +130,7 @@ export const deleteExistingCategory = (
 ) => {
   return async (dispatch: AppDispatch) => {
     try {
-      // delete selected categories based on their matching ids that are stored in checkbox state
-      const ids = checkedIdValues.map(item => item.id);
+      const ids = checkedIdValues.map(item => item.id); // categories are matched with the stored id's
       const updatedCategories = categories.filter(category => !ids.includes(category.id));
 
       await setStorage('storedData', updatedCategories);
@@ -172,14 +170,12 @@ export const addNewNote = (
 
       const parsedNoteEntry = toNewNoteEntry(newNoteEntry);
 
-      // add a new note to the notes array and create an updated category
       const notes = category.notes.concat(parsedNoteEntry);
       const categoryWithNotes: BaseCategoryEntry = {
         ...category,
         notes,
       };
 
-      // filter the category that we are updating with a new note
       const updatedCategories = categories.filter(category => category.id !== categoryWithNotes.id);
 
       await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
@@ -209,7 +205,6 @@ export const updateExistingNote = (
     try {
       const parsedNoteEntry = toNewNoteEntry(editedNote);
 
-      // filter the note that we are updating
       const notesToUpdate = category.notes.filter(note => note.id !== parsedNoteEntry.id);
       const updatedNotes = notesToUpdate.concat(parsedNoteEntry);
       const categoryWithNotes: BaseCategoryEntry = {
@@ -244,7 +239,6 @@ export const deleteExistingNote = (
 ) => {
   return async (dispatch: AppDispatch) => {
     try {
-      // delete selected notes based on their matching ids that are stored in checkbox state
       const ids = checkedIdValues.map(item => item.id);
       const updatedNotes = category.notes.filter(note => !ids.includes(note.id));
       const categoryWithNotes: BaseCategoryEntry = {
