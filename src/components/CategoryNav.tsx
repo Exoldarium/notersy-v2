@@ -17,6 +17,8 @@ interface Props {
   setSortNotes: React.Dispatch<React.SetStateAction<Sorting>>;
 }
 
+//test
+
 export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
   const [dropdown, setDropdown] = useState(false);
