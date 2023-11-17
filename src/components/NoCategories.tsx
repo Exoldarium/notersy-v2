@@ -14,7 +14,7 @@ export const NoCategories = ({ categories }: Props) => {
     return (
       <NoCategoriesStyles>
         <p>Welcome to Notersy!</p>
-        <p>Create a category to start</p>
+        <p>Create a category to start or select and add the text from the page!</p>
         <button
           type="button"
           onClick={() => dispatch(addNewCategory([]))}
