@@ -14,6 +14,9 @@ import { ScrollToTopButtonStyles } from './components/styles/ScrollToTopButtonSt
 import { ChevronUp } from 'react-bootstrap-icons';
 import { AppGlobalStyles } from './components/styles/GlobalStyles';
 
+// TODO:
+// images, readme
+
 export const App = () => {
   const [sortCategories, setSortCategories] = useState<Sorting>('default');
   const [sortNotes, setSortNotes] = useState<Sorting>('default');

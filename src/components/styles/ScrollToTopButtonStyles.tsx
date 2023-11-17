@@ -5,8 +5,10 @@ export const ScrollToTopButtonStyles = styled.button`
   bottom: 50px;
   left: 300px;
   cursor: pointer;
-  background: none;
-  border: none;
+  background-color: #a5a4a4de;
+  border: 1px solid black;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  border-radius: 5px;
   svg {
     width: 1.4rem;
     height: 1.4rem;
