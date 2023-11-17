@@ -4,7 +4,6 @@ import { parseError } from '../utils/parseData';
 const getStorage = async (key: string) => {
   try {
     const res = await chrome.storage.local.get(key);
-    console.log(res);
 
     // check if there's a valid key in res object
     // if not create it
@@ -38,7 +37,6 @@ const setStorage = async (key: string, value: BaseCategoryEntry[]) => {
 const clearStorage = async () => {
   try {
     await chrome.storage.local.clear();
-    console.log('cleared');
   } catch (err) {
     const error = parseError(err);
     throw new Error(error);

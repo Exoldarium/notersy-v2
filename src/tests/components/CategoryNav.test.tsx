@@ -56,7 +56,6 @@ describe('<CategoryNav />', () => {
     expect(screen.getByText('New Category')).toBeInTheDocument();
     expect(screen.getByText('Back')).toBeInTheDocument();
     expect(screen.getByText('Create')).toBeInTheDocument();
-    screen.debug();
   });
 
   test('sorting and removing sorting from categories displays correct information', async () => {

@@ -39,8 +39,6 @@ export const SingleCategory = ({ category }: Props) => {
     e: React.MouseEvent<HTMLInputElement>
   ) => dispatch(setChecboxChecked(e, checkbox, category.id));
 
-  console.log(checkbox);
-
   return (
     <CategoryStyles>
       <form>

@@ -18,8 +18,6 @@ export const useForm = (initialState: BaseCategoryEntry) => {
     });
   };
 
-  console.log(inputs);
-
   return {
     inputs,
     handleInputs

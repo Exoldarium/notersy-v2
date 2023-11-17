@@ -20,8 +20,6 @@ export const NoteList = ({ singleCategory, sortNotes, setSortNotes }: Props) => 
   });
   const dispatch = useAppDispatch();
 
-  console.log('single category has rendered');
-
   if (singleCategory.notes.length === 0 && !editorActive) {
     return (
       <NoCategoriesStyles>

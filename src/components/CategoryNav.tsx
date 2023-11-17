@@ -96,8 +96,6 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
     dispatch(updateCheckedId([]));
   };
 
-  console.log(singleCategory, 'active category');
-
   return (
     <>
       <CategoryNavStyles $checkbox={checkbox} $editTitle={editTitle}>

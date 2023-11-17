@@ -84,7 +84,6 @@ export const addNewCategory = (categories: BaseCategoryEntry[]) => {
       await setStorage('storedData', categories.concat(parsedCategoryEntry));
 
       dispatch(addCategory(parsedCategoryEntry));
-      console.log(categories, 'a new category added');
     } catch (err) {
       const error = parseError(err);
 
@@ -181,7 +180,6 @@ export const addNewNote = (
       await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
       dispatch(addNote(updatedCategories.concat(categoryWithNotes)));
-      console.log(updatedCategories, 'a new note added');
     } catch (err) {
       const error = parseError(err);
 
@@ -217,7 +215,6 @@ export const updateExistingNote = (
       await setStorage('storedData', updatedCategories.concat(categoryWithNotes));
 
       dispatch(updateNote(updatedCategories.concat(categoryWithNotes)));
-      console.log(updatedCategories, 'a new note added');
     } catch (err) {
       const error = parseError(err);
 

@@ -41,8 +41,6 @@ export const App = () => {
   const topRef = useRef<null | HTMLDivElement>(null);
   const navVisible = useNavVisible(topRef);
 
-  console.log(message, 'message here');
-
   useEffect(() => {
     void dispatch(initializeCategories());
   }, [dispatch]);
@@ -61,8 +59,6 @@ export const App = () => {
       topRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  console.log('App', categories);
 
   return (
     <>
