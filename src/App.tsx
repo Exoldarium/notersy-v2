@@ -45,14 +45,12 @@ export const App = () => {
     void dispatch(initializeCategories());
   }, [dispatch]);
 
-  // match the route param with a category id, return a message it the note couldn't be found
   const singleCategory = match ?
     toNewCategoryEntry(categories.find(category => category.id === match.params.id))
     :
     null;
 
-  // check if there's an active category, the category that the user has selected
-  const activeCategory = categories.find(entry => entry.active);
+  const activeCategory = categories.find(entry => entry.active); // check if a category has been selected
 
   const scrollToTopOnClick = () => {
     if (topRef.current) {

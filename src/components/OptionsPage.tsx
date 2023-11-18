@@ -33,7 +33,7 @@ export const OptionsPage = () => {
         </button>
         <h2>Have a problem or a suggestion?</h2>
         <p>
-          You can send it through the official repository <a href="https://github.com/Exoldarium/notersy-v2">here</a>,
+          You can send it through the official repository <a href="https://github.com/Exoldarium/notersy-v2/issues">here</a>,
           or you can send me an e-mail at <a href="mailto:shandoo91@gmail.com">shandoo91@gmail.com</a>
         </p>
         <h2>Get Notersy for</h2>

@@ -204,7 +204,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
               </button>
               <span style={{ borderBottom: '1px solid black' }}></span>
               <a
-                href="https://github.com/Exoldarium/notersy-v2"
+                href="https://github.com/Exoldarium/notersy-v2/issues"
                 target="_blank"
                 rel="noopener noreferrer"
               >
