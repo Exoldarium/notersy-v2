@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -11,6 +11,7 @@ import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { getDate } from '../utils/helpers';
 import * as Icon from 'react-bootstrap-icons';
+import { setNoteContent } from '../reducers/noteContentReducer';
 
 interface Props {
   note: BaseNoteEntry;
@@ -19,7 +20,10 @@ interface Props {
 }
 
 export const SingleNote = ({ note, singleCategory, editable }: Props) => {
-  const [noteContent, setNoteContent] = useState('');
+  // const [noteContent, setNoteContent] = useState('');
+  const noteContent = useAppSelector(({ noteContent }) => {
+    return noteContent;
+  });
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -44,7 +48,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
     content: note.content,
     onUpdate({ editor }) {
       const clean = DOMPurify.sanitize(editor.getHTML());
-      setNoteContent(clean);
+      dispatch(setNoteContent(clean));
     }
   });
 
@@ -53,8 +57,10 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
     if (editable) {
       editor?.commands.focus();
+    } else if (clickedNote || editorActive) {
+      editor?.commands.setContent(note.content);
     }
-  }, [editor, editable]);
+  }, [editor, editable, note.content, clickedNote, editorActive]);
 
   useEffect(() => {
     const updateNoteOnVisibilityChange = () => {
@@ -114,13 +120,13 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   };
 
   const setEditNoteOnClick = () => {
-    dispatch(setClickedNote(note.id));
-
     if (editorActive) {
       dispatch(setEditorActive(false));
     } else if (checkbox[0]) {
       dispatch(updateCheckedId([]));
     }
+    console.log(note.content);
+    dispatch(setClickedNote(note.id));
   };
 
   const cancelEditNoteOnClick = () => {
@@ -136,7 +142,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   return (
     <NoteEditorStyles $editable={editable}>
       <form>
-        {!editable && !clickedNote &&
+        {!editable && !clickedNote && !editorActive &&
           <input
             type="checkbox"
             id={note.id}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -9,13 +9,16 @@ import { BaseCategoryEntry } from '../types';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { getDate } from '../utils/helpers';
 import * as Icon from 'react-bootstrap-icons';
+import { setNoteContent } from '../reducers/noteContentReducer';
 
 interface Props {
   singleCategory: BaseCategoryEntry;
 }
 
 export const NoteEditor = ({ singleCategory }: Props) => {
-  const [noteContent, setNoteContent] = useState('');
+  const noteContent = useAppSelector(({ noteContent }) => {
+    return noteContent;
+  });
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -34,7 +37,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     content: '',
     onUpdate({ editor }) {
       const clean = DOMPurify.sanitize(editor.getHTML());
-      setNoteContent(clean);
+      dispatch(setNoteContent(clean));
     }
   });
 

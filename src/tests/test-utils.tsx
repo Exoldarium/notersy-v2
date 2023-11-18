@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { RootState } from "../store";
+import { noteContentReducer } from "../reducers/noteContentReducer";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>
@@ -26,7 +27,8 @@ export const renderWithProviders = (
         message: messageReducer,
         checkbox: checkboxReducer,
         editorActive: editorActiveReducer,
-        clickedNote: clickedNoteReducer
+        clickedNote: clickedNoteReducer,
+        noteContent: noteContentReducer
       }
     }),
     ...renderOptions

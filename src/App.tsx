@@ -15,7 +15,10 @@ import { ChevronUp } from 'react-bootstrap-icons';
 import { AppGlobalStyles } from './components/styles/GlobalStyles';
 
 // TODO:
-// images, readme
+// images
+// TODO:
+// note content should be saved automatically if the checkbox, newNote or editNote is clicked
+// empty notes should never be submitted, if the note is being edited and the content is erased, the note should be removed
 
 export const App = () => {
   const [sortCategories, setSortCategories] = useState<Sorting>('default');

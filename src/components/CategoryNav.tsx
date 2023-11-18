@@ -35,11 +35,16 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const clickedNote = useAppSelector(({ clickedNote }) => {
     return clickedNote;
   });
+  const noteContent = useAppSelector(({ noteContent }) => {
+    return noteContent;
+  });
   const { inputs, handleInputs } = useForm(singleCategory);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
+
+  console.log(noteContent);
 
   const setActiveCategoryToFalse = () => {
     const updatedCategory: BaseCategoryEntry = {
@@ -54,6 +59,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
     } else if (clickedNote) {
       dispatch(setClickedNote(''));
     } else if (editorActive) {
+      // await dispatch(addNewNote(categories, singleCategory, noteContent));
       dispatch(setEditorActive(false));
     } else if (editTitle) {
       setEditTitle(false);
