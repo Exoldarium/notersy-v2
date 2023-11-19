@@ -35,7 +35,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
       })
     ],
     content: '',
-    onUpdate({ editor }) {
+    onBlur({ editor }) {
       const clean = DOMPurify.sanitize(editor.getHTML());
       dispatch(setNoteContent(clean));
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BaseCategoryEntry, Sorting } from '../types';
-import { deleteExistingNote, updateExistingCategory } from '../reducers/categoryReducer';
+import { BaseCategoryEntry, BaseNoteEntry, Sorting } from '../types';
+import { addNewNote, deleteExistingNote, updateExistingCategory, updateExistingNote } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { useForm } from '../hooks/useForm';
 import { updateCheckedId } from '../reducers/checkboxReducer';
@@ -46,25 +46,37 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
 
   console.log(noteContent);
 
+  // TODO: empty notes should be deleted if back button is clicked
   const setActiveCategoryToFalse = () => {
     const updatedCategory: BaseCategoryEntry = {
       ...singleCategory,
       active: false
     };
 
-    void dispatch(updateExistingCategory(categories, updatedCategory));
-
     if (checkbox[0]) {
       dispatch(updateCheckedId([]));
     } else if (clickedNote) {
+      const findNote = singleCategory.notes.find(n => n.id === clickedNote);
+
+      if (!findNote) return null;
+
+      const noteToUpdate: BaseNoteEntry = {
+        ...findNote,
+        content: noteContent,
+        dateModified: getDate(),
+        unixTimeModified: Date.now()
+      };
+
       dispatch(setClickedNote(''));
+      return void dispatch(updateExistingNote(categories, updatedCategory, noteToUpdate));
     } else if (editorActive) {
-      // await dispatch(addNewNote(categories, singleCategory, noteContent));
       dispatch(setEditorActive(false));
+      return void dispatch(addNewNote(categories, updatedCategory, noteContent));
     } else if (editTitle) {
       setEditTitle(false);
     }
 
+    void dispatch(updateExistingCategory(categories, updatedCategory));
     navigate('/');
   };
 
@@ -84,6 +96,18 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
 
   const setEditorActiveOnClick = () => {
     if (clickedNote) {
+      const findNote = singleCategory.notes.find(note => note.id === clickedNote);
+
+      if (!findNote) return null;
+
+      const noteToUpdate: BaseNoteEntry = {
+        ...findNote,
+        content: noteContent,
+        dateModified: getDate(),
+        unixTimeModified: Date.now()
+      };
+
+      void dispatch(updateExistingNote(categories, singleCategory, noteToUpdate));
       dispatch(setClickedNote(''));
     }
 
@@ -97,8 +121,9 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
       unixTimeModified: Date.now()
     };
 
-    void dispatch(updateExistingCategory(categories, updatedCategory));
-    void dispatch(deleteExistingNote(categories, singleCategory, checkbox));
+    // TODO: pass updated category instead of dispatching two actions, do this everywhere else we use this
+    // void dispatch(updateExistingCategory(categories, updatedCategory));
+    void dispatch(deleteExistingNote(categories, updatedCategory, checkbox));
     dispatch(updateCheckedId([]));
   };
 

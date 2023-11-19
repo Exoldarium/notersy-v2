@@ -18,6 +18,7 @@ export const NoteList = ({ singleCategory, sortNotes, setSortNotes }: Props) => 
   const clickedNote = useAppSelector(({ clickedNote }) => {
     return clickedNote;
   });
+
   const dispatch = useAppDispatch();
 
   if (singleCategory.notes.length === 0 && !editorActive) {

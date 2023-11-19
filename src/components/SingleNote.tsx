@@ -5,7 +5,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { NoteEditorStyles } from './styles/NoteEditorStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
-import { updateExistingNote } from '../reducers/categoryReducer';
+import { addNewNote, deleteExistingNote, updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked, updateCheckedId } from '../reducers/checkboxReducer';
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
@@ -46,25 +46,25 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
     ],
     editable,
     content: note.content,
-    onUpdate({ editor }) {
+    onBlur({ editor }) {
       const clean = DOMPurify.sanitize(editor.getHTML());
       dispatch(setNoteContent(clean));
     }
   });
+
+  console.log(singleCategory.notes);
 
   useEffect(() => {
     editor?.setEditable(editable);
 
     if (editable) {
       editor?.commands.focus();
-    } else if (clickedNote || editorActive) {
-      editor?.commands.setContent(note.content);
     }
-  }, [editor, editable, note.content, clickedNote, editorActive]);
+  }, [editor, editable]);
 
   useEffect(() => {
     const updateNoteOnVisibilityChange = () => {
-      if (document.visibilityState === 'hidden' && editable) { // listen for visibility change (popup window closing)
+      if (document.visibilityState === 'hidden' && editable && clickedNote) { // listen for visibility change (popup window closing)
         const updatedCategory: BaseCategoryEntry = {
           ...singleCategory,
           dateModified: getDate(),
@@ -79,6 +79,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
         };
 
         void dispatch(updateExistingNote(categories, updatedCategory, noteToEdit));
+        dispatch(setClickedNote(''));
       }
     };
 
@@ -121,16 +122,34 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
   const setEditNoteOnClick = () => {
     if (editorActive) {
+      void dispatch(addNewNote(categories, singleCategory, noteContent));
       dispatch(setEditorActive(false));
     } else if (checkbox[0]) {
       dispatch(updateCheckedId([]));
+    } else if (noteContent === '<p></p>') { // delete a note if the content has been deleted, no point in keeping empty notes
+      void dispatch(deleteExistingNote(categories, singleCategory, [{ id: clickedNote }]));
+    } else if (clickedNote) { // update current note content if some other note was selected
+      const findNote = singleCategory.notes.find(n => n.id === clickedNote);
+
+      if (!findNote) return null;
+
+      const noteToUpdate: BaseNoteEntry = {
+        ...findNote,
+        content: noteContent,
+        dateModified: getDate(),
+        unixTimeModified: Date.now()
+      };
+
+      void dispatch(updateExistingNote(categories, singleCategory, noteToUpdate));
     }
-    console.log(note.content);
+
     dispatch(setClickedNote(note.id));
   };
 
   const cancelEditNoteOnClick = () => {
-    if (clickedNote) {
+    if (noteContent === '<p></p>') {
+      void dispatch(deleteExistingNote(categories, singleCategory, [{ id: clickedNote }]));
+    } else if (clickedNote) {
       dispatch(setClickedNote(''));
     }
 

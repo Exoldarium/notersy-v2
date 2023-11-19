@@ -17,8 +17,9 @@ import { AppGlobalStyles } from './components/styles/GlobalStyles';
 // TODO:
 // images
 // TODO:
-// note content should be saved automatically if the checkbox, newNote or editNote is clicked
 // empty notes should never be submitted, if the note is being edited and the content is erased, the note should be removed
+// we could try filtering the submitted empty notes before they go to storage, filter addNewNote and updateNote reducers
+// TODO: fix awaits
 
 export const App = () => {
   const [sortCategories, setSortCategories] = useState<Sorting>('default');

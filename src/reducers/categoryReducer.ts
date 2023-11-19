@@ -169,6 +169,8 @@ export const addNewNote = (
 
       const parsedNoteEntry = toNewNoteEntry(newNoteEntry);
 
+      if (parsedNoteEntry.content === '<p></p>') return; // don't add empty notes
+
       const notes = category.notes.concat(parsedNoteEntry);
       const categoryWithNotes: BaseCategoryEntry = {
         ...category,
