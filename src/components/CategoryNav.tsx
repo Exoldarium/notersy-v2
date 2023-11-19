@@ -100,6 +100,12 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
 
       if (!findNote) return null;
 
+      const updatedCategory: BaseCategoryEntry = {
+        ...singleCategory,
+        dateModified: getDate(),
+        unixTimeModified: Date.now()
+      };
+
       const noteToUpdate: BaseNoteEntry = {
         ...findNote,
         content: noteContent,
@@ -107,7 +113,7 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
         unixTimeModified: Date.now()
       };
 
-      void dispatch(updateExistingNote(categories, singleCategory, noteToUpdate));
+      void dispatch(updateExistingNote(categories, updatedCategory, noteToUpdate));
       dispatch(setClickedNote(''));
     }
 
@@ -122,7 +128,6 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
     };
 
     // TODO: pass updated category instead of dispatching two actions, do this everywhere else we use this
-    // void dispatch(updateExistingCategory(categories, updatedCategory));
     void dispatch(deleteExistingNote(categories, updatedCategory, checkbox));
     dispatch(updateCheckedId([]));
   };

@@ -19,6 +19,8 @@ interface Props {
   editable: boolean;
 }
 
+// TODO: variables to global scope if they are repeating
+
 export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   // const [noteContent, setNoteContent] = useState('');
   const noteContent = useAppSelector(({ noteContent }) => {
@@ -52,6 +54,19 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
     }
   });
 
+  const updatedCategory: BaseCategoryEntry = {
+    ...singleCategory,
+    dateModified: getDate(),
+    unixTimeModified: Date.now()
+  };
+
+  const noteToEdit: BaseNoteEntry = {
+    ...note,
+    content: noteContent,
+    dateModified: getDate(),
+    unixTimeModified: Date.now()
+  };
+
   console.log(singleCategory.notes);
 
   useEffect(() => {
@@ -65,19 +80,6 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   useEffect(() => {
     const updateNoteOnVisibilityChange = () => {
       if (document.visibilityState === 'hidden' && editable && clickedNote) { // listen for visibility change (popup window closing)
-        const updatedCategory: BaseCategoryEntry = {
-          ...singleCategory,
-          dateModified: getDate(),
-          unixTimeModified: Date.now()
-        };
-
-        const noteToEdit: BaseNoteEntry = {
-          ...note,
-          content: noteContent,
-          dateModified: getDate(),
-          unixTimeModified: Date.now()
-        };
-
         void dispatch(updateExistingNote(categories, updatedCategory, noteToEdit));
         dispatch(setClickedNote(''));
       }
@@ -91,19 +93,6 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
   });
 
   const updateNoteOnClick = () => {
-    const updatedCategory: BaseCategoryEntry = {
-      ...singleCategory,
-      dateModified: getDate(),
-      unixTimeModified: Date.now()
-    };
-
-    const noteToEdit: BaseNoteEntry = {
-      ...note,
-      content: noteContent,
-      dateModified: getDate(),
-      unixTimeModified: Date.now()
-    };
-
     void dispatch(updateExistingNote(categories, updatedCategory, noteToEdit));
     dispatch(setClickedNote(''));
   };
@@ -122,12 +111,10 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
   const setEditNoteOnClick = () => {
     if (editorActive) {
-      void dispatch(addNewNote(categories, singleCategory, noteContent));
+      void dispatch(addNewNote(categories, updatedCategory, noteContent));
       dispatch(setEditorActive(false));
     } else if (checkbox[0]) {
       dispatch(updateCheckedId([]));
-    } else if (noteContent === '<p></p>') { // delete a note if the content has been deleted, no point in keeping empty notes
-      void dispatch(deleteExistingNote(categories, singleCategory, [{ id: clickedNote }]));
     } else if (clickedNote) { // update current note content if some other note was selected
       const findNote = singleCategory.notes.find(n => n.id === clickedNote);
 
@@ -140,7 +127,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
         unixTimeModified: Date.now()
       };
 
-      void dispatch(updateExistingNote(categories, singleCategory, noteToUpdate));
+      void dispatch(updateExistingNote(categories, updatedCategory, noteToUpdate));
     }
 
     dispatch(setClickedNote(note.id));
@@ -148,11 +135,10 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
 
   const cancelEditNoteOnClick = () => {
     if (noteContent === '<p></p>') {
-      void dispatch(deleteExistingNote(categories, singleCategory, [{ id: clickedNote }]));
-    } else if (clickedNote) {
-      dispatch(setClickedNote(''));
+      void dispatch(deleteExistingNote(categories, updatedCategory, [{ id: clickedNote }]));
     }
 
+    dispatch(setClickedNote(''));
     editor?.commands.setContent(note.content);
   };
 

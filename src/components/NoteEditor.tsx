@@ -41,15 +41,15 @@ export const NoteEditor = ({ singleCategory }: Props) => {
     }
   });
 
+  const updatedCategory: BaseCategoryEntry = {
+    ...singleCategory,
+    dateModified: getDate(),
+    unixTimeModified: Date.now()
+  };
+
   useEffect(() => {
     const addNoteOnVisibilityChange = () => {
       if (document.visibilityState === 'hidden' && noteContent) { // listen for visibility change (popup window closing)
-        const updatedCategory: BaseCategoryEntry = {
-          ...singleCategory,
-          dateModified: getDate(),
-          unixTimeModified: Date.now()
-        };
-
         void dispatch(addNewNote(categories, updatedCategory, noteContent));
         dispatch(setEditorActive(false));
       }
@@ -63,12 +63,6 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   });
 
   const addNewNoteOnClick = () => {
-    const updatedCategory: BaseCategoryEntry = {
-      ...singleCategory,
-      dateModified: getDate(),
-      unixTimeModified: Date.now()
-    };
-
     void dispatch(addNewNote(categories, updatedCategory, noteContent));
     dispatch(setEditorActive(false));
   };

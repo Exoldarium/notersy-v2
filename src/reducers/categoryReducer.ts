@@ -205,6 +205,9 @@ export const updateExistingNote = (
     try {
       const parsedNoteEntry = toNewNoteEntry(editedNote);
 
+      if (parsedNoteEntry.content === '<p></p>')
+        return dispatch(deleteExistingNote(categories, category, [{ id: parsedNoteEntry.id }])); // don't add empty notes
+
       const notesToUpdate = category.notes.filter(note => note.id !== parsedNoteEntry.id);
       const updatedNotes = notesToUpdate.concat(parsedNoteEntry);
       const categoryWithNotes: BaseCategoryEntry = {
