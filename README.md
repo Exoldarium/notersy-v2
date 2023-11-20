@@ -9,7 +9,7 @@ A small chrome extension that allows users to add, create, update and delete not
 
 - Create custom notes and format them using the in-built rich text editor
 
-- Everything is saved immediately so that you can always continue where you left off
+- Notes are saved automatically so that you can always continue where you left off
 
 ## Installation
 
