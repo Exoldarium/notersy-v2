@@ -14,9 +14,6 @@ import { Sorting } from './types';
 import { useNavVisible } from './hooks/useNavVisible';
 import { ScrollToTopButtonStyles } from './components/styles/ScrollToTopButtonStyles';
 
-// TODO:
-// images
-
 export const App = () => {
   const [sortCategories, setSortCategories] = useState<Sorting>('default');
   const [sortNotes, setSortNotes] = useState<Sorting>('default');
