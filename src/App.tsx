@@ -1,30 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes, useMatch } from 'react-router-dom';
+import { ChevronUp } from 'react-bootstrap-icons';
 import { Nav } from './components/Nav';
 import { NoteList } from './components/NoteList';
 import { Notification } from './components/Notification';
 import { CategoryNav } from './components/CategoryNav';
+import { AppGlobalStyles } from './components/styles/GlobalStyles';
+import { CategoryList } from './components/CategoryList';
 import { initializeCategories } from './reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxTypes';
 import { toNewCategoryEntry } from './utils/parseStorageEntry';
-import { CategoryList } from './components/CategoryList';
 import { Sorting } from './types';
 import { useNavVisible } from './hooks/useNavVisible';
 import { ScrollToTopButtonStyles } from './components/styles/ScrollToTopButtonStyles';
-import { ChevronUp } from 'react-bootstrap-icons';
-import { AppGlobalStyles } from './components/styles/GlobalStyles';
 
 // TODO:
 // images
-// TODO:
-// empty notes should never be submitted, if the note is being edited and the content is erased, the note should be removed
-// we could try filtering the submitted empty notes before they go to storage, filter addNewNote and updateNote reducers
-// TODO: fix awaits
-// TODO: organize imports and html (spacing etc)
 
 export const App = () => {
   const [sortCategories, setSortCategories] = useState<Sorting>('default');
   const [sortNotes, setSortNotes] = useState<Sorting>('default');
+
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -41,6 +37,7 @@ export const App = () => {
   const clickedNote = useAppSelector(({ clickedNote }) => {
     return clickedNote;
   });
+
   const dispatch = useAppDispatch();
   const match = useMatch('/:id');
   const topRef = useRef<null | HTMLDivElement>(null);

@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { BaseCategoryEntry, BaseNoteEntry } from '../types';
+import * as Icon from 'react-bootstrap-icons';
 import { NoteEditorStyles } from './styles/NoteEditorStyles';
+import { BaseCategoryEntry, BaseNoteEntry } from '../types';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { addNewNote, deleteExistingNote, updateExistingNote } from '../reducers/categoryReducer';
 import { setChecboxChecked, updateCheckedId } from '../reducers/checkboxReducer';
 import { setClickedNote } from '../reducers/clickedNoteReducer';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { getDate } from '../utils/helpers';
-import * as Icon from 'react-bootstrap-icons';
 import { setNoteContent } from '../reducers/noteContentReducer';
 
 interface Props {
@@ -19,10 +19,7 @@ interface Props {
   editable: boolean;
 }
 
-// TODO: variables to global scope if they are repeating
-
 export const SingleNote = ({ note, singleCategory, editable }: Props) => {
-  // const [noteContent, setNoteContent] = useState('');
   const noteContent = useAppSelector(({ noteContent }) => {
     return noteContent;
   });
@@ -66,8 +63,6 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
     dateModified: getDate(),
     unixTimeModified: Date.now()
   };
-
-  console.log(singleCategory.notes);
 
   useEffect(() => {
     editor?.setEditable(editable);
@@ -217,7 +212,7 @@ export const SingleNote = ({ note, singleCategory, editable }: Props) => {
           }
           className={editor.isActive('code') ? 'is-active' : ''}
         >
-          {`<>`}
+          {"<>"}
         </button>
         <button
           type="button"

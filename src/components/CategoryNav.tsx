@@ -20,9 +20,7 @@ interface Props {
 export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const [editTitle, setEditTitle] = useState(false);
   const [dropdown, setDropdown] = useState(false);
-  const dropdownRef = useDetectOutsideClick(() => {
-    setDropdown(false);
-  });
+
   const categories = useAppSelector(({ categories }) => {
     return categories;
   });
@@ -38,15 +36,17 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
   const noteContent = useAppSelector(({ noteContent }) => {
     return noteContent;
   });
+
+  const dropdownRef = useDetectOutsideClick(() => {
+    setDropdown(false);
+  });
   const { inputs, handleInputs } = useForm(singleCategory);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const changeEditTitleOnClick = () => setEditTitle(!editTitle);
 
-  console.log(noteContent);
-
-  // TODO: empty notes should be deleted if back button is clicked
   const setActiveCategoryToFalse = () => {
     const updatedCategory: BaseCategoryEntry = {
       ...singleCategory,
@@ -127,7 +127,6 @@ export const CategoryNav = ({ singleCategory, setSortNotes }: Props) => {
       unixTimeModified: Date.now()
     };
 
-    // TODO: pass updated category instead of dispatching two actions, do this everywhere else we use this
     void dispatch(deleteExistingNote(categories, updatedCategory, checkbox));
     dispatch(updateCheckedId([]));
   };

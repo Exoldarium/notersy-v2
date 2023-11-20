@@ -2,13 +2,13 @@ import { useEffect, useRef } from 'react';
 import DOMPurify from 'dompurify';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import * as Icon from 'react-bootstrap-icons';
 import { EditorStyles } from './styles/NoteEditorStyles';
 import { addNewNote } from '../reducers/categoryReducer';
 import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypes';
 import { BaseCategoryEntry } from '../types';
 import { setEditorActive } from '../reducers/editorActiveReducer';
 import { getDate } from '../utils/helpers';
-import * as Icon from 'react-bootstrap-icons';
 import { setNoteContent } from '../reducers/noteContentReducer';
 
 interface Props {
@@ -25,6 +25,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   const editorActive = useAppSelector(({ editorActive }) => {
     return editorActive;
   });
+
   const dispatch = useAppDispatch();
   const ref = useRef<null | HTMLDivElement>(null);
 
@@ -141,7 +142,7 @@ export const NoteEditor = ({ singleCategory }: Props) => {
           }
           className={editor.isActive('code') ? 'is-active' : ''}
         >
-          {`<>`}
+          {"<>"}
         </button>
         <button
           type="button"
