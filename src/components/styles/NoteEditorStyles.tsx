@@ -6,6 +6,7 @@ export const EditorStyles = styled.div<{ $editorActive?: boolean }>`
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  font-size: 14px;
   .editorButtons{ 
     display: ${props => props.$editorActive ? 'flex' : 'none'};
     button {
@@ -45,6 +46,7 @@ export const NoteEditorStyles = styled.li<{ $editable?: boolean }>`
   margin: 0.5rem 0 0.5rem 0;
   overflow: hidden;
   transition: all 0.2s ease-out;
+  font-size: 14px;
   &:hover {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   }

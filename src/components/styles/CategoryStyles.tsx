@@ -11,6 +11,7 @@ export const CategoryStyles = styled.li`
   font-weight: bold;
   transition: all 0.2s ease-out;
   position: relative;
+  font-size: 15px;
   &:hover {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   }
