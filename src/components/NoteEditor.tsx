@@ -49,6 +49,13 @@ export const NoteEditor = ({ singleCategory }: Props) => {
   };
 
   useEffect(() => {
+    if (editor && editorActive) {
+      editor.commands.focus();
+      ref.current?.scrollIntoView();
+    }
+  }, [editor, editorActive]);
+
+  useEffect(() => {
     const addNoteOnVisibilityChange = () => {
       if (document.visibilityState === 'hidden' && noteContent) { // listen for visibility change (popup window closing)
         void dispatch(addNewNote(categories, updatedCategory, noteContent));
@@ -72,11 +79,6 @@ export const NoteEditor = ({ singleCategory }: Props) => {
 
   if (!editor) {
     return null;
-  }
-
-  if (editorActive) {
-    editor.commands.focus();
-    ref.current?.scrollIntoView();
   }
 
   return (
